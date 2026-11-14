@@ -789,7 +789,13 @@ ul.plain { list-style: disc; padding-left: 18px; display: grid; gap: 6px; }
 .link { font-size: 12px; }
 /* trend chart: a short, wide band */
 #trend { --rh: 76px; --oh: 50px; }
-#trend .tabs { padding: 2px; }
+/* the chart now sits beside Pending Tasks / Guest Reviews (taller row), so let the bars use that height */
+@media (min-width: 1301px) { #trend { --rh: 92px; --oh: 58px; } }
+/* weather is now a card of its own beside the chart: spread its three blocks over the row height */
+.weather { align-content: space-between; padding: 16px 20px; }
+/* check-ins / check-outs: the list fills the height of the row (set by the taller Recent Reservations card) and scrolls inside it */
+#checkins .cio, #checkouts .cio { flex: 1 1 0; min-height: 230px; overflow-y: auto; margin-right: -6px; padding-right: 6px; scrollbar-width: thin; scrollbar-color: #c5cfe0 transparent; }
+#checkins .cio li, #checkouts .cio li { flex: 0 0 auto; }#trend .tabs { padding: 2px; }
 #trend .tabs label { padding: 3px 8px; font-size: 11.5px; }
 .legend { margin: 2px 0 4px; gap: 2px 14px; font-size: 11.5px; }
 .chart { grid-template-columns: 38px minmax(0, 1fr); }
@@ -820,6 +826,15 @@ details.tv .sumrow { margin: 8px 0; }
 #calendar .cal { flex: 1 1 auto; grid-template-rows: auto repeat(6, minmax(22px, 1fr)); gap: 3px; }
 .cd { justify-self: center; width: 100%; max-width: 34px; height: auto; min-height: 22px; font-size: 11.5px; }
 .cal-leg { margin-top: 8px; font-size: 11px; }
+/* Occupancy Calendar: "Sample data" tag, month under the title, and wide pill-shaped days */
+.samp { padding: 2px 9px; border-radius: 999px; background: #fde9b8; color: #8a5a00; font-size: 11px; font-weight: 700; line-height: 1.4; white-space: nowrap; }
+#calendar .cal-m { margin: 0 0 12px; font-size: 14px; font-weight: 400; color: var(--muted); }
+#calendar .cal { flex: 0 0 auto; grid-template-rows: none; grid-auto-rows: 30px; align-content: start; gap: 6px; }
+#calendar .cal .dh { padding-bottom: 4px; font-size: 12px; font-weight: 700; color: var(--ink2); }
+#calendar .cal .dh { align-self: center; padding-bottom: 0; }
+#calendar .cd { max-width: none; width: 100%; height: 30px; min-height: 0; align-self: center; border-radius: 999px; font-size: 12.5px; }
+#calendar .cal-leg { gap: 4px 10px; margin-top: 12px; font-size: 11px; }
+#calendar .cal-leg i { width: 11px; height: 11px; margin-right: 4px; }
 /* today's check-ins and check-outs: two short lists */
 #checkins, #checkouts { display: flex; flex-direction: column; }
 #checkins .card-b, #checkouts .card-b { flex: 1 1 auto; display: flex; flex-direction: column; }
@@ -873,6 +888,18 @@ details.tv .sumrow { margin: 8px 0; }
 /* recent reservations: booked and stay dates side by side, so a row is three short lines */
 .rr { padding: 10px 16px; }
 #recent .rr-dates { grid-template-columns: auto auto; justify-content: start; gap: 2px 22px; margin-top: 3px; }
+/* Recent Reservations now sits in the narrower 4-column slot beside Room Status, so it is re-tuned for that width:
+   refresh icon next to "View all", filters fill one line (or two even lines), and each row is a tidy 4-line block */
+#recent .card-h { row-gap: 10px; }
+#recent .rr-refresh { order: 1; margin-left: auto; width: 28px; height: 28px; border-radius: 7px; }
+#recent .rr-refresh .ic { width: 15px; height: 15px; }
+#recent .card-h .link { order: 2; margin-left: 2px; }
+#recent .rr-filter { margin: 0; gap: 8px; }
+#recent .rrf { flex: 1 1 140px; min-width: 0; width: auto; }
+#recent .drp { flex: 1 1 230px; min-width: 0; }
+#recent .drp-field { flex: 1 1 auto; width: auto; min-width: 0; padding: 0 9px; overflow: hidden; }
+#recent .rr { grid-template-columns: 84px minmax(0, 1fr) auto; gap: 0 12px; padding: 12px 16px; }
+#recent .rr-dates { grid-template-columns: 1fr; gap: 2px 0; }
 /* the money strip: labels line up across the four cards */
 @media (min-width: 1501px) { .kpis2 .kpi { align-content: start; align-items: start; } .kpis2 .kpi .big { align-self: center; } }
 /* what's new: one wide announcement in two columns */
@@ -921,7 +948,7 @@ details.tv summary, .mo caption, .drp-btn, .ch-tbl th, .tbl td b, .ch-tbl td b, 
   .kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .kpi .big { font-size: 24px; }
   .grid > .s2, .grid > .s3, .grid > .s4, .grid > .s5, .grid > .s6 { grid-column: span 6; }
-  .grid > .s12, #trend, #recent, #rate, #cancelled { grid-column: span 12; }
+  .grid > .s12, #trend, #rate, #cancelled { grid-column: span 12; }
   .side { grid-column: span 12; grid-row: auto; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; }
 }
 @media (max-width: 1100px) {
@@ -953,3 +980,147 @@ details.tv summary, .mo caption, .drp-btn, .ch-tbl th, .tbl td b, .ch-tbl td b, 
   .col .x { font-size: 9.5px; }
 }
 @media print { .hdr, .nav, .modal { display: none !important; } }
+
+/* ================================================================
+   Widget redesign: Revenue & Occupancy and everything below it
+   ================================================================ */
+
+/* ---- Revenue & Occupancy: headline figures as tiles above the chart, softer rounded bars */
+#trend .sumrow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 2px 0 12px; padding: 0; border: 1px solid var(--line); border-radius: 12px; background: #f7f9fe; overflow: hidden; font-size: 11.5px; color: var(--muted); }
+#trend .sumrow > div { padding: 10px 14px; border-left: 1px solid var(--line); line-height: 1.35; }
+#trend .sumrow > div:first-child { border-left: 0; }
+#trend .sumrow b { margin-top: 3px; font-size: 18px; font-weight: 700; letter-spacing: -.01em; color: var(--navy); }
+.col .rev i { width: min(34px, 60%); border-radius: 6px 6px 0 0; background: linear-gradient(180deg, #5b95ff, #2f6fed); }
+.col.f .rev i { background: linear-gradient(180deg, #c6dcfb, #9ec5f4); }
+.col .occ b { width: 10px; height: 10px; }
+#trend details.tv { margin-top: 10px; }
+@media (max-width: 800px) {
+  #trend .sumrow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #trend .sumrow > div:nth-child(3) { border-left: 0; }
+  #trend .sumrow > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+
+/* ---- Weather: current conditions on top, the 7 days as tiles that fill the card */
+.weather { display: flex; flex-direction: column; align-content: normal; gap: 14px; padding: 20px 22px; }
+.weather .w-days-h { margin-top: 4px; padding-top: 14px; }
+.weather .w-days { flex: 1 1 auto; gap: 8px; }
+.weather .wd { align-content: center; gap: 6px; padding: 10px 0; border-radius: 12px; background: rgba(255, 255, 255, .13); }
+.weather .wd:hover { background: rgba(255, 255, 255, .22); }
+.weather .wd .ic { width: 22px; height: 22px; }
+
+/* ---- Booking Source: bigger donut, a share column and roomier rows that fill the card */
+#channels .ch-wrap { gap: 22px; }
+#channels .donut { width: 128px; height: 128px; }
+#channels .donut::after { inset: 24px; }
+#channels .donut .mid b { font-size: 22px; }
+#channels .donut .mid span { font-size: 11px; }
+#channels .ch-tbl { font-size: 12.5px; }
+#channels .ch-tbl th:nth-child(4), #channels .ch-tbl td:nth-child(4) { display: table-cell; }
+#channels .ch-tbl tfoot { display: table-footer-group; }
+#channels .ch-tbl tfoot td:nth-child(3) { display: none; }
+#channels .ch-tbl td:nth-child(4) { white-space: nowrap; }
+@media (max-width: 1500px) { #channels .donut { width: 112px; height: 112px; } }
+#channels .ch-tbl th { padding: 0 0 8px 8px; font-size: 11px; font-weight: 600; text-transform: none; letter-spacing: 0; }
+#channels .ch-tbl td { padding: 7px 0 7px 8px; }
+#channels .ch-name i { width: 9px; height: 9px; border-radius: 50%; }
+@media (max-width: 520px) { #channels .ch-wrap { flex-wrap: wrap; justify-content: center; } }
+
+/* ---- Pending Tasks: tinted icon tiles, rows share the height, total in a footer bar */
+#tasks .card-b { display: flex; flex-direction: column; }
+#tasks .task-list { flex: 1 1 auto; display: flex; flex-direction: column; }
+#tasks .task-list a { flex: 1 1 auto; padding: 8px 6px; }
+#tasks .task-list .ti { width: 34px; height: 34px; border-radius: 10px; }
+#tasks .task-list a:nth-child(1) .ti { background: #e8f0ff; color: #2f6fed; }
+#tasks .task-list a:nth-child(2) .ti { background: #efebff; color: #6250d6; }
+#tasks .task-list a:nth-child(3) .ti { background: #fff0e5; color: #eb6834; }
+#tasks .task-list a:nth-child(4) .ti { background: #e2f6ee; color: #1baf7a; }
+#tasks .task-list a:nth-child(5) .ti { background: #e1f3f8; color: #1593a8; }
+#tasks .task-total { margin-top: 10px; padding: 12px 14px; border: 0; border-radius: 12px; background: #f5f7fc; }
+
+/* ---- Guest Reviews: tinted rating panel, score chips, reviews spread over the card */
+#reviews .rv { flex: 1 1 auto; gap: 14px; }
+#reviews .rv-top { grid-template-columns: 96px minmax(0, 1fr); gap: 10px 18px; padding: 14px 16px; border-radius: 12px; background: #f5f8ff; }
+#reviews .rv-score b { font-size: 34px; }
+#reviews .rv-list { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; border-top: 0; }
+#reviews .rv-list li { padding: 10px 0; }
+#reviews .rv-sc { align-self: start; padding: 2px 9px; border-radius: 999px; background: #fff4d6; color: #8a5a00; font-size: 12px; font-weight: 700; }
+
+/* ---- The three tables: quieter headers, roomier rows */
+#rate .tbl th, #revperf .tbl th, #cancelled .tbl th { padding: 8px 8px; font-size: 11.5px; font-weight: 600; letter-spacing: .02em; color: var(--muted); background: transparent; border-bottom: 1px solid var(--line); }
+#rate .tbl td, #revperf .tbl td, #cancelled .tbl td { padding: 11px 8px; font-size: 12.5px; }
+#rate .rp-cap { margin-bottom: 4px; font-weight: 600; color: var(--muted); }
+#rate .rp-gha td { background: #eef3ff; }
+#rate .rp-gha td:first-child { box-shadow: inset 3px 0 0 var(--c1); }
+#rate .reco { border-left: 3px solid var(--warn); }
+#rate .btn { align-self: stretch; justify-content: center; text-align: center; }
+.mb { display: block; width: 100%; max-width: 56px; height: 4px; margin: 5px 0 0 auto; border-radius: 3px; background: linear-gradient(90deg, var(--bc, var(--c3)) var(--w), #e8edf5 var(--w)); }
+#revperf .tbl tbody td:first-child { font-weight: 600; }
+#revperf .tbl tfoot td { background: #f6f8fc; border-top: 1px solid var(--line); }
+#cancelled .tbl td:nth-child(3) { color: var(--good); font-weight: 600; }
+#cancelled .tbl td:last-child { font-weight: 700; }
+
+/* ---- Booking Source donut: an SVG ring, one hoverable slice per channel (slice, tooltip and table row light up together) */
+#channels .donut { position: relative; overflow: visible; }
+#channels .donut::after { display: none; }
+#channels .donut .dsv { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+#channels .donut .mid { pointer-events: none; }
+#channels .sg { fill: none; stroke-width: 6.5; cursor: pointer; outline: none; transition: stroke-width .15s, opacity .15s; }
+#channels .sg:hover, #channels .sg:focus-visible { stroke-width: 8.5; }
+#channels .ch-wrap:has(.sg:hover) .sg:not(:hover), #channels .ch-wrap:has(.sg:focus-visible) .sg:not(:focus-visible) { opacity: .4; }
+#channels .dtip { display: none; position: absolute; z-index: 30; left: 0; bottom: calc(100% + 12px); width: max-content; max-width: 230px; padding: 8px 11px; border-radius: 8px; background: var(--navy); color: #fff; font: 500 12px/1.45 Verdana, Geneva, sans-serif; text-align: left; box-shadow: 0 6px 20px rgba(15, 27, 51, .25); pointer-events: none; }
+#channels .dtip b { display: block; font-size: 12.5px; font-weight: 700; }
+#channels .dtip span { display: block; opacity: .92; }#channels .donut:has(.sg1:hover) .dt1, #channels .donut:has(.sg1:focus-visible) .dt1 { display: block; }
+#channels .ch-wrap:has(.sg1:hover) .ch-tbl tbody tr:nth-child(1) td, #channels .ch-wrap:has(.sg1:focus-visible) .ch-tbl tbody tr:nth-child(1) td { background: #eef3ff; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(1):hover) .sg1 { stroke-width: 8.5; }
+#channels .donut:has(.sg2:hover) .dt2, #channels .donut:has(.sg2:focus-visible) .dt2 { display: block; }
+#channels .ch-wrap:has(.sg2:hover) .ch-tbl tbody tr:nth-child(2) td, #channels .ch-wrap:has(.sg2:focus-visible) .ch-tbl tbody tr:nth-child(2) td { background: #eef3ff; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(2):hover) .sg2 { stroke-width: 8.5; }
+#channels .donut:has(.sg3:hover) .dt3, #channels .donut:has(.sg3:focus-visible) .dt3 { display: block; }
+#channels .ch-wrap:has(.sg3:hover) .ch-tbl tbody tr:nth-child(3) td, #channels .ch-wrap:has(.sg3:focus-visible) .ch-tbl tbody tr:nth-child(3) td { background: #eef3ff; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(3):hover) .sg3 { stroke-width: 8.5; }
+#channels .donut:has(.sg4:hover) .dt4, #channels .donut:has(.sg4:focus-visible) .dt4 { display: block; }
+#channels .ch-wrap:has(.sg4:hover) .ch-tbl tbody tr:nth-child(4) td, #channels .ch-wrap:has(.sg4:focus-visible) .ch-tbl tbody tr:nth-child(4) td { background: #eef3ff; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(4):hover) .sg4 { stroke-width: 8.5; }
+#channels .donut:has(.sg5:hover) .dt5, #channels .donut:has(.sg5:focus-visible) .dt5 { display: block; }
+#channels .ch-wrap:has(.sg5:hover) .ch-tbl tbody tr:nth-child(5) td, #channels .ch-wrap:has(.sg5:focus-visible) .ch-tbl tbody tr:nth-child(5) td { background: #eef3ff; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(5):hover) .sg5 { stroke-width: 8.5; }
+#channels .donut:has(.sg6:hover) .dt6, #channels .donut:has(.sg6:focus-visible) .dt6 { display: block; }
+#channels .ch-wrap:has(.sg6:hover) .ch-tbl tbody tr:nth-child(6) td, #channels .ch-wrap:has(.sg6:focus-visible) .ch-tbl tbody tr:nth-child(6) td { background: #eef3ff; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(6):hover) .sg6 { stroke-width: 8.5; }
+#channels .donut:has(.sg7:hover) .dt7, #channels .donut:has(.sg7:focus-visible) .dt7 { display: block; }
+#channels .ch-wrap:has(.sg7:hover) .ch-tbl tbody tr:nth-child(7) td, #channels .ch-wrap:has(.sg7:focus-visible) .ch-tbl tbody tr:nth-child(7) td { background: #eef3ff; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(7):hover) .sg7 { stroke-width: 8.5; }
+#channels .donut:has(.sg8:hover) .dt8, #channels .donut:has(.sg8:focus-visible) .dt8 { display: block; }
+#channels .ch-wrap:has(.sg8:hover) .ch-tbl tbody tr:nth-child(8) td, #channels .ch-wrap:has(.sg8:focus-visible) .ch-tbl tbody tr:nth-child(8) td { background: #eef3ff; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(8):hover) .sg8 { stroke-width: 8.5; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:hover) .sg { opacity: .4; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(1):hover) .sg1 { opacity: 1; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(2):hover) .sg2 { opacity: 1; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(3):hover) .sg3 { opacity: 1; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(4):hover) .sg4 { opacity: 1; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(5):hover) .sg5 { opacity: 1; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(6):hover) .sg6 { opacity: 1; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(7):hover) .sg7 { opacity: 1; }
+#channels .ch-wrap:has(.ch-tbl tbody tr:nth-child(8):hover) .sg8 { opacity: 1; }
+
+
+/* ================================================================
+   Reference look: bold card titles, plain "View all", count rows with thin bars, guest rows with a blue name
+   ================================================================ */
+.card-h h2 { font-size: 15px; font-weight: 700; }
+.card-h .link { font-size: 12.5px; }
+.card-h .status { font-size: 11.5px; }
+
+/* Housekeeping Progress: label on the left, bold "x / total" on the right, thin coloured bar underneath */
+#housekeeping .hkrows { flex: 1 1 auto; align-content: space-evenly; gap: 10px; margin-top: 8px; }
+#housekeeping .hkr > div:first-child { align-items: baseline; font-size: 13px; color: var(--navy); }
+#housekeeping .hkr b { font-size: 13px; font-weight: 700; }
+#housekeeping .hkr .bar { height: 6px; margin-top: 6px; border-radius: 4px; background: #e6ebf3; }
+#housekeeping .hkr .bar i { border-radius: 4px; }
+#housekeeping .foot { margin-top: 14px; font-size: 12px; }
+
+/* Today's Check-ins / Check-outs: round blue avatar, bold blue name, small grey room / booking line */
+#checkins .cio li, #checkouts .cio li { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 12px; padding: 10px 0; }
+#checkins .cio .av, #checkouts .cio .av { width: 34px; height: 34px; font-size: 12px; }
+#checkins .cio b, #checkouts .cio b { font-size: 13.5px; font-weight: 700; color: #1a73e8; }
+#checkins .cio small, #checkouts .cio small { margin-top: 1px; font-size: 11.5px; color: var(--muted); }
