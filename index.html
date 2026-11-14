@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>eGlobe PMS Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Icon sprite (inline SVG, no external files) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></symbol>
+<symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></symbol>
+<symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></symbol>
+<symbol id="i-box" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></symbol>
+<symbol id="i-headset" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+<symbol id="i-userplus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></symbol>
+<symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></symbol>
+<symbol id="i-building" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></symbol>
+<symbol id="i-login" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></symbol>
+<symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></symbol>
+<symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"/><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"/><path d="M12 4v6"/><path d="M2 18h20"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+<symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
+<symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15l.7 1.8 1.8.7-1.8.7L19 20l-.7-1.8-1.8-.7 1.8-.7z"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+<symbol id="i-zap" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+<symbol id="i-trend" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+<symbol id="i-chev-r" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+<symbol id="i-percent" viewBox="0 0 24 24"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></symbol>
+<symbol id="i-pie" viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></symbol>
+<symbol id="i-rupee" viewBox="0 0 24 24"><path d="M6 3h12"/><path d="M6 8h12"/><path d="M6 13l8.5 8"/><path d="M6 13h3"/><path d="M9 13c6.667 0 6.667-10 0-10"/></symbol>  <symbol id="i-arrow-up" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></symbol>
+<symbol id="i-arrow-down" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></symbol>
+<symbol id="i-gauge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 12l4-4"/><path d="M7 15.5a6 6 0 0 1 .4-5M12 6.5v1M16.5 9.5l-.8.6M7.5 9.5l.8.6"/></symbol>
+<symbol id="i-clipboard" viewBox="0 0 24 24"><path d="M9 4H6a1 1 0 0 0-1 1v15a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-3"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M8.5 11h7M8.5 15h7"/></symbol>
+<symbol id="i-translate" viewBox="0 0 24 24"><rect x="1.5" y="4" width="21" height="16" rx="2.5" fill="currentColor" stroke="none"/><path d="M5.5 15.5l2.2-6 2.2 6M6.3 13.5h2.8" stroke="#1e88e5" stroke-width="1.6" fill="none"/><path d="M13 9.5h5.5M15.7 8.2v1.3M14 15c2-.7 3.5-2.3 4-5.5M15.3 11.8c.6 1.4 1.8 2.6 3.2 3" stroke="#1e88e5" stroke-width="1.5" fill="none"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></symbol>
+</svg>
+<!-- ============================================================ HEADER: row 1 (blue) -->
+<header class="hdr">
+<div class="hdr-in">
+<span class="hdr-sp" aria-hidden="true"></span>
+<div class="prop">
+<label class="pl" for="prop">Select Property</label>
+<select class="sel" id="prop" aria-label="Select property">
+<option selected>Hotel Grand Meridian [ID: 10482]</option>
+<option>The Palm Residency [ID: 10517]</option>
+<option>Riverside Retreat [ID: 10771]</option>
+</select>
+</div>
+<div class="hdr-r">
+<label class="lang" title="Language"><svg class="ic"><use href="#i-translate"/></svg>
+<select class="sel" aria-label="Language"><option>English</option><option>&#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</option></select>
+</label>
+<a class="icon-btn" href="#m-search" aria-label="Search"><svg class="ic"><use href="#i-search"/></svg></a>
+<a class="icon-btn" href="#m-notif" aria-label="Notifications, 6 new"><svg class="ic"><use href="#i-bell"/></svg><span class="badge">6</span></a>
+<div class="acct"><b>Admin</b><span class="avatar" aria-hidden="true">e</span></div>
+</div>
+</div>
+</header>
+<!-- ============================================================ NAVIGATION: row 2 (white) -->
+<nav class="nav" aria-label="Main navigation">
+<ul>
+<li><a class="on" href="#" aria-current="page"><svg class="ic"><use href="#i-gauge"/></svg>Dashboard</a></li>
+<li><a href="#"><svg class="ic"><use href="#i-share"/></svg>Manage Channels</a></li>
+<li><a href="#"><svg class="ic"><use href="#i-building"/></svg>PMS</a></li>
+<li><a href="#"><svg class="ic"><use href="#i-cloud"/></svg>POS</a></li>
+<li><a href="#"><svg class="ic"><use href="#i-calendar"/></svg>Booking Engine</a></li>
+<li><a href="#"><svg class="ic"><use href="#i-clipboard"/></svg>Reports</a></li>
+<li><a href="#"><svg class="ic"><use href="#i-grid"/></svg>Extras</a></li>
+<li><a href="#"><svg class="ic"><use href="#i-user"/></svg>Support</a></li>
+</ul>
+</nav>
+<main class="page">
+<section class="kpis" aria-label="Key figures">
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-rupee"/></svg>Today's Revenue<span class="tipi" tabindex="0" data-tip="Booking value excluding GST (room + extras &minus; discounts) of the reservations whose check-in date is today, 13 Nov. The change compares it with yesterday's check-ins.">i</span></h3>
+<a class="big" href="#m-arrivals" title="28 reservations check in on 13 Nov. Open the arrivals list.">&#8377;6,24,800</a>
+<p class="sub"><b>28</b> check-ins today</p>
+<p class="delta up"><svg class="ic ar"><use href="#i-arrow-up"/></svg><b>7.4%</b> <small>vs yesterday</small></p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-percent"/></svg>Occupancy<span class="tipi" tabindex="0" data-tip="Rooms sold tonight &divide; sellable rooms. Sellable = 110 total &minus; 2 out of order &minus; 1 under maintenance = 107. Tonight's rooms sold = stayovers + arrivals.">i</span></h3>
+<a class="big" href="#m-rooms" title="Open the room list">82%</a>
+<p class="sub">88 / 107 rooms sold</p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-chart"/></svg>ADR<span class="tipi" tabindex="0" data-tip="Average daily rate = room revenue &divide; rooms sold (&#8377;5,70,240 &divide; 88).">i</span></h3>
+<div class="big">&#8377;6,480</div>
+<p class="delta up"><svg class="ic ar"><use href="#i-arrow-up"/></svg><b>3.2%</b> <small>vs yesterday</small></p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-pie"/></svg>RevPAR<span class="tipi" tabindex="0" data-tip="Revenue per available room = room revenue &divide; sellable rooms (&#8377;5,70,240 &divide; 107).">i</span></h3>
+<div class="big">&#8377;5,329</div>
+<p class="delta up"><svg class="ic ar"><use href="#i-arrow-up"/></svg><b>10.4%</b> <small>vs yesterday</small></p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-login"/></svg>Arrivals</h3>
+<a class="big" href="#m-arrivals" title="Open today's arrivals">28</a>
+<p class="sub">14 in &middot; 14 expected</p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-logout"/></svg>Departures</h3>
+<a class="big" href="#m-departures" title="Open today's departures">24</a>
+<p class="sub">16 out &middot; 8 pending</p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-users"/></svg>In-house<span class="tipi" tabindex="0" data-tip="Guests checked in right now: 60 stayovers + 14 arrived today + 8 departing today who have not checked out yet = 82 rooms. Stayovers are guests already checked in who stay beyond today.">i</span></h3>
+<a class="big" href="#m-inhouse" title="Open the in-house guest list">172</a>
+<p class="sub">guests in 82 rooms</p>
+<p class="sub"><a class="link" href="#m-stayovers">60 stayovers</a></p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-bed"/></svg>Available<span class="tipi" tabindex="0" data-tip="Rooms still sellable tonight = 25 vacant now &minus; 14 arrivals still to come + 8 departures still to leave = 19. Sellable rooms are 107 (110 &minus; 2 out of order &minus; 1 maintenance).">i</span></h3>
+<a class="big" href="#m-rooms" title="Open the room list">19</a>
+<p class="sub">of 107 sellable</p>
+</article>
+</section>
+<section class="kpis2" aria-label="Money and bookings today">
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-rupee"/></svg>Today's Collection<span class="tipi" tabindex="0" data-tip="Money actually received today, by the date of payment: advances, payments at check-in and settlements at check-out, including OTA prepaid. Refunds paid today are shown separately and are not deducted from this figure.">i</span></h3>
+<a class="big" href="#m-collection" title="See the breakdown">&#8377;3,28,400</a>
+<p class="sub"><b>23</b> payments &middot; net &#8377;3,10,400</p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-card"/></svg>Balance Due<span class="tipi" tabindex="0" data-tip="Unpaid balance on bookings checking in today: booking total (room + extras + tax &minus; discounts) minus payments received. Open the list to see which bookings are overdue, due today or upcoming.">i</span></h3>
+<a class="big" href="#m-balance" title="Open the booking list">&#8377;1,86,500</a>
+<p class="sub"><b>12</b> bookings</p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-plus"/></svg>New Bookings<span class="tipi" tabindex="0" data-tip="Reservations created today, counted before any later cancellations. Booking value excludes GST.">i</span></h3>
+<a class="big" href="#m-newbook" title="Open today's new bookings">31</a>
+<p class="sub">&#8377;7,12,400 value</p>
+<p class="delta up"><svg class="ic ar"><use href="#i-arrow-up"/></svg><b>5</b> <small>vs yesterday</small></p>
+</article>
+<article class="card kpi">
+<h3><svg class="ic kic"><use href="#i-ban"/></svg>Cancellations<span class="tipi" tabindex="0" data-tip="Reservations cancelled today (by cancellation date, any stay date). Value excludes GST; fees are charges kept from the guest's advance. Fees kept today: &#8377;6,200.">i</span></h3>
+<a class="big" href="#m-cancel" title="Open today's cancellations">3</a>
+<p class="sub">&#8377;68,400 value</p>
+<p class="delta up"><svg class="ic ar"><use href="#i-arrow-down"/></svg><b>1 fewer</b> <small>vs yesterday</small></p>
+</article>
+</section>
+<!-- ========================================================== WIDGET GRID: row 1 -->
+<div class="grid">
+<section class="card s4" id="trend" aria-labelledby="h-trend">
+<header class="card-h">
+<h2 id="h-trend">Revenue &amp; Occupancy <span class="tipi" tabindex="0" data-tip="Bars: room revenue excluding GST. Lighter bars: revenue already on the books for future dates. Line: occupancy = rooms sold &divide; sellable rooms.">i</span></h2>
+<div class="tabs" role="radiogroup" aria-label="Trend range">
+<input type="radio" name="trng" id="tr7" checked><label for="tr7">7 days</label>
+<input type="radio" name="trng" id="tr30"><label for="tr30">30 days</label>
+<input type="radio" name="trng" id="trm"><label for="trm">This month</label>
+<input type="radio" name="trng" id="trp"><label for="trp">Last month</label>
+</div>
+</header>
+<div class="card-b">
+<div class="legend"><span><i></i>Revenue</span><span><i class="f"></i>On the books</span><span><i class="ln"></i>Occupancy</span></div>
+<div class="trend-box t7">
+<div class="chart n7">
+<div class="yax"><div><span>&#8377;7 L</span><span>&#8377;3.5 L</span><span>0</span></div><div></div><div><span>100%</span><span>75%</span><span>50%</span></div><div></div></div>
+<div class="cols" style="--n:7"><div class="col wk" data-tip="Sat 7 Nov&#10;Room revenue &#8377;6,67,000&#10;Occupancy 91% (100 of 110 rooms)&#10;ADR &#8377;6,670"><div class="rev"><i style="height:95.0%"></i></div><div class="occ"><b style="bottom:82.0%"></b></div><span class="x">Sat 7</span></div><div class="col" data-tip="Sun 8 Nov&#10;Room revenue &#8377;5,15,910&#10;Occupancy 79% (87 of 110 rooms)&#10;ADR &#8377;5,930"><div class="rev"><i style="height:74.0%"></i></div><div class="occ"><b style="bottom:58.0%"></b></div><span class="x">Sun 8</span></div><div class="col" data-tip="Mon 9 Nov&#10;Room revenue &#8377;4,38,000&#10;Occupancy 68% (75 of 110 rooms)&#10;ADR &#8377;5,840"><div class="rev"><i style="height:63.0%"></i></div><div class="occ"><b style="bottom:36.0%"></b></div><span class="x">Mon 9</span></div><div class="col" data-tip="Tue 10 Nov&#10;Room revenue &#8377;4,64,360&#10;Occupancy 70% (76 of 109 rooms)&#10;ADR &#8377;6,110"><div class="rev"><i style="height:66.0%"></i></div><div class="occ"><b style="bottom:39.0%"></b></div><span class="x">Tue 10</span></div><div class="col" data-tip="Wed 11 Nov&#10;Room revenue &#8377;4,50,410&#10;Occupancy 67% (73 of 109 rooms)&#10;ADR &#8377;6,170"><div class="rev"><i style="height:64.0%"></i></div><div class="occ"><b style="bottom:34.0%"></b></div><span class="x">Wed 11</span></div><div class="col" data-tip="Thu 12 Nov&#10;Room revenue &#8377;5,21,240&#10;Occupancy 77% (83 of 108 rooms)&#10;ADR &#8377;6,280"><div class="rev"><i style="height:74.0%"></i></div><div class="occ"><b style="bottom:54.0%"></b></div><span class="x">Thu 12</span></div><div class="col wk" data-tip="Fri 13 Nov&#10;Room revenue &#8377;5,70,240&#10;Occupancy 82% (88 of 107 rooms)&#10;ADR &#8377;6,480"><div class="rev"><i style="height:81.0%"></i></div><div class="occ"><b style="bottom:64.0%"></b></div><span class="x">Fri 13</span></div><svg class="line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="7.1,18.2 21.4,41.8 35.7,63.6 50.0,60.6 64.3,66.1 78.6,46.3 92.9,35.5"/></svg></div>
+</div>
+<details class="tv"><summary>Totals and table</summary>
+<div class="sumrow"><div>Room revenue<b>&#8377;36,27,160</b></div><div>Average occupancy<b>76.3%</b></div><div>ADR<b>&#8377;6,232</b></div><div>Room nights sold<b>582</b></div></div>
+<div class="tw"><table class="tbl"><thead><tr><th>Date</th><th class="r">Room revenue</th><th class="r">Rooms sold</th><th class="r">Occupancy</th><th class="r">ADR</th></tr></thead><tbody><tr><td>Sat 7 Nov</td><td class="r">&#8377;6,67,000</td><td class="r">100 / 110</td><td class="r">91%</td><td class="r">&#8377;6,670</td></tr><tr><td>Sun 8 Nov</td><td class="r">&#8377;5,15,910</td><td class="r">87 / 110</td><td class="r">79%</td><td class="r">&#8377;5,930</td></tr><tr><td>Mon 9 Nov</td><td class="r">&#8377;4,38,000</td><td class="r">75 / 110</td><td class="r">68%</td><td class="r">&#8377;5,840</td></tr><tr><td>Tue 10 Nov</td><td class="r">&#8377;4,64,360</td><td class="r">76 / 109</td><td class="r">70%</td><td class="r">&#8377;6,110</td></tr><tr><td>Wed 11 Nov</td><td class="r">&#8377;4,50,410</td><td class="r">73 / 109</td><td class="r">67%</td><td class="r">&#8377;6,170</td></tr><tr><td>Thu 12 Nov</td><td class="r">&#8377;5,21,240</td><td class="r">83 / 108</td><td class="r">77%</td><td class="r">&#8377;6,280</td></tr><tr><td>Fri 13 Nov</td><td class="r">&#8377;5,70,240</td><td class="r">88 / 107</td><td class="r">82%</td><td class="r">&#8377;6,480</td></tr></tbody></table></div></details>
+</div>      <div class="trend-box t30">
+<div class="chart n30">
+<div class="yax"><div><span>&#8377;7 L</span><span>&#8377;3.5 L</span><span>0</span></div><div></div><div><span>100%</span><span>75%</span><span>50%</span></div><div></div></div>
+<div class="cols" style="--n:30"><div class="col" data-tip="Thu 15 Oct&#10;Room revenue &#8377;5,60,560&#10;Occupancy 83% (91 of 110 rooms)&#10;ADR &#8377;6,160"><div class="rev"><i style="height:80.0%"></i></div><div class="occ"><b style="bottom:65.0%"></b></div><span class="x">15 Oct</span></div><div class="col wk" data-tip="Fri 16 Oct&#10;Room revenue &#8377;5,91,300&#10;Occupancy 82% (90 of 110 rooms)&#10;ADR &#8377;6,570"><div class="rev"><i style="height:84.0%"></i></div><div class="occ"><b style="bottom:64.0%"></b></div><span class="x">16 Oct</span></div><div class="col wk" data-tip="Sat 17 Oct&#10;Room revenue &#8377;6,69,630&#10;Occupancy 92% (101 of 110 rooms)&#10;ADR &#8377;6,630"><div class="rev"><i style="height:96.0%"></i></div><div class="occ"><b style="bottom:84.0%"></b></div><span class="x">17 Oct</span></div><div class="col" data-tip="Sun 18 Oct&#10;Room revenue &#8377;4,47,640&#10;Occupancy 69% (76 of 110 rooms)&#10;ADR &#8377;5,890"><div class="rev"><i style="height:64.0%"></i></div><div class="occ"><b style="bottom:38.0%"></b></div><span class="x">18 Oct</span></div><div class="col" data-tip="Mon 19 Oct&#10;Room revenue &#8377;4,68,160&#10;Occupancy 69% (76 of 110 rooms)&#10;ADR &#8377;6,160"><div class="rev"><i style="height:67.0%"></i></div><div class="occ"><b style="bottom:38.0%"></b></div><span class="x">19 Oct</span></div><div class="col" data-tip="Tue 20 Oct&#10;Room revenue &#8377;4,73,460&#10;Occupancy 71% (78 of 110 rooms)&#10;ADR &#8377;6,070"><div class="rev"><i style="height:68.0%"></i></div><div class="occ"><b style="bottom:42.0%"></b></div><span class="x">20 Oct</span></div><div class="col" data-tip="Wed 21 Oct&#10;Room revenue &#8377;4,59,750&#10;Occupancy 68% (75 of 110 rooms)&#10;ADR &#8377;6,130"><div class="rev"><i style="height:66.0%"></i></div><div class="occ"><b style="bottom:36.0%"></b></div><span class="x">21 Oct</span></div><div class="col" data-tip="Thu 22 Oct&#10;Room revenue &#8377;5,36,640&#10;Occupancy 78% (86 of 110 rooms)&#10;ADR &#8377;6,240"><div class="rev"><i style="height:77.0%"></i></div><div class="occ"><b style="bottom:56.0%"></b></div><span class="x">22 Oct</span></div><div class="col wk" data-tip="Fri 23 Oct&#10;Room revenue &#8377;6,45,050&#10;Occupancy 88% (97 of 110 rooms)&#10;ADR &#8377;6,650"><div class="rev"><i style="height:92.0%"></i></div><div class="occ"><b style="bottom:76.0%"></b></div><span class="x">23 Oct</span></div><div class="col wk" data-tip="Sat 24 Oct&#10;Room revenue &#8377;6,44,160&#10;Occupancy 87% (96 of 110 rooms)&#10;ADR &#8377;6,710"><div class="rev"><i style="height:92.0%"></i></div><div class="occ"><b style="bottom:75.0%"></b></div><span class="x">24 Oct</span></div><div class="col" data-tip="Sun 25 Oct&#10;Room revenue &#8377;4,89,540&#10;Occupancy 75% (82 of 110 rooms)&#10;ADR &#8377;5,970"><div class="rev"><i style="height:70.0%"></i></div><div class="occ"><b style="bottom:49.0%"></b></div><span class="x">25 Oct</span></div><div class="col" data-tip="Mon 26 Oct&#10;Room revenue &#8377;4,82,160&#10;Occupancy 75% (82 of 110 rooms)&#10;ADR &#8377;5,880"><div class="rev"><i style="height:69.0%"></i></div><div class="occ"><b style="bottom:49.0%"></b></div><span class="x">26 Oct</span></div><div class="col" data-tip="Tue 27 Oct&#10;Room revenue &#8377;4,22,670&#10;Occupancy 66% (73 of 110 rooms)&#10;ADR &#8377;5,790"><div class="rev"><i style="height:60.0%"></i></div><div class="occ"><b style="bottom:33.0%"></b></div><span class="x">27 Oct</span></div><div class="col" data-tip="Wed 28 Oct&#10;Room revenue &#8377;5,03,010&#10;Occupancy 74% (81 of 110 rooms)&#10;ADR &#8377;6,210"><div class="rev"><i style="height:72.0%"></i></div><div class="occ"><b style="bottom:47.0%"></b></div><span class="x">28 Oct</span></div><div class="col" data-tip="Thu 29 Oct&#10;Room revenue &#8377;5,05,600&#10;Occupancy 73% (80 of 110 rooms)&#10;ADR &#8377;6,320"><div class="rev"><i style="height:72.0%"></i></div><div class="occ"><b style="bottom:45.0%"></b></div><span class="x">29 Oct</span></div><div class="col wk" data-tip="Fri 30 Oct&#10;Room revenue &#8377;6,12,430&#10;Occupancy 83% (91 of 110 rooms)&#10;ADR &#8377;6,730"><div class="rev"><i style="height:87.0%"></i></div><div class="occ"><b style="bottom:65.0%"></b></div><span class="x">30 Oct</span></div><div class="col wk" data-tip="Sat 31 Oct&#10;Room revenue &#8377;6,92,580&#10;Occupancy 93% (102 of 110 rooms)&#10;ADR &#8377;6,790"><div class="rev"><i style="height:99.0%"></i></div><div class="occ"><b style="bottom:85.0%"></b></div><span class="x">31 Oct</span></div><div class="col" data-tip="Sun 1 Nov&#10;Room revenue &#8377;4,96,800&#10;Occupancy 73% (80 of 110 rooms)&#10;ADR &#8377;6,210"><div class="rev"><i style="height:71.0%"></i></div><div class="occ"><b style="bottom:45.0%"></b></div><span class="x">1 Nov</span></div><div class="col" data-tip="Mon 2 Nov&#10;Room revenue &#8377;4,89,600&#10;Occupancy 73% (80 of 110 rooms)&#10;ADR &#8377;6,120"><div class="rev"><i style="height:70.0%"></i></div><div class="occ"><b style="bottom:45.0%"></b></div><span class="x">2 Nov</span></div><div class="col" data-tip="Tue 3 Nov&#10;Room revenue &#8377;4,22,100&#10;Occupancy 64% (70 of 110 rooms)&#10;ADR &#8377;6,030"><div class="rev"><i style="height:60.0%"></i></div><div class="occ"><b style="bottom:27.0%"></b></div><span class="x">3 Nov</span></div><div class="col" data-tip="Wed 4 Nov&#10;Room revenue &#8377;4,81,110&#10;Occupancy 72% (79 of 110 rooms)&#10;ADR &#8377;6,090"><div class="rev"><i style="height:69.0%"></i></div><div class="occ"><b style="bottom:44.0%"></b></div><span class="x">4 Nov</span></div><div class="col" data-tip="Thu 5 Nov&#10;Room revenue &#8377;5,58,000&#10;Occupancy 82% (90 of 110 rooms)&#10;ADR &#8377;6,200"><div class="rev"><i style="height:80.0%"></i></div><div class="occ"><b style="bottom:64.0%"></b></div><span class="x">5 Nov</span></div><div class="col wk" data-tip="Fri 6 Nov&#10;Room revenue &#8377;5,33,148&#10;Occupancy 76% (84 of 110 rooms)&#10;ADR &#8377;6,347"><div class="rev"><i style="height:76.0%"></i></div><div class="occ"><b style="bottom:53.0%"></b></div><span class="x">6 Nov</span></div><div class="col wk" data-tip="Sat 7 Nov&#10;Room revenue &#8377;6,67,000&#10;Occupancy 91% (100 of 110 rooms)&#10;ADR &#8377;6,670"><div class="rev"><i style="height:95.0%"></i></div><div class="occ"><b style="bottom:82.0%"></b></div><span class="x">7 Nov</span></div><div class="col" data-tip="Sun 8 Nov&#10;Room revenue &#8377;5,15,910&#10;Occupancy 79% (87 of 110 rooms)&#10;ADR &#8377;5,930"><div class="rev"><i style="height:74.0%"></i></div><div class="occ"><b style="bottom:58.0%"></b></div><span class="x">8 Nov</span></div><div class="col" data-tip="Mon 9 Nov&#10;Room revenue &#8377;4,38,000&#10;Occupancy 68% (75 of 110 rooms)&#10;ADR &#8377;5,840"><div class="rev"><i style="height:63.0%"></i></div><div class="occ"><b style="bottom:36.0%"></b></div><span class="x">9 Nov</span></div><div class="col" data-tip="Tue 10 Nov&#10;Room revenue &#8377;4,64,360&#10;Occupancy 70% (76 of 109 rooms)&#10;ADR &#8377;6,110"><div class="rev"><i style="height:66.0%"></i></div><div class="occ"><b style="bottom:39.0%"></b></div><span class="x">10 Nov</span></div><div class="col" data-tip="Wed 11 Nov&#10;Room revenue &#8377;4,50,410&#10;Occupancy 67% (73 of 109 rooms)&#10;ADR &#8377;6,170"><div class="rev"><i style="height:64.0%"></i></div><div class="occ"><b style="bottom:34.0%"></b></div><span class="x">11 Nov</span></div><div class="col" data-tip="Thu 12 Nov&#10;Room revenue &#8377;5,21,240&#10;Occupancy 77% (83 of 108 rooms)&#10;ADR &#8377;6,280"><div class="rev"><i style="height:74.0%"></i></div><div class="occ"><b style="bottom:54.0%"></b></div><span class="x">12 Nov</span></div><div class="col wk" data-tip="Fri 13 Nov&#10;Room revenue &#8377;5,70,240&#10;Occupancy 82% (88 of 107 rooms)&#10;ADR &#8377;6,480"><div class="rev"><i style="height:81.0%"></i></div><div class="occ"><b style="bottom:64.0%"></b></div><span class="x">13 Nov</span></div><svg class="line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="1.7,34.5 5.0,36.4 8.3,16.4 11.7,61.8 15.0,61.8 18.3,58.2 21.7,63.6 25.0,43.6 28.3,23.6 31.7,25.5 35.0,50.9 38.3,50.9 41.7,67.3 45.0,52.7 48.3,54.5 51.7,34.5 55.0,14.5 58.3,54.5 61.7,54.5 65.0,72.7 68.3,56.4 71.7,36.4 75.0,47.3 78.3,18.2 81.7,41.8 85.0,63.6 88.3,60.6 91.7,66.1 95.0,46.3 98.3,35.5"/></svg></div>
+</div>
+<details class="tv"><summary>Totals and table</summary>
+<div class="sumrow"><div>Room revenue<b>&#8377;1,58,12,258</b></div><div>Average occupancy<b>76.6%</b></div><div>ADR<b>&#8377;6,270</b></div><div>Room nights sold<b>2,522</b></div></div>
+<div class="tw"><table class="tbl"><thead><tr><th>Date</th><th class="r">Room revenue</th><th class="r">Rooms sold</th><th class="r">Occupancy</th><th class="r">ADR</th></tr></thead><tbody><tr><td>Thu 15 Oct</td><td class="r">&#8377;5,60,560</td><td class="r">91 / 110</td><td class="r">83%</td><td class="r">&#8377;6,160</td></tr><tr><td>Fri 16 Oct</td><td class="r">&#8377;5,91,300</td><td class="r">90 / 110</td><td class="r">82%</td><td class="r">&#8377;6,570</td></tr><tr><td>Sat 17 Oct</td><td class="r">&#8377;6,69,630</td><td class="r">101 / 110</td><td class="r">92%</td><td class="r">&#8377;6,630</td></tr><tr><td>Sun 18 Oct</td><td class="r">&#8377;4,47,640</td><td class="r">76 / 110</td><td class="r">69%</td><td class="r">&#8377;5,890</td></tr><tr><td>Mon 19 Oct</td><td class="r">&#8377;4,68,160</td><td class="r">76 / 110</td><td class="r">69%</td><td class="r">&#8377;6,160</td></tr><tr><td>Tue 20 Oct</td><td class="r">&#8377;4,73,460</td><td class="r">78 / 110</td><td class="r">71%</td><td class="r">&#8377;6,070</td></tr><tr><td>Wed 21 Oct</td><td class="r">&#8377;4,59,750</td><td class="r">75 / 110</td><td class="r">68%</td><td class="r">&#8377;6,130</td></tr><tr><td>Thu 22 Oct</td><td class="r">&#8377;5,36,640</td><td class="r">86 / 110</td><td class="r">78%</td><td class="r">&#8377;6,240</td></tr><tr><td>Fri 23 Oct</td><td class="r">&#8377;6,45,050</td><td class="r">97 / 110</td><td class="r">88%</td><td class="r">&#8377;6,650</td></tr><tr><td>Sat 24 Oct</td><td class="r">&#8377;6,44,160</td><td class="r">96 / 110</td><td class="r">87%</td><td class="r">&#8377;6,710</td></tr><tr><td>Sun 25 Oct</td><td class="r">&#8377;4,89,540</td><td class="r">82 / 110</td><td class="r">75%</td><td class="r">&#8377;5,970</td></tr><tr><td>Mon 26 Oct</td><td class="r">&#8377;4,82,160</td><td class="r">82 / 110</td><td class="r">75%</td><td class="r">&#8377;5,880</td></tr><tr><td>Tue 27 Oct</td><td class="r">&#8377;4,22,670</td><td class="r">73 / 110</td><td class="r">66%</td><td class="r">&#8377;5,790</td></tr><tr><td>Wed 28 Oct</td><td class="r">&#8377;5,03,010</td><td class="r">81 / 110</td><td class="r">74%</td><td class="r">&#8377;6,210</td></tr><tr><td>Thu 29 Oct</td><td class="r">&#8377;5,05,600</td><td class="r">80 / 110</td><td class="r">73%</td><td class="r">&#8377;6,320</td></tr><tr><td>Fri 30 Oct</td><td class="r">&#8377;6,12,430</td><td class="r">91 / 110</td><td class="r">83%</td><td class="r">&#8377;6,730</td></tr><tr><td>Sat 31 Oct</td><td class="r">&#8377;6,92,580</td><td class="r">102 / 110</td><td class="r">93%</td><td class="r">&#8377;6,790</td></tr><tr><td>Sun 1 Nov</td><td class="r">&#8377;4,96,800</td><td class="r">80 / 110</td><td class="r">73%</td><td class="r">&#8377;6,210</td></tr><tr><td>Mon 2 Nov</td><td class="r">&#8377;4,89,600</td><td class="r">80 / 110</td><td class="r">73%</td><td class="r">&#8377;6,120</td></tr><tr><td>Tue 3 Nov</td><td class="r">&#8377;4,22,100</td><td class="r">70 / 110</td><td class="r">64%</td><td class="r">&#8377;6,030</td></tr><tr><td>Wed 4 Nov</td><td class="r">&#8377;4,81,110</td><td class="r">79 / 110</td><td class="r">72%</td><td class="r">&#8377;6,090</td></tr><tr><td>Thu 5 Nov</td><td class="r">&#8377;5,58,000</td><td class="r">90 / 110</td><td class="r">82%</td><td class="r">&#8377;6,200</td></tr><tr><td>Fri 6 Nov</td><td class="r">&#8377;5,33,148</td><td class="r">84 / 110</td><td class="r">76%</td><td class="r">&#8377;6,347</td></tr><tr><td>Sat 7 Nov</td><td class="r">&#8377;6,67,000</td><td class="r">100 / 110</td><td class="r">91%</td><td class="r">&#8377;6,670</td></tr><tr><td>Sun 8 Nov</td><td class="r">&#8377;5,15,910</td><td class="r">87 / 110</td><td class="r">79%</td><td class="r">&#8377;5,930</td></tr><tr><td>Mon 9 Nov</td><td class="r">&#8377;4,38,000</td><td class="r">75 / 110</td><td class="r">68%</td><td class="r">&#8377;5,840</td></tr><tr><td>Tue 10 Nov</td><td class="r">&#8377;4,64,360</td><td class="r">76 / 109</td><td class="r">70%</td><td class="r">&#8377;6,110</td></tr><tr><td>Wed 11 Nov</td><td class="r">&#8377;4,50,410</td><td class="r">73 / 109</td><td class="r">67%</td><td class="r">&#8377;6,170</td></tr><tr><td>Thu 12 Nov</td><td class="r">&#8377;5,21,240</td><td class="r">83 / 108</td><td class="r">77%</td><td class="r">&#8377;6,280</td></tr><tr><td>Fri 13 Nov</td><td class="r">&#8377;5,70,240</td><td class="r">88 / 107</td><td class="r">82%</td><td class="r">&#8377;6,480</td></tr></tbody></table></div></details>
+</div>      <div class="trend-box tm">
+<div class="chart n30">
+<div class="yax"><div><span>&#8377;7 L</span><span>&#8377;3.5 L</span><span>0</span></div><div></div><div><span>100%</span><span>50%</span><span>0%</span></div><div></div></div>
+<div class="cols" style="--n:30"><div class="col" data-tip="Sun 1 Nov&#10;Room revenue &#8377;4,96,800&#10;Occupancy 73% (80 of 110 rooms)&#10;ADR &#8377;6,210"><div class="rev"><i style="height:71.0%"></i></div><div class="occ"><b style="bottom:73.0%"></b></div><span class="x">1 Nov</span></div><div class="col" data-tip="Mon 2 Nov&#10;Room revenue &#8377;4,89,600&#10;Occupancy 73% (80 of 110 rooms)&#10;ADR &#8377;6,120"><div class="rev"><i style="height:70.0%"></i></div><div class="occ"><b style="bottom:73.0%"></b></div><span class="x">2 Nov</span></div><div class="col" data-tip="Tue 3 Nov&#10;Room revenue &#8377;4,22,100&#10;Occupancy 64% (70 of 110 rooms)&#10;ADR &#8377;6,030"><div class="rev"><i style="height:60.0%"></i></div><div class="occ"><b style="bottom:64.0%"></b></div><span class="x">3 Nov</span></div><div class="col" data-tip="Wed 4 Nov&#10;Room revenue &#8377;4,81,110&#10;Occupancy 72% (79 of 110 rooms)&#10;ADR &#8377;6,090"><div class="rev"><i style="height:69.0%"></i></div><div class="occ"><b style="bottom:72.0%"></b></div><span class="x">4 Nov</span></div><div class="col" data-tip="Thu 5 Nov&#10;Room revenue &#8377;5,58,000&#10;Occupancy 82% (90 of 110 rooms)&#10;ADR &#8377;6,200"><div class="rev"><i style="height:80.0%"></i></div><div class="occ"><b style="bottom:82.0%"></b></div><span class="x">5 Nov</span></div><div class="col wk" data-tip="Fri 6 Nov&#10;Room revenue &#8377;5,33,148&#10;Occupancy 76% (84 of 110 rooms)&#10;ADR &#8377;6,347"><div class="rev"><i style="height:76.0%"></i></div><div class="occ"><b style="bottom:76.0%"></b></div><span class="x">6 Nov</span></div><div class="col wk" data-tip="Sat 7 Nov&#10;Room revenue &#8377;6,67,000&#10;Occupancy 91% (100 of 110 rooms)&#10;ADR &#8377;6,670"><div class="rev"><i style="height:95.0%"></i></div><div class="occ"><b style="bottom:91.0%"></b></div><span class="x">7 Nov</span></div><div class="col" data-tip="Sun 8 Nov&#10;Room revenue &#8377;5,15,910&#10;Occupancy 79% (87 of 110 rooms)&#10;ADR &#8377;5,930"><div class="rev"><i style="height:74.0%"></i></div><div class="occ"><b style="bottom:79.0%"></b></div><span class="x">8 Nov</span></div><div class="col" data-tip="Mon 9 Nov&#10;Room revenue &#8377;4,38,000&#10;Occupancy 68% (75 of 110 rooms)&#10;ADR &#8377;5,840"><div class="rev"><i style="height:63.0%"></i></div><div class="occ"><b style="bottom:68.0%"></b></div><span class="x">9 Nov</span></div><div class="col" data-tip="Tue 10 Nov&#10;Room revenue &#8377;4,64,360&#10;Occupancy 70% (76 of 109 rooms)&#10;ADR &#8377;6,110"><div class="rev"><i style="height:66.0%"></i></div><div class="occ"><b style="bottom:70.0%"></b></div><span class="x">10 Nov</span></div><div class="col" data-tip="Wed 11 Nov&#10;Room revenue &#8377;4,50,410&#10;Occupancy 67% (73 of 109 rooms)&#10;ADR &#8377;6,170"><div class="rev"><i style="height:64.0%"></i></div><div class="occ"><b style="bottom:67.0%"></b></div><span class="x">11 Nov</span></div><div class="col" data-tip="Thu 12 Nov&#10;Room revenue &#8377;5,21,240&#10;Occupancy 77% (83 of 108 rooms)&#10;ADR &#8377;6,280"><div class="rev"><i style="height:74.0%"></i></div><div class="occ"><b style="bottom:77.0%"></b></div><span class="x">12 Nov</span></div><div class="col wk" data-tip="Fri 13 Nov&#10;Room revenue &#8377;5,70,240&#10;Occupancy 82% (88 of 107 rooms)&#10;ADR &#8377;6,480"><div class="rev"><i style="height:81.0%"></i></div><div class="occ"><b style="bottom:82.0%"></b></div><span class="x">13 Nov</span></div><div class="col f wk" data-tip="Sat 14 Nov - on the books (forecast)&#10;Room revenue &#8377;6,91,850&#10;Occupancy 94% (101 of 107 rooms)&#10;ADR &#8377;6,850"><div class="rev"><i style="height:99.0%"></i></div><div class="occ"><b style="bottom:94.0%"></b></div><span class="x">14 Nov</span></div><div class="col f" data-tip="Sun 15 Nov - on the books (forecast)&#10;Room revenue &#8377;6,02,700&#10;Occupancy 91% (98 of 108 rooms)&#10;ADR &#8377;6,150"><div class="rev"><i style="height:86.0%"></i></div><div class="occ"><b style="bottom:91.0%"></b></div><span class="x">15 Nov</span></div><div class="col f" data-tip="Mon 16 Nov - on the books (forecast)&#10;Room revenue &#8377;4,51,400&#10;Occupancy 68% (74 of 109 rooms)&#10;ADR &#8377;6,100"><div class="rev"><i style="height:64.0%"></i></div><div class="occ"><b style="bottom:68.0%"></b></div><span class="x">16 Nov</span></div><div class="col f" data-tip="Tue 17 Nov - on the books (forecast)&#10;Room revenue &#8377;4,17,450&#10;Occupancy 63% (69 of 109 rooms)&#10;ADR &#8377;6,050"><div class="rev"><i style="height:60.0%"></i></div><div class="occ"><b style="bottom:63.0%"></b></div><span class="x">17 Nov</span></div><div class="col f" data-tip="Wed 18 Nov - on the books (forecast)&#10;Room revenue &#8377;3,93,600&#10;Occupancy 58% (64 of 110 rooms)&#10;ADR &#8377;6,150"><div class="rev"><i style="height:56.0%"></i></div><div class="occ"><b style="bottom:58.0%"></b></div><span class="x">18 Nov</span></div><div class="col f" data-tip="Thu 19 Nov - on the books (forecast)&#10;Room revenue &#8377;2,52,000&#10;Occupancy 36% (40 of 110 rooms)&#10;ADR &#8377;6,300"><div class="rev"><i style="height:36.0%"></i></div><div class="occ"><b style="bottom:36.0%"></b></div><span class="x">19 Nov</span></div><div class="col f wk" data-tip="Fri 20 Nov - on the books (forecast)&#10;Room revenue &#8377;4,11,750&#10;Occupancy 55% (61 of 110 rooms)&#10;ADR &#8377;6,750"><div class="rev"><i style="height:59.0%"></i></div><div class="occ"><b style="bottom:55.0%"></b></div><span class="x">20 Nov</span></div><div class="col f wk" data-tip="Sat 21 Nov - on the books (forecast)&#10;Room revenue &#8377;4,58,950&#10;Occupancy 61% (67 of 110 rooms)&#10;ADR &#8377;6,850"><div class="rev"><i style="height:66.0%"></i></div><div class="occ"><b style="bottom:61.0%"></b></div><span class="x">21 Nov</span></div><div class="col f" data-tip="Sun 22 Nov - on the books (forecast)&#10;Room revenue &#8377;2,70,600&#10;Occupancy 40% (44 of 110 rooms)&#10;ADR &#8377;6,150"><div class="rev"><i style="height:39.0%"></i></div><div class="occ"><b style="bottom:40.0%"></b></div><span class="x">22 Nov</span></div><div class="col f" data-tip="Mon 23 Nov - on the books (forecast)&#10;Room revenue &#8377;2,19,600&#10;Occupancy 33% (36 of 110 rooms)&#10;ADR &#8377;6,100"><div class="rev"><i style="height:31.0%"></i></div><div class="occ"><b style="bottom:33.0%"></b></div><span class="x">23 Nov</span></div><div class="col f" data-tip="Tue 24 Nov - on the books (forecast)&#10;Room revenue &#8377;1,99,650&#10;Occupancy 30% (33 of 110 rooms)&#10;ADR &#8377;6,050"><div class="rev"><i style="height:29.0%"></i></div><div class="occ"><b style="bottom:30.0%"></b></div><span class="x">24 Nov</span></div><div class="col f" data-tip="Wed 25 Nov - on the books (forecast)&#10;Room revenue &#8377;1,84,500&#10;Occupancy 27% (30 of 110 rooms)&#10;ADR &#8377;6,150"><div class="rev"><i style="height:26.0%"></i></div><div class="occ"><b style="bottom:27.0%"></b></div><span class="x">25 Nov</span></div><div class="col f" data-tip="Thu 26 Nov - on the books (forecast)&#10;Room revenue &#8377;1,76,400&#10;Occupancy 25% (28 of 110 rooms)&#10;ADR &#8377;6,300"><div class="rev"><i style="height:25.0%"></i></div><div class="occ"><b style="bottom:25.0%"></b></div><span class="x">26 Nov</span></div><div class="col f wk" data-tip="Fri 27 Nov - on the books (forecast)&#10;Room revenue &#8377;2,29,500&#10;Occupancy 31% (34 of 110 rooms)&#10;ADR &#8377;6,750"><div class="rev"><i style="height:33.0%"></i></div><div class="occ"><b style="bottom:31.0%"></b></div><span class="x">27 Nov</span></div><div class="col f wk" data-tip="Sat 28 Nov - on the books (forecast)&#10;Room revenue &#8377;2,12,350&#10;Occupancy 28% (31 of 110 rooms)&#10;ADR &#8377;6,850"><div class="rev"><i style="height:30.0%"></i></div><div class="occ"><b style="bottom:28.0%"></b></div><span class="x">28 Nov</span></div><div class="col f" data-tip="Sun 29 Nov - on the books (forecast)&#10;Room revenue &#8377;1,59,900&#10;Occupancy 24% (26 of 110 rooms)&#10;ADR &#8377;6,150"><div class="rev"><i style="height:23.0%"></i></div><div class="occ"><b style="bottom:24.0%"></b></div><span class="x">29 Nov</span></div><div class="col f" data-tip="Mon 30 Nov - on the books (forecast)&#10;Room revenue &#8377;1,46,400&#10;Occupancy 22% (24 of 110 rooms)&#10;ADR &#8377;6,100"><div class="rev"><i style="height:21.0%"></i></div><div class="occ"><b style="bottom:22.0%"></b></div><span class="x">30 Nov</span></div><svg class="line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="1.7,27.3 5.0,27.3 8.3,36.4 11.7,28.2 15.0,18.2 18.3,23.6 21.7,9.1 25.0,20.9 28.3,31.8 31.7,30.3 35.0,33.0 38.3,23.1 41.7,17.8"/><polyline class="f" points="41.7,17.8 45.0,5.6 48.3,9.3 51.7,32.1 55.0,36.7 58.3,41.8 61.7,63.6 65.0,44.5 68.3,39.1 71.7,60.0 75.0,67.3 78.3,70.0 81.7,72.7 85.0,74.5 88.3,69.1 91.7,71.8 95.0,76.4 98.3,78.2"/></svg></div>
+</div>
+<details class="tv"><summary>Totals and table</summary>
+<div class="sumrow"><div>Room revenue (incl. on-the-books forecast)<b>&#8377;1,20,86,518</b></div><div>Average occupancy<b>58.6%</b></div><div>ADR<b>&#8377;6,279</b></div><div>Room nights sold<b>1,925</b></div></div>
+<div class="tw"><table class="tbl"><thead><tr><th>Date</th><th class="r">Room revenue</th><th class="r">Rooms sold</th><th class="r">Occupancy</th><th class="r">ADR</th></tr></thead><tbody><tr><td>Sun 1 Nov</td><td class="r">&#8377;4,96,800</td><td class="r">80 / 110</td><td class="r">73%</td><td class="r">&#8377;6,210</td></tr><tr><td>Mon 2 Nov</td><td class="r">&#8377;4,89,600</td><td class="r">80 / 110</td><td class="r">73%</td><td class="r">&#8377;6,120</td></tr><tr><td>Tue 3 Nov</td><td class="r">&#8377;4,22,100</td><td class="r">70 / 110</td><td class="r">64%</td><td class="r">&#8377;6,030</td></tr><tr><td>Wed 4 Nov</td><td class="r">&#8377;4,81,110</td><td class="r">79 / 110</td><td class="r">72%</td><td class="r">&#8377;6,090</td></tr><tr><td>Thu 5 Nov</td><td class="r">&#8377;5,58,000</td><td class="r">90 / 110</td><td class="r">82%</td><td class="r">&#8377;6,200</td></tr><tr><td>Fri 6 Nov</td><td class="r">&#8377;5,33,148</td><td class="r">84 / 110</td><td class="r">76%</td><td class="r">&#8377;6,347</td></tr><tr><td>Sat 7 Nov</td><td class="r">&#8377;6,67,000</td><td class="r">100 / 110</td><td class="r">91%</td><td class="r">&#8377;6,670</td></tr><tr><td>Sun 8 Nov</td><td class="r">&#8377;5,15,910</td><td class="r">87 / 110</td><td class="r">79%</td><td class="r">&#8377;5,930</td></tr><tr><td>Mon 9 Nov</td><td class="r">&#8377;4,38,000</td><td class="r">75 / 110</td><td class="r">68%</td><td class="r">&#8377;5,840</td></tr><tr><td>Tue 10 Nov</td><td class="r">&#8377;4,64,360</td><td class="r">76 / 109</td><td class="r">70%</td><td class="r">&#8377;6,110</td></tr><tr><td>Wed 11 Nov</td><td class="r">&#8377;4,50,410</td><td class="r">73 / 109</td><td class="r">67%</td><td class="r">&#8377;6,170</td></tr><tr><td>Thu 12 Nov</td><td class="r">&#8377;5,21,240</td><td class="r">83 / 108</td><td class="r">77%</td><td class="r">&#8377;6,280</td></tr><tr><td>Fri 13 Nov</td><td class="r">&#8377;5,70,240</td><td class="r">88 / 107</td><td class="r">82%</td><td class="r">&#8377;6,480</td></tr><tr><td>Sat 14 Nov (forecast)</td><td class="r">&#8377;6,91,850</td><td class="r">101 / 107</td><td class="r">94%</td><td class="r">&#8377;6,850</td></tr><tr><td>Sun 15 Nov (forecast)</td><td class="r">&#8377;6,02,700</td><td class="r">98 / 108</td><td class="r">91%</td><td class="r">&#8377;6,150</td></tr><tr><td>Mon 16 Nov (forecast)</td><td class="r">&#8377;4,51,400</td><td class="r">74 / 109</td><td class="r">68%</td><td class="r">&#8377;6,100</td></tr><tr><td>Tue 17 Nov (forecast)</td><td class="r">&#8377;4,17,450</td><td class="r">69 / 109</td><td class="r">63%</td><td class="r">&#8377;6,050</td></tr><tr><td>Wed 18 Nov (forecast)</td><td class="r">&#8377;3,93,600</td><td class="r">64 / 110</td><td class="r">58%</td><td class="r">&#8377;6,150</td></tr><tr><td>Thu 19 Nov (forecast)</td><td class="r">&#8377;2,52,000</td><td class="r">40 / 110</td><td class="r">36%</td><td class="r">&#8377;6,300</td></tr><tr><td>Fri 20 Nov (forecast)</td><td class="r">&#8377;4,11,750</td><td class="r">61 / 110</td><td class="r">55%</td><td class="r">&#8377;6,750</td></tr><tr><td>Sat 21 Nov (forecast)</td><td class="r">&#8377;4,58,950</td><td class="r">67 / 110</td><td class="r">61%</td><td class="r">&#8377;6,850</td></tr><tr><td>Sun 22 Nov (forecast)</td><td class="r">&#8377;2,70,600</td><td class="r">44 / 110</td><td class="r">40%</td><td class="r">&#8377;6,150</td></tr><tr><td>Mon 23 Nov (forecast)</td><td class="r">&#8377;2,19,600</td><td class="r">36 / 110</td><td class="r">33%</td><td class="r">&#8377;6,100</td></tr><tr><td>Tue 24 Nov (forecast)</td><td class="r">&#8377;1,99,650</td><td class="r">33 / 110</td><td class="r">30%</td><td class="r">&#8377;6,050</td></tr><tr><td>Wed 25 Nov (forecast)</td><td class="r">&#8377;1,84,500</td><td class="r">30 / 110</td><td class="r">27%</td><td class="r">&#8377;6,150</td></tr><tr><td>Thu 26 Nov (forecast)</td><td class="r">&#8377;1,76,400</td><td class="r">28 / 110</td><td class="r">25%</td><td class="r">&#8377;6,300</td></tr><tr><td>Fri 27 Nov (forecast)</td><td class="r">&#8377;2,29,500</td><td class="r">34 / 110</td><td class="r">31%</td><td class="r">&#8377;6,750</td></tr><tr><td>Sat 28 Nov (forecast)</td><td class="r">&#8377;2,12,350</td><td class="r">31 / 110</td><td class="r">28%</td><td class="r">&#8377;6,850</td></tr><tr><td>Sun 29 Nov (forecast)</td><td class="r">&#8377;1,59,900</td><td class="r">26 / 110</td><td class="r">24%</td><td class="r">&#8377;6,150</td></tr><tr><td>Mon 30 Nov (forecast)</td><td class="r">&#8377;1,46,400</td><td class="r">24 / 110</td><td class="r">22%</td><td class="r">&#8377;6,100</td></tr></tbody></table></div></details>
+</div>      <div class="trend-box tp">
+<div class="chart n31">
+<div class="yax"><div><span>&#8377;7 L</span><span>&#8377;3.5 L</span><span>0</span></div><div></div><div><span>100%</span><span>75%</span><span>50%</span></div><div></div></div>
+<div class="cols" style="--n:31"><div class="col" data-tip="Thu 1 Oct&#10;Room revenue &#8377;5,72,400&#10;Occupancy 82% (90 of 110 rooms)&#10;ADR &#8377;6,360"><div class="rev"><i style="height:82.0%"></i></div><div class="occ"><b style="bottom:64.0%"></b></div><span class="x">1 Oct</span></div><div class="col wk" data-tip="Fri 2 Oct&#10;Room revenue &#8377;6,02,530&#10;Occupancy 81% (89 of 110 rooms)&#10;ADR &#8377;6,770"><div class="rev"><i style="height:86.0%"></i></div><div class="occ"><b style="bottom:62.0%"></b></div><span class="x">2 Oct</span></div><div class="col wk" data-tip="Sat 3 Oct&#10;Room revenue &#8377;6,83,000&#10;Occupancy 91% (100 of 110 rooms)&#10;ADR &#8377;6,830"><div class="rev"><i style="height:98.0%"></i></div><div class="occ"><b style="bottom:82.0%"></b></div><span class="x">3 Oct</span></div><div class="col" data-tip="Sun 4 Oct&#10;Room revenue &#8377;5,29,830&#10;Occupancy 79% (87 of 110 rooms)&#10;ADR &#8377;6,090"><div class="rev"><i style="height:76.0%"></i></div><div class="occ"><b style="bottom:58.0%"></b></div><span class="x">4 Oct</span></div><div class="col" data-tip="Mon 5 Oct&#10;Room revenue &#8377;4,50,000&#10;Occupancy 68% (75 of 110 rooms)&#10;ADR &#8377;6,000"><div class="rev"><i style="height:64.0%"></i></div><div class="occ"><b style="bottom:36.0%"></b></div><span class="x">5 Oct</span></div><div class="col" data-tip="Tue 6 Oct&#10;Room revenue &#8377;4,55,070&#10;Occupancy 70% (77 of 110 rooms)&#10;ADR &#8377;5,910"><div class="rev"><i style="height:65.0%"></i></div><div class="occ"><b style="bottom:40.0%"></b></div><span class="x">6 Oct</span></div><div class="col" data-tip="Wed 7 Oct&#10;Room revenue &#8377;4,41,780&#10;Occupancy 67% (74 of 110 rooms)&#10;ADR &#8377;5,970"><div class="rev"><i style="height:63.0%"></i></div><div class="occ"><b style="bottom:35.0%"></b></div><span class="x">7 Oct</span></div><div class="col" data-tip="Thu 8 Oct&#10;Room revenue &#8377;5,16,800&#10;Occupancy 77% (85 of 110 rooms)&#10;ADR &#8377;6,080"><div class="rev"><i style="height:74.0%"></i></div><div class="occ"><b style="bottom:55.0%"></b></div><span class="x">8 Oct</span></div><div class="col wk" data-tip="Fri 9 Oct&#10;Room revenue &#8377;6,23,040&#10;Occupancy 87% (96 of 110 rooms)&#10;ADR &#8377;6,490"><div class="rev"><i style="height:89.0%"></i></div><div class="occ"><b style="bottom:75.0%"></b></div><span class="x">9 Oct</span></div><div class="col wk" data-tip="Sat 10 Oct&#10;Room revenue &#8377;6,56,450&#10;Occupancy 86% (95 of 110 rooms)&#10;ADR &#8377;6,910"><div class="rev"><i style="height:94.0%"></i></div><div class="occ"><b style="bottom:73.0%"></b></div><span class="x">10 Oct</span></div><div class="col" data-tip="Sun 11 Oct&#10;Room revenue &#8377;4,99,770&#10;Occupancy 74% (81 of 110 rooms)&#10;ADR &#8377;6,170"><div class="rev"><i style="height:71.0%"></i></div><div class="occ"><b style="bottom:47.0%"></b></div><span class="x">11 Oct</span></div><div class="col" data-tip="Mon 12 Oct&#10;Room revenue &#8377;4,92,480&#10;Occupancy 74% (81 of 110 rooms)&#10;ADR &#8377;6,080"><div class="rev"><i style="height:70.0%"></i></div><div class="occ"><b style="bottom:47.0%"></b></div><span class="x">12 Oct</span></div><div class="col" data-tip="Tue 13 Oct&#10;Room revenue &#8377;4,31,280&#10;Occupancy 65% (72 of 110 rooms)&#10;ADR &#8377;5,990"><div class="rev"><i style="height:62.0%"></i></div><div class="occ"><b style="bottom:31.0%"></b></div><span class="x">13 Oct</span></div><div class="col" data-tip="Wed 14 Oct&#10;Room revenue &#8377;4,84,000&#10;Occupancy 73% (80 of 110 rooms)&#10;ADR &#8377;6,050"><div class="rev"><i style="height:69.0%"></i></div><div class="occ"><b style="bottom:45.0%"></b></div><span class="x">14 Oct</span></div><div class="col" data-tip="Thu 15 Oct&#10;Room revenue &#8377;5,60,560&#10;Occupancy 83% (91 of 110 rooms)&#10;ADR &#8377;6,160"><div class="rev"><i style="height:80.0%"></i></div><div class="occ"><b style="bottom:65.0%"></b></div><span class="x">15 Oct</span></div><div class="col wk" data-tip="Fri 16 Oct&#10;Room revenue &#8377;5,91,300&#10;Occupancy 82% (90 of 110 rooms)&#10;ADR &#8377;6,570"><div class="rev"><i style="height:84.0%"></i></div><div class="occ"><b style="bottom:64.0%"></b></div><span class="x">16 Oct</span></div><div class="col wk" data-tip="Sat 17 Oct&#10;Room revenue &#8377;6,69,630&#10;Occupancy 92% (101 of 110 rooms)&#10;ADR &#8377;6,630"><div class="rev"><i style="height:96.0%"></i></div><div class="occ"><b style="bottom:84.0%"></b></div><span class="x">17 Oct</span></div><div class="col" data-tip="Sun 18 Oct&#10;Room revenue &#8377;4,47,640&#10;Occupancy 69% (76 of 110 rooms)&#10;ADR &#8377;5,890"><div class="rev"><i style="height:64.0%"></i></div><div class="occ"><b style="bottom:38.0%"></b></div><span class="x">18 Oct</span></div><div class="col" data-tip="Mon 19 Oct&#10;Room revenue &#8377;4,68,160&#10;Occupancy 69% (76 of 110 rooms)&#10;ADR &#8377;6,160"><div class="rev"><i style="height:67.0%"></i></div><div class="occ"><b style="bottom:38.0%"></b></div><span class="x">19 Oct</span></div><div class="col" data-tip="Tue 20 Oct&#10;Room revenue &#8377;4,73,460&#10;Occupancy 71% (78 of 110 rooms)&#10;ADR &#8377;6,070"><div class="rev"><i style="height:68.0%"></i></div><div class="occ"><b style="bottom:42.0%"></b></div><span class="x">20 Oct</span></div><div class="col" data-tip="Wed 21 Oct&#10;Room revenue &#8377;4,59,750&#10;Occupancy 68% (75 of 110 rooms)&#10;ADR &#8377;6,130"><div class="rev"><i style="height:66.0%"></i></div><div class="occ"><b style="bottom:36.0%"></b></div><span class="x">21 Oct</span></div><div class="col" data-tip="Thu 22 Oct&#10;Room revenue &#8377;5,36,640&#10;Occupancy 78% (86 of 110 rooms)&#10;ADR &#8377;6,240"><div class="rev"><i style="height:77.0%"></i></div><div class="occ"><b style="bottom:56.0%"></b></div><span class="x">22 Oct</span></div><div class="col wk" data-tip="Fri 23 Oct&#10;Room revenue &#8377;6,45,050&#10;Occupancy 88% (97 of 110 rooms)&#10;ADR &#8377;6,650"><div class="rev"><i style="height:92.0%"></i></div><div class="occ"><b style="bottom:76.0%"></b></div><span class="x">23 Oct</span></div><div class="col wk" data-tip="Sat 24 Oct&#10;Room revenue &#8377;6,44,160&#10;Occupancy 87% (96 of 110 rooms)&#10;ADR &#8377;6,710"><div class="rev"><i style="height:92.0%"></i></div><div class="occ"><b style="bottom:75.0%"></b></div><span class="x">24 Oct</span></div><div class="col" data-tip="Sun 25 Oct&#10;Room revenue &#8377;4,89,540&#10;Occupancy 75% (82 of 110 rooms)&#10;ADR &#8377;5,970"><div class="rev"><i style="height:70.0%"></i></div><div class="occ"><b style="bottom:49.0%"></b></div><span class="x">25 Oct</span></div><div class="col" data-tip="Mon 26 Oct&#10;Room revenue &#8377;4,82,160&#10;Occupancy 75% (82 of 110 rooms)&#10;ADR &#8377;5,880"><div class="rev"><i style="height:69.0%"></i></div><div class="occ"><b style="bottom:49.0%"></b></div><span class="x">26 Oct</span></div><div class="col" data-tip="Tue 27 Oct&#10;Room revenue &#8377;4,22,670&#10;Occupancy 66% (73 of 110 rooms)&#10;ADR &#8377;5,790"><div class="rev"><i style="height:60.0%"></i></div><div class="occ"><b style="bottom:33.0%"></b></div><span class="x">27 Oct</span></div><div class="col" data-tip="Wed 28 Oct&#10;Room revenue &#8377;5,03,010&#10;Occupancy 74% (81 of 110 rooms)&#10;ADR &#8377;6,210"><div class="rev"><i style="height:72.0%"></i></div><div class="occ"><b style="bottom:47.0%"></b></div><span class="x">28 Oct</span></div><div class="col" data-tip="Thu 29 Oct&#10;Room revenue &#8377;5,05,600&#10;Occupancy 73% (80 of 110 rooms)&#10;ADR &#8377;6,320"><div class="rev"><i style="height:72.0%"></i></div><div class="occ"><b style="bottom:45.0%"></b></div><span class="x">29 Oct</span></div><div class="col wk" data-tip="Fri 30 Oct&#10;Room revenue &#8377;6,12,430&#10;Occupancy 83% (91 of 110 rooms)&#10;ADR &#8377;6,730"><div class="rev"><i style="height:87.0%"></i></div><div class="occ"><b style="bottom:65.0%"></b></div><span class="x">30 Oct</span></div><div class="col wk" data-tip="Sat 31 Oct&#10;Room revenue &#8377;6,92,580&#10;Occupancy 93% (102 of 110 rooms)&#10;ADR &#8377;6,790"><div class="rev"><i style="height:99.0%"></i></div><div class="occ"><b style="bottom:85.0%"></b></div><span class="x">31 Oct</span></div><svg class="line" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polyline points="1.6,36.4 4.8,38.2 8.1,18.2 11.3,41.8 14.5,63.6 17.7,60.0 21.0,65.5 24.2,45.5 27.4,25.5 30.6,27.3 33.9,52.7 37.1,52.7 40.3,69.1 43.5,54.5 46.8,34.5 50.0,36.4 53.2,16.4 56.5,61.8 59.7,61.8 62.9,58.2 66.1,63.6 69.4,43.6 72.6,23.6 75.8,25.5 79.0,50.9 82.3,50.9 85.5,67.3 88.7,52.7 91.9,54.5 95.2,34.5 98.4,14.5"/></svg></div>
+</div>
+<details class="tv"><summary>Totals and table</summary>
+<div class="sumrow"><div>Room revenue<b>&#8377;1,66,42,770</b></div><div>Average occupancy<b>77.4%</b></div><div>ADR<b>&#8377;6,306</b></div><div>Room nights sold<b>2,639</b></div></div>
+<div class="tw"><table class="tbl"><thead><tr><th>Date</th><th class="r">Room revenue</th><th class="r">Rooms sold</th><th class="r">Occupancy</th><th class="r">ADR</th></tr></thead><tbody><tr><td>Thu 1 Oct</td><td class="r">&#8377;5,72,400</td><td class="r">90 / 110</td><td class="r">82%</td><td class="r">&#8377;6,360</td></tr><tr><td>Fri 2 Oct</td><td class="r">&#8377;6,02,530</td><td class="r">89 / 110</td><td class="r">81%</td><td class="r">&#8377;6,770</td></tr><tr><td>Sat 3 Oct</td><td class="r">&#8377;6,83,000</td><td class="r">100 / 110</td><td class="r">91%</td><td class="r">&#8377;6,830</td></tr><tr><td>Sun 4 Oct</td><td class="r">&#8377;5,29,830</td><td class="r">87 / 110</td><td class="r">79%</td><td class="r">&#8377;6,090</td></tr><tr><td>Mon 5 Oct</td><td class="r">&#8377;4,50,000</td><td class="r">75 / 110</td><td class="r">68%</td><td class="r">&#8377;6,000</td></tr><tr><td>Tue 6 Oct</td><td class="r">&#8377;4,55,070</td><td class="r">77 / 110</td><td class="r">70%</td><td class="r">&#8377;5,910</td></tr><tr><td>Wed 7 Oct</td><td class="r">&#8377;4,41,780</td><td class="r">74 / 110</td><td class="r">67%</td><td class="r">&#8377;5,970</td></tr><tr><td>Thu 8 Oct</td><td class="r">&#8377;5,16,800</td><td class="r">85 / 110</td><td class="r">77%</td><td class="r">&#8377;6,080</td></tr><tr><td>Fri 9 Oct</td><td class="r">&#8377;6,23,040</td><td class="r">96 / 110</td><td class="r">87%</td><td class="r">&#8377;6,490</td></tr><tr><td>Sat 10 Oct</td><td class="r">&#8377;6,56,450</td><td class="r">95 / 110</td><td class="r">86%</td><td class="r">&#8377;6,910</td></tr><tr><td>Sun 11 Oct</td><td class="r">&#8377;4,99,770</td><td class="r">81 / 110</td><td class="r">74%</td><td class="r">&#8377;6,170</td></tr><tr><td>Mon 12 Oct</td><td class="r">&#8377;4,92,480</td><td class="r">81 / 110</td><td class="r">74%</td><td class="r">&#8377;6,080</td></tr><tr><td>Tue 13 Oct</td><td class="r">&#8377;4,31,280</td><td class="r">72 / 110</td><td class="r">65%</td><td class="r">&#8377;5,990</td></tr><tr><td>Wed 14 Oct</td><td class="r">&#8377;4,84,000</td><td class="r">80 / 110</td><td class="r">73%</td><td class="r">&#8377;6,050</td></tr><tr><td>Thu 15 Oct</td><td class="r">&#8377;5,60,560</td><td class="r">91 / 110</td><td class="r">83%</td><td class="r">&#8377;6,160</td></tr><tr><td>Fri 16 Oct</td><td class="r">&#8377;5,91,300</td><td class="r">90 / 110</td><td class="r">82%</td><td class="r">&#8377;6,570</td></tr><tr><td>Sat 17 Oct</td><td class="r">&#8377;6,69,630</td><td class="r">101 / 110</td><td class="r">92%</td><td class="r">&#8377;6,630</td></tr><tr><td>Sun 18 Oct</td><td class="r">&#8377;4,47,640</td><td class="r">76 / 110</td><td class="r">69%</td><td class="r">&#8377;5,890</td></tr><tr><td>Mon 19 Oct</td><td class="r">&#8377;4,68,160</td><td class="r">76 / 110</td><td class="r">69%</td><td class="r">&#8377;6,160</td></tr><tr><td>Tue 20 Oct</td><td class="r">&#8377;4,73,460</td><td class="r">78 / 110</td><td class="r">71%</td><td class="r">&#8377;6,070</td></tr><tr><td>Wed 21 Oct</td><td class="r">&#8377;4,59,750</td><td class="r">75 / 110</td><td class="r">68%</td><td class="r">&#8377;6,130</td></tr><tr><td>Thu 22 Oct</td><td class="r">&#8377;5,36,640</td><td class="r">86 / 110</td><td class="r">78%</td><td class="r">&#8377;6,240</td></tr><tr><td>Fri 23 Oct</td><td class="r">&#8377;6,45,050</td><td class="r">97 / 110</td><td class="r">88%</td><td class="r">&#8377;6,650</td></tr><tr><td>Sat 24 Oct</td><td class="r">&#8377;6,44,160</td><td class="r">96 / 110</td><td class="r">87%</td><td class="r">&#8377;6,710</td></tr><tr><td>Sun 25 Oct</td><td class="r">&#8377;4,89,540</td><td class="r">82 / 110</td><td class="r">75%</td><td class="r">&#8377;5,970</td></tr><tr><td>Mon 26 Oct</td><td class="r">&#8377;4,82,160</td><td class="r">82 / 110</td><td class="r">75%</td><td class="r">&#8377;5,880</td></tr><tr><td>Tue 27 Oct</td><td class="r">&#8377;4,22,670</td><td class="r">73 / 110</td><td class="r">66%</td><td class="r">&#8377;5,790</td></tr><tr><td>Wed 28 Oct</td><td class="r">&#8377;5,03,010</td><td class="r">81 / 110</td><td class="r">74%</td><td class="r">&#8377;6,210</td></tr><tr><td>Thu 29 Oct</td><td class="r">&#8377;5,05,600</td><td class="r">80 / 110</td><td class="r">73%</td><td class="r">&#8377;6,320</td></tr><tr><td>Fri 30 Oct</td><td class="r">&#8377;6,12,430</td><td class="r">91 / 110</td><td class="r">83%</td><td class="r">&#8377;6,730</td></tr><tr><td>Sat 31 Oct</td><td class="r">&#8377;6,92,580</td><td class="r">102 / 110</td><td class="r">93%</td><td class="r">&#8377;6,790</td></tr></tbody></table></div></details>
+</div>
+</div>
+</section>
+<section class="card s3" id="roomstatus" aria-labelledby="h-rooms">
+<header class="card-h"><h2 id="h-rooms">Room Status <span class="tipi" tabindex="0" data-tip="Physical status of every room right now. This is room inventory status, separate from housekeeping task progress. The five counts add up to the 110 rooms in inventory. Sellable = 110 &minus; 2 out of order &minus; 1 maintenance = 107.">i</span></h2><a class="link" href="#m-rooms">View rack &rarr;</a></header>
+<div class="card-b">
+<div class="seg" role="group" aria-label="Room status, 110 rooms">
+<a class="k1" style="flex:82" href="#m-rooms" title="Occupied: 82">82</a>
+<a class="k3" style="flex:14" href="#m-rooms" title="Vacant clean: 14">14</a>
+<a class="k2" style="flex:11" href="#m-rooms" title="Vacant dirty: 11">11</a>
+<a class="k8" style="flex:2" href="#m-rooms" title="Out of order: 2" aria-label="Out of order: 2"></a>
+<a class="k7" style="flex:1" href="#m-rooms" title="Maintenance: 1" aria-label="Maintenance: 1"></a>
+</div>
+<div class="rt-grid">
+<a class="rt rt1" href="#m-rooms"><span>Occupied</span><b>82</b></a>
+<a class="rt rt3" href="#m-rooms"><span>Vacant Clean</span><b>14</b></a>
+<a class="rt rt2" href="#m-rooms"><span>Vacant Dirty</span><b>11</b></a>
+<a class="rt rt8" href="#m-rooms"><span>Out of Order</span><b>2</b></a>
+<a class="rt rt7" href="#m-rooms"><span>Maintenance</span><b>1</b></a>
+<div class="rt rt0"><span>Total Rooms</span><b>110</b></div>
+</div>
+<p class="foot"><b>107 sellable</b> &middot; live as of 11:32 AM</p>
+</div>
+</section>
+<section class="card s2" id="housekeeping" aria-labelledby="h-hk">
+<header class="card-h"><h2 id="h-hk">Housekeeping <span class="tipi" tabindex="0" data-tip="Cleaning jobs raised for today: check-out cleans plus stayover services (76 rooms). Cleaned = finished by the attendant, including jobs waiting for inspection. Ready = vacant, clean and inspected rooms. About 50% is expected by 11:30 AM. Arrival rooms: 5 of 14 ready (1 awaiting inspection, 3 being cleaned, 2 not started, 2 waiting for check-out, 1 not yet allocated); check-in starts 2:00 PM. 8 more rooms will need cleaning after pending check-outs.">i</span></h2></header>
+<div class="card-b">
+<div class="prog-top"><b>49%</b><span class="status ok">On track</span></div>
+<p class="sub">37 of 76 rooms cleaned</p>
+<div class="hkrows">
+<div class="hkr"><div><span>Cleaned</span><b>37</b></div><div class="bar"><i style="width:48.7%;background:var(--c3)"></i></div></div>
+<div class="hkr"><div><span>Pending</span><b>31</b></div><div class="bar"><i style="width:40.8%;background:#9aa7bb"></i></div></div>
+<div class="hkr"><div><span>In progress</span><b>8</b></div><div class="bar"><i style="width:10.5%;background:var(--c2)"></i></div></div>
+<div class="hkr"><div><span>Inspection</span><b>2</b></div><div class="bar"><i style="width:2.6%;background:var(--c7)"></i></div></div>
+<div class="hkr"><div><span>Ready</span><b>12 / 14</b></div><div class="bar"><i style="width:85.7%;background:var(--c4)"></i></div></div>
+</div>
+<p class="foot">Arrival rooms ready: <b>5 of 14</b>. <a class="link" href="#m-rooms">Rooms &rarr;</a></p>
+</div>
+</section>
+<div class="side">
+<section class="card weather" aria-label="Weather in Jaipur">
+<div class="w-top"><span>Jaipur</span><span>13 Nov, 2026</span></div>
+<div class="w-now">
+<div class="w-main"><svg class="ic w-ic"><use href="#i-sun"/></svg><div><b>27&deg;C</b><span>Clear sky</span></div></div>
+<div class="w-side"><span>&uarr; 29&deg; &darr; 16&deg;</span><span>Humidity <b>38%</b></span><span>Wind <b>9 km/h</b></span></div>
+</div>
+<div class="w-days-h">Next 7 days</div>
+<div class="w-days"><div class="wd" title="Sat 14 Nov: Clear sky, high 29&deg;, low 16&deg;"><span>Sat</span><svg class="ic"><use href="#i-sun"/></svg><b>29&deg;</b><small>16&deg;</small></div><div class="wd" title="Sun 15 Nov: Clear sky, high 30&deg;, low 17&deg;"><span>Sun</span><svg class="ic"><use href="#i-sun"/></svg><b>30&deg;</b><small>17&deg;</small></div><div class="wd" title="Mon 16 Nov: Clear sky, high 30&deg;, low 16&deg;"><span>Mon</span><svg class="ic"><use href="#i-sun"/></svg><b>30&deg;</b><small>16&deg;</small></div><div class="wd" title="Tue 17 Nov: Partly cloudy, high 29&deg;, low 17&deg;"><span>Tue</span><svg class="ic cl"><use href="#i-cloud"/></svg><b>29&deg;</b><small>17&deg;</small></div><div class="wd" title="Wed 18 Nov: Clear sky, high 28&deg;, low 15&deg;"><span>Wed</span><svg class="ic"><use href="#i-sun"/></svg><b>28&deg;</b><small>15&deg;</small></div><div class="wd" title="Thu 19 Nov: Clear sky, high 28&deg;, low 14&deg;"><span>Thu</span><svg class="ic"><use href="#i-sun"/></svg><b>28&deg;</b><small>14&deg;</small></div><div class="wd" title="Fri 20 Nov: Hazy, high 27&deg;, low 15&deg;"><span>Fri</span><svg class="ic cl"><use href="#i-cloud"/></svg><b>27&deg;</b><small>15&deg;</small></div></div>
+</section>
+<section class="card" id="calendar" aria-labelledby="h-cal">
+<header class="card-h"><h2 id="h-cal">Occupancy Calendar <span class="tipi" tabindex="0" data-tip="Actual occupancy up to today, then occupancy already on the books. Hover or focus a day to see rooms sold and, for the next 14 nights, how it compares with what is typically booked by this lead time.">i</span></h2><span class="sub2">Nov 2026</span></header>
+<div class="card-b">
+<div class="cal" role="group" aria-label="Occupancy by day, November 2026">
+<span class="dh">Mo</span><span class="dh">Tu</span><span class="dh">We</span><span class="dh">Th</span><span class="dh">Fr</span><span class="dh">Sa</span><span class="dh">Su</span>
+<span class="cd blank"></span><span class="cd blank"></span><span class="cd blank"></span><span class="cd blank"></span><span class="cd blank"></span><span class="cd blank"></span><span class="cd c2" tabindex="0" data-tip="Sun 1 Nov&#10;73% (80 of 110 rooms)">1</span><span class="cd c2" tabindex="0" data-tip="Mon 2 Nov&#10;73% (80 of 110 rooms)">2</span><span class="cd c1" tabindex="0" data-tip="Tue 3 Nov&#10;64% (70 of 110 rooms)">3</span><span class="cd c2" tabindex="0" data-tip="Wed 4 Nov&#10;72% (79 of 110 rooms)">4</span><span class="cd c2" tabindex="0" data-tip="Thu 5 Nov&#10;82% (90 of 110 rooms)">5</span><span class="cd c2" tabindex="0" data-tip="Fri 6 Nov&#10;76% (84 of 110 rooms)">6</span><span class="cd c3" tabindex="0" data-tip="Sat 7 Nov&#10;91% (100 of 110 rooms)">7</span><span class="cd c2" tabindex="0" data-tip="Sun 8 Nov&#10;79% (87 of 110 rooms)">8</span><span class="cd c1" tabindex="0" data-tip="Mon 9 Nov&#10;68% (75 of 110 rooms)">9</span><span class="cd c1" tabindex="0" data-tip="Tue 10 Nov&#10;70% (76 of 109 rooms)">10</span><span class="cd c1" tabindex="0" data-tip="Wed 11 Nov&#10;67% (73 of 109 rooms)">11</span><span class="cd c2" tabindex="0" data-tip="Thu 12 Nov&#10;77% (83 of 108 rooms)">12</span><span class="cd c2 today" tabindex="0" data-tip="Fri 13 Nov&#10;82% (88 of 107 rooms)">13</span><span class="cd c3" tabindex="0" data-tip="Sat 14 Nov - on the books&#10;94% (101 of 107 rooms)&#10;Typical at this lead time: 85% (+9 pts)">14</span><span class="cd c3" tabindex="0" data-tip="Sun 15 Nov - on the books&#10;91% (98 of 108 rooms)&#10;Typical at this lead time: 78% (+13 pts)">15</span><span class="cd c1" tabindex="0" data-tip="Mon 16 Nov - on the books&#10;68% (74 of 109 rooms)&#10;Typical at this lead time: 66% (+2 pts)">16</span><span class="cd c1" tabindex="0" data-tip="Tue 17 Nov - on the books&#10;63% (69 of 109 rooms)&#10;Typical at this lead time: 60% (+3 pts)">17</span><span class="cd c1" tabindex="0" data-tip="Wed 18 Nov - on the books&#10;58% (64 of 110 rooms)&#10;Typical at this lead time: 58% (+0 pts)">18</span><span class="cd c0" tabindex="0" data-tip="Thu 19 Nov - on the books&#10;36% (40 of 110 rooms)&#10;Typical at this lead time: 52% (&minus;16 pts)">19</span><span class="cd c1" tabindex="0" data-tip="Fri 20 Nov - on the books&#10;55% (61 of 110 rooms)&#10;Typical at this lead time: 52% (+3 pts)">20</span><span class="cd c1" tabindex="0" data-tip="Sat 21 Nov - on the books&#10;61% (67 of 110 rooms)&#10;Typical at this lead time: 58% (+3 pts)">21</span><span class="cd c0" tabindex="0" data-tip="Sun 22 Nov - on the books&#10;40% (44 of 110 rooms)&#10;Typical at this lead time: 41% (&minus;1 pts)">22</span><span class="cd c0" tabindex="0" data-tip="Mon 23 Nov - on the books&#10;33% (36 of 110 rooms)&#10;Typical at this lead time: 35% (&minus;2 pts)">23</span><span class="cd c0" tabindex="0" data-tip="Tue 24 Nov - on the books&#10;30% (33 of 110 rooms)&#10;Typical at this lead time: 31% (&minus;1 pts)">24</span><span class="cd c0" tabindex="0" data-tip="Wed 25 Nov - on the books&#10;27% (30 of 110 rooms)&#10;Typical at this lead time: 28% (&minus;1 pts)">25</span><span class="cd c0" tabindex="0" data-tip="Thu 26 Nov - on the books&#10;25% (28 of 110 rooms)&#10;Typical at this lead time: 27% (&minus;2 pts)">26</span><span class="cd c0" tabindex="0" data-tip="Fri 27 Nov - on the books&#10;31% (34 of 110 rooms)&#10;Typical at this lead time: 30% (+1 pts)">27</span><span class="cd c0" tabindex="0" data-tip="Sat 28 Nov - on the books&#10;28% (31 of 110 rooms)">28</span><span class="cd c0" tabindex="0" data-tip="Sun 29 Nov - on the books&#10;24% (26 of 110 rooms)">29</span><span class="cd c0" tabindex="0" data-tip="Mon 30 Nov - on the books&#10;22% (24 of 110 rooms)">30</span>
+</div>
+<div class="cal-leg"><span><i class="c0"></i>0&ndash;40%</span><span><i class="c1"></i>41&ndash;70%</span><span><i class="c2"></i>71&ndash;90%</span><span><i class="c3"></i>91&ndash;100%</span></div>
+</div>
+</section>
+</div>
+<!-- row 2 -->
+<section class="card s3" id="channels" aria-labelledby="h-ch">
+<header class="card-h">
+<h2 id="h-ch">Booking Source <span class="tipi" tabindex="0" data-tip="Every channel on its own. Booking Engine and Walk-in are direct bookings. Bookings are counted by the date the booking was created, before any later cancellation. Values exclude GST. Hover a row to see its share and value.">i</span></h2>
+<select class="sel sm cp" aria-label="Channel period"><option value="today">Today</option><option value="last7">Last 7 days</option><option value="last30" selected>Last 30 days</option></select>
+</header>
+<div class="card-b">
+<div class="ch-set ch-today">
+<div class="ch-wrap">
+<div class="donut" role="img" aria-label="Bookings by channel, Today" style="background:conic-gradient(var(--c1) 0.0% 18.9%, #fff 18.9% 19.4%, var(--c2) 19.4% 41.4%, #fff 41.4% 41.9%, var(--c3) 41.9% 57.6%, #fff 57.6% 58.1%, var(--c4) 58.1% 67.2%, #fff 67.2% 67.7%, var(--c5) 67.7% 73.7%, #fff 73.7% 74.2%, var(--c6) 74.2% 86.6%, #fff 86.6% 87.1%, var(--c7) 87.1% 93.0%, #fff 93.0% 93.5%, var(--c8) 93.5% 99.5%, #fff 99.5% 100.0%)"><div class="mid"><b>31</b><span>bookings</span></div></div>
+<table class="ch-tbl"><thead><tr><th>Channel</th><th>Bookings</th><th>Share</th><th>Value</th></tr></thead><tbody><tr title="Booking.com: 7 bookings &middot; 23% &middot; &#8377;1,68,800"><td><span class="ch-name"><i style="background:var(--c2)"></i>Booking.com</span></td><td><b>7</b></td><td>23%</td><td>&#8377;1,68,800</td></tr><tr title="Google Hotel Ads: 6 bookings &middot; 19% &middot; &#8377;1,41,000"><td><span class="ch-name"><i style="background:var(--c1)"></i>Google Hotel Ads</span></td><td><b>6</b></td><td>19%</td><td>&#8377;1,41,000</td></tr><tr title="MakeMyTrip: 5 bookings &middot; 16% &middot; &#8377;1,12,600"><td><span class="ch-name"><i style="background:var(--c3)"></i>MakeMyTrip</span></td><td><b>5</b></td><td>16%</td><td>&#8377;1,12,600</td></tr><tr title="Booking Engine: 4 bookings &middot; 13% &middot; &#8377;1,10,000"><td><span class="ch-name"><i style="background:var(--c6)"></i>Booking Engine</span></td><td><b>4</b></td><td>13%</td><td>&#8377;1,10,000</td></tr><tr title="Agoda: 3 bookings &middot; 10% &middot; &#8377;66,300"><td><span class="ch-name"><i style="background:var(--c4)"></i>Agoda</span></td><td><b>3</b></td><td>10%</td><td>&#8377;66,300</td></tr><tr title="Other OTAs: 2 bookings &middot; 6% &middot; &#8377;41,200"><td><span class="ch-name"><i style="background:var(--c8)"></i>Other OTAs</span></td><td><b>2</b></td><td>6%</td><td>&#8377;41,200</td></tr><tr title="Walk-in: 2 bookings &middot; 7% &middot; &#8377;19,000"><td><span class="ch-name"><i style="background:var(--c7)"></i>Walk-in</span></td><td><b>2</b></td><td>7%</td><td>&#8377;19,000</td></tr><tr title="Airbnb: 2 bookings &middot; 6% &middot; &#8377;53,500"><td><span class="ch-name"><i style="background:var(--c5)"></i>Airbnb</span></td><td><b>2</b></td><td>6%</td><td>&#8377;53,500</td></tr></tbody><tfoot><tr><td style="font-weight:700;border-top:2px solid var(--navy)">Total</td><td style="border-top:2px solid var(--navy)"><b>31</b></td><td style="border-top:2px solid var(--navy)">100%</td><td style="border-top:2px solid var(--navy)"><b>&#8377;7,12,400</b></td></tr></tfoot></table>
+</div>
+</div>
+<div class="ch-set ch-last7">
+<div class="ch-wrap">
+<div class="donut" role="img" aria-label="Bookings by channel, Last 7 days" style="background:conic-gradient(var(--c1) 0.0% 18.5%, #fff 18.5% 19.0%, var(--c2) 19.0% 41.4%, #fff 41.4% 41.9%, var(--c3) 41.9% 58.1%, #fff 58.1% 58.6%, var(--c4) 58.6% 68.5%, #fff 68.5% 69.0%, var(--c5) 69.0% 74.7%, #fff 74.7% 75.2%, var(--c6) 75.2% 88.1%, #fff 88.1% 88.6%, var(--c7) 88.6% 92.8%, #fff 92.8% 93.3%, var(--c8) 93.3% 99.5%, #fff 99.5% 100.0%)"><div class="mid"><b>210</b><span>bookings</span></div></div>
+<table class="ch-tbl"><thead><tr><th>Channel</th><th>Bookings</th><th>Share</th><th>Value</th></tr></thead><tbody><tr title="Booking.com: 48 bookings &middot; 23% &middot; &#8377;11,02,400"><td><span class="ch-name"><i style="background:var(--c2)"></i>Booking.com</span></td><td><b>48</b></td><td>23%</td><td>&#8377;11,02,400</td></tr><tr title="Google Hotel Ads: 40 bookings &middot; 19% &middot; &#8377;9,28,000"><td><span class="ch-name"><i style="background:var(--c1)"></i>Google Hotel Ads</span></td><td><b>40</b></td><td>19%</td><td>&#8377;9,28,000</td></tr><tr title="MakeMyTrip: 35 bookings &middot; 17% &middot; &#8377;7,70,000"><td><span class="ch-name"><i style="background:var(--c3)"></i>MakeMyTrip</span></td><td><b>35</b></td><td>17%</td><td>&#8377;7,70,000</td></tr><tr title="Booking Engine: 28 bookings &middot; 13% &middot; &#8377;6,64,000"><td><span class="ch-name"><i style="background:var(--c6)"></i>Booking Engine</span></td><td><b>28</b></td><td>13%</td><td>&#8377;6,64,000</td></tr><tr title="Agoda: 22 bookings &middot; 10% &middot; &#8377;4,81,800"><td><span class="ch-name"><i style="background:var(--c4)"></i>Agoda</span></td><td><b>22</b></td><td>10%</td><td>&#8377;4,81,800</td></tr><tr title="Other OTAs: 14 bookings &middot; 7% &middot; &#8377;2,77,200"><td><span class="ch-name"><i style="background:var(--c8)"></i>Other OTAs</span></td><td><b>14</b></td><td>7%</td><td>&#8377;2,77,200</td></tr><tr title="Airbnb: 13 bookings &middot; 6% &middot; &#8377;3,43,200"><td><span class="ch-name"><i style="background:var(--c5)"></i>Airbnb</span></td><td><b>13</b></td><td>6%</td><td>&#8377;3,43,200</td></tr><tr title="Walk-in: 10 bookings &middot; 5% &middot; &#8377;1,21,400"><td><span class="ch-name"><i style="background:var(--c7)"></i>Walk-in</span></td><td><b>10</b></td><td>5%</td><td>&#8377;1,21,400</td></tr></tbody><tfoot><tr><td style="font-weight:700;border-top:2px solid var(--navy)">Total</td><td style="border-top:2px solid var(--navy)"><b>210</b></td><td style="border-top:2px solid var(--navy)">100%</td><td style="border-top:2px solid var(--navy)"><b>&#8377;46,88,000</b></td></tr></tfoot></table>
+</div>
+</div>
+<div class="ch-set ch-last30">
+<div class="ch-wrap">
+<div class="donut" role="img" aria-label="Bookings by channel, Last 30 days" style="background:conic-gradient(var(--c1) 0.0% 19.5%, #fff 19.5% 20.0%, var(--c2) 20.0% 43.2%, #fff 43.2% 43.7%, var(--c3) 43.7% 60.4%, #fff 60.4% 60.9%, var(--c4) 60.9% 71.1%, #fff 71.1% 71.6%, var(--c5) 71.6% 77.1%, #fff 77.1% 77.6%, var(--c6) 77.6% 89.4%, #fff 89.4% 89.9%, var(--c7) 89.9% 92.6%, #fff 92.6% 93.1%, var(--c8) 93.1% 99.5%, #fff 99.5% 100.0%)"><div class="mid"><b>930</b><span>bookings</span></div></div>
+<table class="ch-tbl"><thead><tr><th>Channel</th><th>Bookings</th><th>Share</th><th>Value</th></tr></thead><tbody><tr title="Booking.com: 220 bookings &middot; 24% &middot; &#8377;49,28,000"><td><span class="ch-name"><i style="background:var(--c2)"></i>Booking.com</span></td><td><b>220</b></td><td>24%</td><td>&#8377;49,28,000</td></tr><tr title="Google Hotel Ads: 186 bookings &middot; 20% &middot; &#8377;41,01,000"><td><span class="ch-name"><i style="background:var(--c1)"></i>Google Hotel Ads</span></td><td><b>186</b></td><td>20%</td><td>&#8377;41,01,000</td></tr><tr title="MakeMyTrip: 160 bookings &middot; 17% &middot; &#8377;34,72,000"><td><span class="ch-name"><i style="background:var(--c3)"></i>MakeMyTrip</span></td><td><b>160</b></td><td>17%</td><td>&#8377;34,72,000</td></tr><tr title="Booking Engine: 114 bookings &middot; 12% &middot; &#8377;23,70,900"><td><span class="ch-name"><i style="background:var(--c6)"></i>Booking Engine</span></td><td><b>114</b></td><td>12%</td><td>&#8377;23,70,900</td></tr><tr title="Agoda: 100 bookings &middot; 11% &middot; &#8377;21,40,000"><td><span class="ch-name"><i style="background:var(--c4)"></i>Agoda</span></td><td><b>100</b></td><td>11%</td><td>&#8377;21,40,000</td></tr><tr title="Other OTAs: 64 bookings &middot; 7% &middot; &#8377;12,53,000"><td><span class="ch-name"><i style="background:var(--c8)"></i>Other OTAs</span></td><td><b>64</b></td><td>7%</td><td>&#8377;12,53,000</td></tr><tr title="Airbnb: 56 bookings &middot; 6% &middot; &#8377;14,12,000"><td><span class="ch-name"><i style="background:var(--c5)"></i>Airbnb</span></td><td><b>56</b></td><td>6%</td><td>&#8377;14,12,000</td></tr><tr title="Walk-in: 30 bookings &middot; 3% &middot; &#8377;3,03,000"><td><span class="ch-name"><i style="background:var(--c7)"></i>Walk-in</span></td><td><b>30</b></td><td>3%</td><td>&#8377;3,03,000</td></tr></tbody><tfoot><tr><td style="font-weight:700;border-top:2px solid var(--navy)">Total</td><td style="border-top:2px solid var(--navy)"><b>930</b></td><td style="border-top:2px solid var(--navy)">100%</td><td style="border-top:2px solid var(--navy)"><b>&#8377;1,99,79,900</b></td></tr></tfoot></table>
+</div>
+</div>
+</div>
+</section>
+<section class="card s3" id="checkins" aria-labelledby="h-ci">
+<header class="card-h"><h2 id="h-ci">Today's Check-ins</h2><a class="link" href="#m-arrivals">View all &rarr;</a></header>
+<div class="card-b">
+<ul class="cio">
+<li><span class="av">AI</span><div><b>Ananya Iyer</b><small>Room 412 &middot; RSV48912</small></div><span class="st ok">Checked in</span></li>
+<li><span class="av">SK</span><div><b>Sneha Kapoor</b><small>Room 205 &middot; RSV48921</small></div><span class="st ok">Checked in</span></li>
+<li><span class="av">RM</span><div><b>Rohan Mehta</b><small>Room 318 &middot; RSV48915</small></div><span class="st up">Expected</span></li>
+<li><span class="av">KM</span><div><b>Karan Malhotra</b><small>Room 119 &middot; RSV48934</small></div><span class="st up">Expected</span></li>
+</ul>
+<p class="foot"><b>28</b> today &middot; 14 checked in &middot; 14 expected</p>
+</div>
+</section>
+<section class="card s3" id="checkouts" aria-labelledby="h-co">
+<header class="card-h"><h2 id="h-co">Today's Check-outs</h2><a class="link" href="#m-departures">View all &rarr;</a></header>
+<div class="card-b">
+<ul class="cio">
+<li><span class="av">SN</span><div><b>Siddharth Nair</b><small>Room 107 &middot; RSV48702</small></div><span class="st ok">Checked out</span></li>
+<li><span class="av">DR</span><div><b>Deepa Rao</b><small>Room 110 &middot; RSV48706</small></div><span class="st ok">Checked out</span></li>
+<li><span class="av">PB</span><div><b>Pranav Bhatia</b><small>Room 119 &middot; RSV48719</small></div><span class="st today">Pending</span></li>
+<li><span class="av">RB</span><div><b>Ritu Bhatia</b><small>Room 318 &middot; &#8377;4,200 due</small></div><span class="st today">Pending</span></li>
+</ul>
+<p class="foot"><b>24</b> today &middot; 16 checked out &middot; 8 pending</p>
+</div>
+</section>
+<!-- row 3 -->
+<section class="card s6" id="recent" aria-labelledby="h-recent">
+<header class="card-h">
+<h2 id="h-recent">Recent Reservations</h2>
+<div class="rr-filter">
+<select class="sel rrf" aria-label="Show bookings by"><option value="booked" selected>Booked Date</option><option value="ci">Check-in Date</option><option value="co">Check-out Date</option><option value="so">StayOver Bookings</option><option value="in">CheckedIn Bookings</option></select>
+<div class="drp">
+<input type="checkbox" id="drp-open" class="sr" aria-label="Open the date range picker">
+<label for="drp-open" class="drp-bd" aria-hidden="true"></label>
+<label for="drp-open" class="drp-field"><span class="drp-t"><span class="tp7">Nov 07, 2026 - Nov 14, 2026</span><span class="tp30">Oct 16, 2026 - Nov 14, 2026</span><span class="tpm">Nov 01, 2026 - Nov 30, 2026</span><span class="tplm">Oct 01, 2026 - Oct 31, 2026</span></span></label>
+<label for="drp-open" class="drp-cal-btn" title="Choose dates"><svg class="ic"><use href="#i-calendar"/></svg></label>
+<div class="drp-panel">
+<div class="drp-presets">
+<label><input type="radio" name="drp-p" class="drp-p7 sr" checked><span>Last 7 Days</span></label>
+<label><input type="radio" name="drp-p" class="drp-p30 sr"><span>Last 30 Days</span></label>
+<label><input type="radio" name="drp-p" class="drp-pm sr"><span>This Month</span></label>
+<label><input type="radio" name="drp-p" class="drp-plm sr"><span>Last Month</span></label>
+</div>
+<div class="drp-months"><span class="drp-nav l" aria-hidden="true"><svg class="ic"><use href="#i-chev-r"/></svg></span><span class="drp-nav r" aria-hidden="true"><svg class="ic"><use href="#i-chev-r"/></svg></span><table class="mo mo-oct"><caption>Oct 2026</caption><thead><tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr></thead><tbody><tr><td class="dd off">27</td><td class="dd off">28</td><td class="dd off">29</td><td class="dd off">30</td><td class="dd" data-s="plm">1</td><td class="dd" data-mid="plm">2</td><td class="dd" data-mid="plm">3</td></tr><tr><td class="dd" data-mid="plm">4</td><td class="dd" data-mid="plm">5</td><td class="dd" data-mid="plm">6</td><td class="dd" data-mid="plm">7</td><td class="dd" data-mid="plm">8</td><td class="dd" data-mid="plm">9</td><td class="dd" data-mid="plm">10</td></tr><tr><td class="dd" data-mid="plm">11</td><td class="dd" data-mid="plm">12</td><td class="dd" data-mid="plm">13</td><td class="dd" data-mid="plm">14</td><td class="dd" data-mid="plm">15</td><td class="dd" data-mid="plm" data-s="p30">16</td><td class="dd" data-mid="p30 plm">17</td></tr><tr><td class="dd" data-mid="p30 plm">18</td><td class="dd" data-mid="p30 plm">19</td><td class="dd" data-mid="p30 plm">20</td><td class="dd" data-mid="p30 plm">21</td><td class="dd" data-mid="p30 plm">22</td><td class="dd" data-mid="p30 plm">23</td><td class="dd" data-mid="p30 plm">24</td></tr><tr><td class="dd" data-mid="p30 plm">25</td><td class="dd" data-mid="p30 plm">26</td><td class="dd" data-mid="p30 plm">27</td><td class="dd" data-mid="p30 plm">28</td><td class="dd" data-mid="p30 plm">29</td><td class="dd" data-mid="p30 plm">30</td><td class="dd" data-mid="p30" data-e="plm">31</td></tr><tr><td class="dd off">1</td><td class="dd off">2</td><td class="dd off">3</td><td class="dd off">4</td><td class="dd off">5</td><td class="dd off">6</td><td class="dd off">7</td></tr></tbody></table><table class="mo mo-nov"><caption>Nov 2026</caption><thead><tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr></thead><tbody><tr><td class="dd off">25</td><td class="dd off">26</td><td class="dd off">27</td><td class="dd off">28</td><td class="dd off">29</td><td class="dd off">30</td><td class="dd off">31</td></tr><tr><td class="dd" data-mid="p30" data-s="pm">1</td><td class="dd" data-mid="p30 pm">2</td><td class="dd" data-mid="p30 pm">3</td><td class="dd" data-mid="p30 pm">4</td><td class="dd" data-mid="p30 pm">5</td><td class="dd" data-mid="p30 pm">6</td><td class="dd" data-mid="p30 pm" data-s="p7">7</td></tr><tr><td class="dd" data-mid="p7 p30 pm">8</td><td class="dd" data-mid="p7 p30 pm">9</td><td class="dd" data-mid="p7 p30 pm">10</td><td class="dd" data-mid="p7 p30 pm">11</td><td class="dd" data-mid="p7 p30 pm">12</td><td class="dd today" data-mid="p7 p30 pm">13</td><td class="dd" data-mid="pm" data-e="p7 p30">14</td></tr><tr><td class="dd" data-mid="pm">15</td><td class="dd" data-mid="pm">16</td><td class="dd" data-mid="pm">17</td><td class="dd" data-mid="pm">18</td><td class="dd" data-mid="pm">19</td><td class="dd" data-mid="pm">20</td><td class="dd" data-mid="pm">21</td></tr><tr><td class="dd" data-mid="pm">22</td><td class="dd" data-mid="pm">23</td><td class="dd" data-mid="pm">24</td><td class="dd" data-mid="pm">25</td><td class="dd" data-mid="pm">26</td><td class="dd" data-mid="pm">27</td><td class="dd" data-mid="pm">28</td></tr><tr><td class="dd" data-mid="pm">29</td><td class="dd" data-e="pm">30</td><td class="dd off">1</td><td class="dd off">2</td><td class="dd off">3</td><td class="dd off">4</td><td class="dd off">5</td></tr></tbody></table><table class="mo mo-dec"><caption>Dec 2026</caption><thead><tr><th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th></tr></thead><tbody><tr><td class="dd off">29</td><td class="dd off">30</td><td class="dd">1</td><td class="dd">2</td><td class="dd">3</td><td class="dd">4</td><td class="dd">5</td></tr><tr><td class="dd">6</td><td class="dd">7</td><td class="dd">8</td><td class="dd">9</td><td class="dd">10</td><td class="dd">11</td><td class="dd">12</td></tr><tr><td class="dd">13</td><td class="dd">14</td><td class="dd">15</td><td class="dd">16</td><td class="dd">17</td><td class="dd">18</td><td class="dd">19</td></tr><tr><td class="dd">20</td><td class="dd">21</td><td class="dd">22</td><td class="dd">23</td><td class="dd">24</td><td class="dd">25</td><td class="dd">26</td></tr><tr><td class="dd">27</td><td class="dd">28</td><td class="dd">29</td><td class="dd">30</td><td class="dd">31</td><td class="dd off">1</td><td class="dd off">2</td></tr><tr><td class="dd off">3</td><td class="dd off">4</td><td class="dd off">5</td><td class="dd off">6</td><td class="dd off">7</td><td class="dd off">8</td><td class="dd off">9</td></tr></tbody></table></div>
+<div class="drp-foot"><span class="drp-t"><span class="tp7">Nov 07, 2026 - Nov 14, 2026</span><span class="tp30">Oct 16, 2026 - Nov 14, 2026</span><span class="tpm">Nov 01, 2026 - Nov 30, 2026</span><span class="tplm">Oct 01, 2026 - Oct 31, 2026</span></span><label for="drp-open" class="drp-btn">Cancel</label><label for="drp-open" class="drp-btn pri">Apply</label></div>
+</div>
+</div>
+<a class="rr-refresh" href="" title="Refresh" aria-label="Refresh"><svg class="ic"><use href="#i-refresh"/></svg></a>
+</div>
+<a class="link" href="#m-newbook">View all &rarr;</a>
+</header>
+<div class="card-b rr-wrap">
+<ul class="rr-list">
+<li class="rr" data-b="p7 p30 pm" data-ci="pm" data-co="pm"><div class="rr-ch"><span class="chb" style="background:var(--c1)" title="Google Hotel Ads">GH</span><span class="rr-st ok">CONFIRMED</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48969</a><span>Google Hotel Ads</span></p><p class="rr-guest">Guest: Tanvi Menon</p><div class="rr-dates"><p><span>Booked:</span> 13 Nov, 11:31 AM</p><p><span>Stay:</span> 18 Nov &rarr; 20 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;12,400</b><span class="pay w">Pay at hotel</span></div></li>
+<li class="rr" data-b="p7 p30 pm" data-ci="pm" data-co="pm"><div class="rr-ch"><span class="chb" style="background:var(--c8)" title="Other OTAs">OT</span><span class="rr-st ok">CONFIRMED</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48968</a><span>Other OTAs</span></p><p class="rr-guest">Guest: Harsh Desai</p><div class="rr-dates"><p><span>Booked:</span> 13 Nov, 11:28 AM</p><p><span>Stay:</span> 15 Nov &rarr; 17 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;14,800</b><span class="pay w">Pay at hotel</span></div></li>
+<li class="rr" data-b="p7 p30 pm" data-ci="pm" data-co="pm"><div class="rr-ch"><span class="chb" style="background:var(--c5)" title="Airbnb">AB</span><span class="rr-st ok">CONFIRMED</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48967</a><span>Airbnb</span></p><p class="rr-guest">Guest: Swati Mishra</p><div class="rr-dates"><p><span>Booked:</span> 13 Nov, 11:25 AM</p><p><span>Stay:</span> 21 Nov &rarr; 24 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;26,400</b><span class="pay g">Prepaid</span></div></li>
+<li class="rr" data-b="p7 p30 pm" data-ci="p7 p30 pm" data-co="p7 p30 pm" data-in><div class="rr-ch"><span class="chb" style="background:var(--c7)" title="Walk-in">WI</span><span class="rr-st in">CHECKED IN</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48966</a><span>Walk-in</span></p><p class="rr-guest">Guest: Nikhil Jain</p><div class="rr-dates"><p><span>Booked:</span> 13 Nov, 11:21 AM</p><p><span>Stay:</span> 13 Nov &rarr; 14 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;6,700</b><span class="pay g">Paid at desk</span></div></li>
+<li class="rr" data-b="p7 p30 pm" data-ci="p7 p30 pm" data-co="pm"><div class="rr-ch"><span class="chb" style="background:var(--c1)" title="Google Hotel Ads">GH</span><span class="rr-st ok">CONFIRMED</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48965</a><span>Google Hotel Ads</span></p><p class="rr-guest">Guest: Yuki Tanaka</p><div class="rr-dates"><p><span>Booked:</span> 13 Nov, 11:18 AM</p><p><span>Stay:</span> 13 Nov &rarr; 15 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;13,000</b><span class="pay g">Prepaid</span></div></li>
+<li class="rr" data-b="p7 p30 pm" data-ci="pm" data-co="pm"><div class="rr-ch"><span class="chb" style="background:var(--c6)" title="Booking Engine">BE</span><span class="rr-st ok">CONFIRMED</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48964</a><span>Booking Engine</span></p><p class="rr-guest">Guest: Komal Arora</p><div class="rr-dates"><p><span>Booked:</span> 13 Nov, 11:14 AM</p><p><span>Stay:</span> 20 Nov &rarr; 23 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;27,900</b><span class="pay b">Advance paid</span></div></li>
+<li class="rr" data-b="p7 p30 pm" data-ci="p7 p30 pm" data-co="pm"><div class="rr-ch"><span class="chb" style="background:var(--c3)" title="MakeMyTrip">MM</span><span class="rr-st ok">CONFIRMED</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48963</a><span>MakeMyTrip</span></p><p class="rr-guest">Guest: Aarav Saxena</p><div class="rr-dates"><p><span>Booked:</span> 13 Nov, 11:09 AM</p><p><span>Stay:</span> 14 Nov &rarr; 16 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;15,600</b><span class="pay g">Prepaid</span></div></li>
+<li class="rr" data-b="p7 p30 pm" data-ci="pm" data-co="pm"><div class="rr-ch"><span class="chb" style="background:var(--c2)" title="Booking.com">BK</span><span class="rr-st ok">CONFIRMED</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48962</a><span>Booking.com</span></p><p class="rr-guest">Guest: Lucas Taylor</p><div class="rr-dates"><p><span>Booked:</span> 13 Nov, 11:02 AM</p><p><span>Stay:</span> 16 Nov &rarr; 19 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;19,800</b><span class="pay w">Pay at hotel</span></div></li>
+<li class="rr" data-b="p30 pm" data-ci="p7 p30 pm" data-co="pm" data-so data-in><div class="rr-ch"><span class="chb" style="background:var(--c3)" title="MakeMyTrip">MM</span><span class="rr-st in">CHECKED IN</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48812</a><span>MakeMyTrip</span></p><p class="rr-guest">Guest: Aditi Sharma</p><div class="rr-dates"><p><span>Booked:</span> 5 Nov, 6:05 PM</p><p><span>Stay:</span> 11 Nov &rarr; 15 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;22,000</b><span class="pay w">Pay at hotel</span></div></li>
+<li class="rr" data-b="p30 pm" data-ci="p7 p30 pm" data-co="pm" data-so data-in><div class="rr-ch"><span class="chb" style="background:var(--c1)" title="Google Hotel Ads">GH</span><span class="rr-st in">CHECKED IN</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48803</a><span>Google Hotel Ads</span></p><p class="rr-guest">Guest: Meera Nair</p><div class="rr-dates"><p><span>Booked:</span> 5 Nov, 10:20 AM</p><p><span>Stay:</span> 12 Nov &rarr; 16 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;26,800</b><span class="pay g">Prepaid</span></div></li>
+<li class="rr" data-b="p30 pm" data-ci="p7 p30 pm" data-co="pm" data-so data-in><div class="rr-ch"><span class="chb" style="background:var(--c2)" title="Booking.com">BK</span><span class="rr-st in">CHECKED IN</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48790</a><span>Booking.com</span></p><p class="rr-guest">Guest: Lucas Dubois</p><div class="rr-dates"><p><span>Booked:</span> 2 Nov, 3:15 PM</p><p><span>Stay:</span> 9 Nov &rarr; 17 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;52,000</b><span class="pay g">Prepaid</span></div></li>
+<li class="rr" data-b="p30 plm" data-ci="p30 pm" data-co="pm" data-so data-in><div class="rr-ch"><span class="chb" style="background:var(--c8)" title="Other OTAs">OT</span><span class="rr-st in">CHECKED IN</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48760</a><span>Other OTAs</span></p><p class="rr-guest">Guest: Pooja Menon</p><div class="rr-dates"><p><span>Booked:</span> 27 Oct, 1:10 PM</p><p><span>Stay:</span> 5 Nov &rarr; 15 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;55,000</b><span class="pay b">Advance paid</span></div></li>
+<li class="rr" data-b="p30 plm" data-ci="p30 pm" data-co="p7 p30 pm" data-so data-in><div class="rr-ch"><span class="chb" style="background:var(--c6)" title="Booking Engine">BE</span><span class="rr-st in">CHECKED IN</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48755</a><span>Booking Engine</span></p><p class="rr-guest">Guest: Arjun Thakur</p><div class="rr-dates"><p><span>Booked:</span> 25 Oct, 8:45 PM</p><p><span>Stay:</span> 4 Nov &rarr; 14 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;67,000</b><span class="pay w">Pay at hotel</span></div></li>
+<li class="rr" data-b="p30 plm" data-ci="p7 p30 pm" data-co="p7 p30 pm" data-so data-in><div class="rr-ch"><span class="chb" style="background:var(--c6)" title="Booking Engine">BE</span><span class="rr-st in">CHECKED IN</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48744</a><span>Booking Engine</span></p><p class="rr-guest">Guest: Pranav Kulkarni</p><div class="rr-dates"><p><span>Booked:</span> 24 Oct, 11:40 AM</p><p><span>Stay:</span> 8 Nov &rarr; 14 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;40,200</b><span class="pay b">Advance paid</span></div></li>
+<li class="rr" data-b="p30 plm" data-ci="p30 pm" data-co="p7 p30 pm" data-so data-in><div class="rr-ch"><span class="chb" style="background:var(--c1)" title="Google Hotel Ads">GH</span><span class="rr-st in">CHECKED IN</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48731</a><span>Google Hotel Ads</span></p><p class="rr-guest">Guest: Simran Kohli</p><div class="rr-dates"><p><span>Booked:</span> 22 Oct, 12:25 PM</p><p><span>Stay:</span> 3 Nov &rarr; 14 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;91,300</b><span class="pay g">Prepaid</span></div></li>
+<li class="rr" data-b="p30 plm" data-ci="p30 pm" data-co="pm" data-so data-in><div class="rr-ch"><span class="chb dk" style="background:var(--c4)" title="Agoda">AG</span><span class="rr-st in">CHECKED IN</span></div><div class="rr-main"><p class="rr-top"><a class="rr-id" href="#m-newbook">RSV48721</a><span>Agoda</span></p><p class="rr-guest">Guest: Sanjay Bhatia</p><div class="rr-dates"><p><span>Booked:</span> 20 Oct, 5:30 PM</p><p><span>Stay:</span> 6 Nov &rarr; 18 Nov 2026</p></div></div><div class="rr-amt"><b>&#8377;66,000</b><span class="pay w">Pay at hotel</span></div></li>
+</ul>
+<p class="rr-empty">No bookings in this date range.</p>
+<div class="rr-foot f-booked-p7"><div><b>&#8377;1,36,600</b><span>Total value (ex-GST) &middot; 8 bookings</span></div><div><b>&#8377;7,589</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-booked-p30"><div><b>&#8377;5,56,900</b><span>Total value (ex-GST) &middot; 16 bookings</span></div><div><b>&#8377;6,710</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-booked-pm"><div><b>&#8377;2,37,400</b><span>Total value (ex-GST) &middot; 11 bookings</span></div><div><b>&#8377;6,982</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-booked-plm"><div><b>&#8377;3,19,500</b><span>Total value (ex-GST) &middot; 5 bookings</span></div><div><b>&#8377;6,520</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-ci-p7"><div><b>&#8377;1,76,300</b><span>Total value (ex-GST) &middot; 7 bookings</span></div><div><b>&#8377;6,530</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-ci-p30"><div><b>&#8377;4,55,600</b><span>Total value (ex-GST) &middot; 11 bookings</span></div><div><b>&#8377;6,509</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-ci-pm"><div><b>&#8377;5,56,900</b><span>Total value (ex-GST) &middot; 16 bookings</span></div><div><b>&#8377;6,710</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-ci-plm"><div><b>&#8377;0</b><span>Total value (ex-GST) &middot; 0 bookings</span></div><div><b>&mdash;</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-co-p7"><div><b>&#8377;2,05,200</b><span>Total value (ex-GST) &middot; 4 bookings</span></div><div><b>&#8377;7,329</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-co-p30"><div><b>&#8377;2,05,200</b><span>Total value (ex-GST) &middot; 4 bookings</span></div><div><b>&#8377;7,329</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-co-pm"><div><b>&#8377;5,56,900</b><span>Total value (ex-GST) &middot; 16 bookings</span></div><div><b>&#8377;6,710</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-co-plm"><div><b>&#8377;0</b><span>Total value (ex-GST) &middot; 0 bookings</span></div><div><b>&mdash;</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-so"><div><b>&#8377;4,20,300</b><span>Total value (ex-GST) &middot; 8 bookings</span></div><div><b>&#8377;6,466</b><span>Average room rate</span></div></div>
+<div class="rr-foot f-in"><div><b>&#8377;4,27,000</b><span>Total value (ex-GST) &middot; 9 bookings</span></div><div><b>&#8377;6,470</b><span>Average room rate</span></div></div>
+</div>
+</section>
+<section class="card s3" id="tasks" aria-labelledby="h-tasks">
+<header class="card-h"><h2 id="h-tasks">Pending Tasks <span class="tipi" tabindex="0" data-tip="Every open task is counted once, in exactly one category, so the total is the sum of the rows. Housekeeping Tasks are ad-hoc requests; routine room cleaning is tracked in the Housekeeping widget.">i</span></h2><a class="link" href="#m-tasks">View all tasks</a></header>
+<div class="card-b">
+<div class="task-list">
+<a href="#m-tasks" title="Open the room requests pending list"><span class="ti"><svg class="ic"><use href="#i-bed"/></svg></span><span><b>Room Requests Pending</b><small><span class="o">1 overdue</span> &middot; <span class="u">2 unassigned</span> &middot; <span>1 urgent</span></small></span><span class="num">6</span><svg class="ic" style="width:14px;color:var(--muted)"><use href="#i-chev-r"/></svg></a>
+<a href="#m-tasks" title="Open the guest service requests list"><span class="ti"><svg class="ic"><use href="#i-user"/></svg></span><span><b>Guest Service Requests</b><small>All on track</small></span><span class="num">4</span><svg class="ic" style="width:14px;color:var(--muted)"><use href="#i-chev-r"/></svg></a>
+<a href="#m-tasks" title="Open the maintenance tasks list"><span class="ti"><svg class="ic"><use href="#i-wrench"/></svg></span><span><b>Maintenance Tasks</b><small><span class="o">1 overdue</span> &middot; <span class="u">1 unassigned</span> &middot; <span>2 urgent</span></small></span><span class="num">3</span><svg class="ic" style="width:14px;color:var(--muted)"><use href="#i-chev-r"/></svg></a>
+<a href="#m-tasks" title="Open the housekeeping tasks list"><span class="ti"><svg class="ic"><use href="#i-sparkles"/></svg></span><span><b>Housekeeping Tasks</b><small><span class="o">2 overdue</span></small></span><span class="num">8</span><svg class="ic" style="width:14px;color:var(--muted)"><use href="#i-chev-r"/></svg></a>
+<a href="#m-tasks" title="Open the front desk follow-ups list"><span class="ti"><svg class="ic"><use href="#i-phone"/></svg></span><span><b>Front Desk Follow-ups</b><small><span class="o">1 overdue</span> &middot; <span class="u">1 unassigned</span></small></span><span class="num">5</span><svg class="ic" style="width:14px;color:var(--muted)"><use href="#i-chev-r"/></svg></a>
+</div>
+<div class="task-total">
+<b>Total open tasks: 26</b>
+<span class="chips"><a class="chip crit" href="#m-tasks">5 overdue</a><a class="chip warn" href="#m-tasks">4 unassigned</a><a class="chip info" href="#m-tasks">3 urgent</a></span>
+</div>
+</div>
+</section>
+<!-- GUEST REVIEWS: a small widget -->
+<section class="card s3" id="reviews" aria-labelledby="h-rv">
+<header class="card-h"><h2 id="h-rv">Guest Reviews</h2><a class="link" href="#m-reviews">View all reviews &rarr;</a></header>
+<div class="card-b rv">
+<div class="rv-top">
+<div class="rv-sum">
+<p class="rv-score"><b>4.6</b><span>/5</span></p>
+<p class="rv-word">Excellent</p>
+<span class="stars" role="img" aria-label="4.6 out of 5"><span class="s-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="s-fill" style="width:92%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span>
+<p class="sub">Based on <b>128</b> reviews</p>
+</div>
+<div class="hkrows">
+<div class="hkr"><div><span>Cleanliness</span><b>4.7</b></div><div class="bar"><i style="width:94.0%;background:var(--c1)"></i></div></div>
+<div class="hkr"><div><span>Location</span><b>4.8</b></div><div class="bar"><i style="width:96.0%;background:var(--c1)"></i></div></div>
+<div class="hkr"><div><span>Service</span><b>4.5</b></div><div class="bar"><i style="width:90.0%;background:var(--c1)"></i></div></div>
+<div class="hkr"><div><span>Value for money</span><b>4.4</b></div><div class="bar"><i style="width:88.0%;background:var(--c1)"></i></div></div>
+</div>
+</div>
+<ul class="rv-list">
+<li><span class="rv-av">RM</span><div><p class="rv-who"><b>Rahul Menon</b><small>Google &middot; 1 day ago</small></p><p>Spotless room, quick check-in and a very helpful front desk.</p></div><b class="rv-sc">5/5</b></li>
+<li><span class="rv-av">SD</span><div><p class="rv-who"><b>Sophie Dubois</b><small>Booking.com &middot; 2 days ago</small></p><p>Great location and comfortable beds. Breakfast could be better.</p></div><b class="rv-sc">4/5</b></li>
+<li><span class="rv-av">PK</span><div><p class="rv-who"><b>Priya Kapoor</b><small>MakeMyTrip &middot; 3 days ago</small></p><p>Late check-out was arranged without any fuss. Will stay again.</p></div><b class="rv-sc">5/5</b></li>
+</ul>
+</div>
+</section>
+<!-- row 4 -->
+<section class="card s4" id="rate" aria-labelledby="h-rate">
+<header class="card-h"><h2 id="h-rate">Rate parity <span class="tipi" tabindex="0" data-tip="Compares the rate you publish on Google Hotel Ads with the rates on your OTAs (from your channel manager) for the selected dates. It does not use any competitor data. Percentages show how much lower each OTA is than Google Hotel Ads.">i</span></h2><span class="sub2">Google Hotel Ads vs OTAs</span></header>
+<div class="card-b">
+<p class="rp-cap">Deluxe Room &middot; rate per night &middot; Sat 14 &ndash; Sun 15 Nov</p>
+<table class="tbl">
+<thead><tr><th>Channel</th><th class="r">Rate</th><th class="r">vs Google</th></tr></thead>
+<tbody>
+<tr class="rp-gha"><td><b>Google Hotel Ads</b></td><td class="r"><b>&#8377;6,500</b></td><td class="r">&mdash;</td></tr>
+<tr><td>Booking.com <span class="st ok">Lowest</span></td><td class="r">&#8377;6,200</td><td class="r"><span class="st today">4.6% lower</span></td></tr>
+<tr><td>MakeMyTrip</td><td class="r">&#8377;6,300</td><td class="r"><span class="st today">3.1% lower</span></td></tr>
+<tr><td>Agoda</td><td class="r">&#8377;6,350</td><td class="r"><span class="st today">2.3% lower</span></td></tr>
+</tbody>
+</table>
+<p class="reco warn"><b>Google Hotel Ads is &#8377;300 (4.6%) above the lowest OTA.</b> Guests comparing prices on Google may book on Booking.com instead.</p>
+<a class="btn primary" href="#m-rate-change">Change Google Hotel Ads rate</a>
+</div>
+</section>
+<section class="card s4" id="revperf" aria-labelledby="h-perf">
+<header class="card-h"><h2 id="h-perf">Revenue by room type</h2><span class="sub2">Tonight</span></header>
+<div class="card-b">
+<table class="tbl">
+<thead><tr><th>Room type</th><th class="r">Sold</th><th class="r">Occ.</th><th class="r">ADR</th><th class="r">Revenue</th></tr></thead>
+<tbody>
+<tr><td>Deluxe Room</td><td class="r">41 / 48</td><td class="r">85%</td><td class="r">&#8377;5,500</td><td class="r">&#8377;2,25,500</td></tr>
+<tr><td>Premium Room</td><td class="r">25 / 29</td><td class="r">86%</td><td class="r">&#8377;6,700</td><td class="r">&#8377;1,67,500</td></tr>
+<tr><td>Executive Suite</td><td class="r">14 / 20</td><td class="r">70%</td><td class="r">&#8377;8,300</td><td class="r">&#8377;1,16,200</td></tr>
+<tr><td>Family Suite</td><td class="r">8 / 10</td><td class="r">80%</td><td class="r">&#8377;7,630</td><td class="r">&#8377;61,040</td></tr>
+</tbody>
+<tfoot><tr><td><b>All rooms</b></td><td class="r"><b>88 / 107</b></td><td class="r"><b>82%</b></td><td class="r"><b>&#8377;6,480</b></td><td class="r"><b>&#8377;5,70,240</b></td></tr></tfoot>
+</table>
+</div>
+</section>
+<section class="card s4" id="cancelled" aria-labelledby="h-cx">
+<header class="card-h"><h2 id="h-cx">Cancelled Today</h2><a class="link" href="#m-cancel">View all &rarr;</a></header>
+<div class="card-b">
+<table class="tbl">
+<thead><tr><th>Guest</th><th>Stay</th><th class="r">Fee kept</th><th class="r">Value</th></tr></thead>
+<tbody>
+<tr title="RSV48440"><td class="bk"><b>Hans Mueller</b><small>Change of plans</small></td><td class="nw">16 &ndash; 19 Nov</td><td class="r">&#8377;3,100</td><td class="r">&#8377;30,200</td></tr>
+<tr title="RSV48512"><td class="bk"><b>Olivia Taylor</b><small>Flight cancelled</small></td><td class="nw">20 &ndash; 22 Nov</td><td class="r">&#8377;3,100</td><td class="r">&#8377;22,800</td></tr>
+<tr title="RSV48587"><td class="bk"><b>Tanmay Joshi</b><small>Free-cancellation rate</small></td><td class="nw">14 &ndash; 15 Nov</td><td class="r">&#8377;0</td><td class="r">&#8377;15,400</td></tr>
+</tbody>
+<tfoot><tr><td colspan="2"><b>3 cancellations</b></td><td class="r"><b>&#8377;6,200</b></td><td class="r"><b>&#8377;68,400</b></td></tr></tfoot>
+</table>
+</div>
+</section>
+<!-- row 5 -->
+<!-- WHAT'S NEW: one announcement, same layout as the Rooms View update -->
+<section class="card s12" id="whatsnew" aria-label="What's new">
+<div class="card-b wn">
+<div class="wn-head"><span class="wn-badge"><span class="wn-bi"><svg class="ic"><use href="#i-sparkles"/></svg></span><b>PMS Dashboard</b></span><h3 class="wn-title">New Update: The Redesigned PMS Dashboard is Now LIVE!</h3></div>
+<p>We are excited to introduce the redesigned <b>PMS Dashboard</b> in eGlobe PMS, giving your front desk and management team one screen to see performance, collections, rooms, guest feedback and the rates you publish, so they can act faster and run daily operations more efficiently.</p>
+<h4 class="wn-h">What&rsquo;s New?</h4>
+<ul class="wn-list">
+<li><b>Today&rsquo;s Revenue &amp; Collection:</b> The value of today&rsquo;s check-ins, and the money collected today by payment mode.</li>
+<li><b>Balance Due &amp; Recent Reservations:</b> The unpaid balance on today&rsquo;s check-ins, and bookings filtered by date or status.</li>
+<li><b>Booking Source:</b> Every channel on its own, from Google Hotel Ads to your Booking Engine.</li>
+<li><b>Rate Parity:</b> Compare your Google Hotel Ads rate with the OTAs, then match an OTA, decrease by a % or fix a rate for the dates you choose.</li>
+<li><b>Occupancy Calendar &amp; Weather:</b> Day-by-day occupancy for the month and a 7-day weather forecast.</li>
+<li><b>Live Notifications:</b> A new alert pops up every 7 seconds for bookings, arrivals, balances, tasks, rooms, reviews and rate alerts.</li>
+</ul>
+<div class="wn-how"><b>How to Access:</b><span>PMS Menu &gt;&gt; Dashboard</span></div>
+<p class="wn-cta">Experience smarter hotel management with eGlobe PMS!</p>
+</div>
+<footer class="wn-foot"><a class="link" href="#m-updates">See all software updates</a></footer>
+</section>
+</div>
+</main>
+<!-- ============================================================ POP-UP LISTS & FORMS (open with :target, close with #_) -->
+<!-- Balance Due list -->
+<div class="modal" id="m-balance" role="dialog" aria-modal="true" aria-labelledby="t-balance">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg">
+<div class="dlg-h"><div><h2 id="t-balance">Balance Due &middot; check-in today</h2><p>Bookings checking in on 13 Nov with an unpaid balance. Balance = booking total &minus; payments received.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b">
+<div class="sum-strip"><div>Total outstanding<b>&#8377;1,86,500</b></div><div>Bookings<b>12</b></div><div>Overdue<b style="color:var(--bad)">&#8377;62,000</b></div><div>Due today<b>&#8377;85,700</b></div><div>Upcoming<b>&#8377;38,800</b></div><div>Received on these bookings<b>&#8377;89,400</b> of &#8377;2,75,900</div></div>
+<div class="filters">
+<div class="grp"><span class="glbl">Show</span>
+<input type="radio" name="bflt" id="f-b-all" checked><label for="f-b-all">All (12)</label>
+<input type="radio" name="bflt" id="f-b-over"><label for="f-b-over">Overdue (2)</label>
+<input type="radio" name="bflt" id="f-b-today"><label for="f-b-today">Due today (6)</label>
+<input type="radio" name="bflt" id="f-b-up"><label for="f-b-up">Upcoming (4)</label>
+</div>
+<div class="grp"><span class="glbl">Sort by</span>
+<input type="radio" name="bsort" id="so-bal" checked><label for="so-bal">Outstanding amount</label>
+<input type="radio" name="bsort" id="so-due"><label for="so-due">Due status</label>
+</div>
+</div>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Reservation</th><th>Guest</th><th>Room</th><th>Check-in</th><th class="r">Booking total</th><th class="r">Received</th><th class="r">Balance</th><th>Payment</th><th>Due date</th><th>Status</th></tr></thead>
+<tbody class="bal-sorted by-bal">
+<tr data-s="over"><td class="nw"><b>RSV48927</b></td><td>Vikram Shekhawat</td><td>507</td><td class="nw">13 Nov</td><td class="r">&#8377;52,800</td><td class="r">&#8377;20,000</td><td class="r"><b>&#8377;32,800</b></td><td>Partly paid</td><td class="nw">11 Nov</td><td><span class="st over">Overdue</span></td></tr>
+<tr data-s="over"><td class="nw"><b>RSV48915</b></td><td>Rohan Mehta</td><td>318</td><td class="nw">13 Nov</td><td class="r">&#8377;41,200</td><td class="r">&#8377;12,000</td><td class="r"><b>&#8377;29,200</b></td><td>Partly paid</td><td class="nw">10 Nov</td><td><span class="st over">Overdue</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48938</b></td><td>Divya Reddy</td><td><span class="unassigned" style="font-weight:600;color:var(--muted)">Not assigned</span></td><td class="nw">13 Nov</td><td class="r">&#8377;31,600</td><td class="r">&#8377;10,000</td><td class="r"><b>&#8377;21,600</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48912</b></td><td>Ananya Iyer</td><td>412</td><td class="nw">13 Nov</td><td class="r">&#8377;28,400</td><td class="r">&#8377;8,000</td><td class="r"><b>&#8377;20,400</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48921</b></td><td>Sneha Kapoor</td><td>205</td><td class="nw">13 Nov</td><td class="r">&#8377;18,600</td><td class="r">&#8377;0</td><td class="r"><b>&#8377;18,600</b></td><td>Unpaid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="up"><td class="nw"><b>RSV48934</b></td><td>Karan Malhotra</td><td>119</td><td class="nw">13 Nov</td><td class="r">&#8377;22,800</td><td class="r">&#8377;7,000</td><td class="r"><b>&#8377;15,800</b></td><td>Partly paid</td><td class="nw">15 Nov</td><td><span class="st up">Upcoming</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48946</b></td><td>Shreya Desai</td><td>215</td><td class="nw">13 Nov</td><td class="r">&#8377;17,900</td><td class="r">&#8377;5,000</td><td class="r"><b>&#8377;12,900</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="up"><td class="nw"><b>RSV48941</b></td><td>Amit Chopra</td><td>301</td><td class="nw">13 Nov</td><td class="r">&#8377;12,400</td><td class="r">&#8377;0</td><td class="r"><b>&#8377;12,400</b></td><td>Unpaid</td><td class="nw">16 Nov</td><td><span class="st up">Upcoming</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48930</b></td><td>Neha Agarwal</td><td>223</td><td class="nw">13 Nov</td><td class="r">&#8377;14,200</td><td class="r">&#8377;4,000</td><td class="r"><b>&#8377;10,200</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="up"><td class="nw"><b>RSV48950</b></td><td>Manish Tiwari</td><td>216</td><td class="nw">13 Nov</td><td class="r">&#8377;9,800</td><td class="r">&#8377;2,400</td><td class="r"><b>&#8377;7,400</b></td><td>Partly paid</td><td class="nw">15 Nov</td><td><span class="st up">Upcoming</span></td></tr>
+<tr data-s="up"><td class="nw"><b>RSV48953</b></td><td>Isha Bansal</td><td>106</td><td class="nw">13 Nov</td><td class="r">&#8377;15,200</td><td class="r">&#8377;12,000</td><td class="r"><b>&#8377;3,200</b></td><td>Partly paid</td><td class="nw">14 Nov</td><td><span class="st up">Upcoming</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48957</b></td><td>Harsh Joshi</td><td>220</td><td class="nw">13 Nov</td><td class="r">&#8377;11,000</td><td class="r">&#8377;9,000</td><td class="r"><b>&#8377;2,000</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+</tbody>
+<tbody class="bal-sorted by-due">
+<tr data-s="over"><td class="nw"><b>RSV48927</b></td><td>Vikram Shekhawat</td><td>507</td><td class="nw">13 Nov</td><td class="r">&#8377;52,800</td><td class="r">&#8377;20,000</td><td class="r"><b>&#8377;32,800</b></td><td>Partly paid</td><td class="nw">11 Nov</td><td><span class="st over">Overdue</span></td></tr>
+<tr data-s="over"><td class="nw"><b>RSV48915</b></td><td>Rohan Mehta</td><td>318</td><td class="nw">13 Nov</td><td class="r">&#8377;41,200</td><td class="r">&#8377;12,000</td><td class="r"><b>&#8377;29,200</b></td><td>Partly paid</td><td class="nw">10 Nov</td><td><span class="st over">Overdue</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48938</b></td><td>Divya Reddy</td><td><span class="unassigned" style="font-weight:600;color:var(--muted)">Not assigned</span></td><td class="nw">13 Nov</td><td class="r">&#8377;31,600</td><td class="r">&#8377;10,000</td><td class="r"><b>&#8377;21,600</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48912</b></td><td>Ananya Iyer</td><td>412</td><td class="nw">13 Nov</td><td class="r">&#8377;28,400</td><td class="r">&#8377;8,000</td><td class="r"><b>&#8377;20,400</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48921</b></td><td>Sneha Kapoor</td><td>205</td><td class="nw">13 Nov</td><td class="r">&#8377;18,600</td><td class="r">&#8377;0</td><td class="r"><b>&#8377;18,600</b></td><td>Unpaid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48946</b></td><td>Shreya Desai</td><td>215</td><td class="nw">13 Nov</td><td class="r">&#8377;17,900</td><td class="r">&#8377;5,000</td><td class="r"><b>&#8377;12,900</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48930</b></td><td>Neha Agarwal</td><td>223</td><td class="nw">13 Nov</td><td class="r">&#8377;14,200</td><td class="r">&#8377;4,000</td><td class="r"><b>&#8377;10,200</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="today"><td class="nw"><b>RSV48957</b></td><td>Harsh Joshi</td><td>220</td><td class="nw">13 Nov</td><td class="r">&#8377;11,000</td><td class="r">&#8377;9,000</td><td class="r"><b>&#8377;2,000</b></td><td>Partly paid</td><td class="nw">13 Nov</td><td><span class="st today">Due today</span></td></tr>
+<tr data-s="up"><td class="nw"><b>RSV48934</b></td><td>Karan Malhotra</td><td>119</td><td class="nw">13 Nov</td><td class="r">&#8377;22,800</td><td class="r">&#8377;7,000</td><td class="r"><b>&#8377;15,800</b></td><td>Partly paid</td><td class="nw">15 Nov</td><td><span class="st up">Upcoming</span></td></tr>
+<tr data-s="up"><td class="nw"><b>RSV48941</b></td><td>Amit Chopra</td><td>301</td><td class="nw">13 Nov</td><td class="r">&#8377;12,400</td><td class="r">&#8377;0</td><td class="r"><b>&#8377;12,400</b></td><td>Unpaid</td><td class="nw">16 Nov</td><td><span class="st up">Upcoming</span></td></tr>
+<tr data-s="up"><td class="nw"><b>RSV48950</b></td><td>Manish Tiwari</td><td>216</td><td class="nw">13 Nov</td><td class="r">&#8377;9,800</td><td class="r">&#8377;2,400</td><td class="r"><b>&#8377;7,400</b></td><td>Partly paid</td><td class="nw">15 Nov</td><td><span class="st up">Upcoming</span></td></tr>
+<tr data-s="up"><td class="nw"><b>RSV48953</b></td><td>Isha Bansal</td><td>106</td><td class="nw">13 Nov</td><td class="r">&#8377;15,200</td><td class="r">&#8377;12,000</td><td class="r"><b>&#8377;3,200</b></td><td>Partly paid</td><td class="nw">14 Nov</td><td><span class="st up">Upcoming</span></td></tr>
+</tbody>
+</table></div>
+<p class="hint">Amounts include GST. Overdue = past the booking's due date; Due today = payable at check-in; Upcoming = payable at check-out or later.</p>
+</div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Today's collection -->
+<div class="modal" id="m-collection" role="dialog" aria-modal="true" aria-labelledby="t-col">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg narrow" style="width:min(680px,100%)">
+<div class="dlg-h"><div><h2 id="t-col">Today's Collection</h2><p>Payments received on 13 Nov 2026, by the date the money was actually received.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b">
+<div class="sum-strip"><div>Collected<b>&#8377;3,28,400</b></div><div>Payments<b>23</b></div><div>Refunds paid<b>&#8377;18,000</b></div><div>Net<b>&#8377;3,10,400</b></div></div>
+<h3 class="rv-h">By payment mode</h3>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Payment mode</th><th class="r">Payments</th><th class="r">Amount</th></tr></thead><tbody><tr><td>UPI</td><td class="r">9</td><td class="r">&#8377;1,42,600</td></tr><tr><td>Cash</td><td class="r">6</td><td class="r">&#8377;58,400</td></tr><tr><td>Credit / debit card</td><td class="r">5</td><td class="r">&#8377;78,900</td></tr><tr><td>Bank transfer</td><td class="r">3</td><td class="r">&#8377;48,500</td></tr></tbody><tfoot><tr><td><b>Total collected</b></td><td class="r"><b>23</b></td><td class="r"><b>&#8377;3,28,400</b></td></tr></tfoot></table></div>
+<h3 class="rv-h" style="margin-top:14px">By type of payment</h3>
+<div class="tbl-wrap"><table class="tbl"><thead><tr><th>Type of payment</th><th class="r">Payments</th><th class="r">Amount</th></tr></thead><tbody><tr><td>Advance on new bookings</td><td class="r">7</td><td class="r">&#8377;1,02,000</td></tr><tr><td>Collected at check-in</td><td class="r">9</td><td class="r">&#8377;1,26,400</td></tr><tr><td>Settled at check-out</td><td class="r">7</td><td class="r">&#8377;1,00,000</td></tr></tbody><tfoot><tr><td><b>Total collected</b></td><td class="r"><b>23</b></td><td class="r"><b>&#8377;3,28,400</b></td></tr></tfoot></table></div>
+<p class="hint">Refunds are shown separately and are not deducted from the collected total. Cash collected today is &#8377;115, which is what should be deposited.</p>
+</div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Software updates -->
+<div class="modal" id="m-updates" role="dialog" aria-modal="true" aria-labelledby="t-up">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg" style="width:min(840px,100%)">
+<div class="dlg-h"><div><h2 id="t-up">Software updates</h2><p>What is new in eGlobe PMS, newest first.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b">
+<details class="wn-item" open>
+<summary><b>The Redesigned PMS Dashboard is Now LIVE</b><span class="st ok">Latest</span></summary>
+<div class="wn-body">
+<p>One screen for performance, collections, rooms, guest feedback and the rates you publish.</p>
+<ul class="wn-list">
+<li><b>Today&rsquo;s Revenue &amp; Collection:</b> the value of today&rsquo;s check-ins, and money collected today by payment mode.</li>
+<li><b>Balance Due:</b> unpaid balance on today&rsquo;s check-ins, with the booking list.</li>
+<li><b>Recent Reservations:</b> filter by booked, check-in, check-out, stayover or checked-in bookings.</li>
+<li><b>Booking Source:</b> every channel on its own.</li>
+<li><b>Rate Parity:</b> Google Hotel Ads against the OTAs, with match, decrease by % or fixed rate for chosen dates.</li>
+<li><b>Occupancy Calendar &amp; Weather:</b> monthly occupancy and a 7-day forecast.</li>
+<li><b>Guest Reviews</b> and <b>Live Notifications</b>.</li>
+</ul>
+<div class="wn-how"><b>How to Access:</b><span>PMS Menu &gt;&gt; Dashboard</span></div>
+</div>
+</details>
+<details class="wn-item">
+<summary><b>Room View is Now LIVE</b></summary>
+<div class="wn-body">
+<p>We are excited to introduce the redesigned <b>Room View</b> in eGlobe PMS, offering a smarter and more convenient way to manage your property&rsquo;s daily room operations.</p>
+<h4 class="wn-h">What&rsquo;s New?</h4>
+<ul class="wn-list">
+<li><b>Live Room Status:</b> Overview of Occupied, Vacant, Dirty, Maintenance, Reserved and Blocked rooms.</li>
+<li><b>Room-wise Details:</b> View guest names, booking dates, stay duration and check-in/check-out status.</li>
+<li><b>Quick Actions:</b> Create bookings, block rooms, place rooms on hold and convert existing blocks into bookings.</li>
+<li><b>Today&rsquo;s Activity:</b> Monitor arrivals, departures, in-house guests and no-shows.</li>
+<li><b>Advanced Search &amp; Filters:</b> Find rooms by room number, guest name, room type or status.</li>
+<li><b>Day Notes:</b> Add important operational notes for specific dates.</li>
+</ul>
+<p>The new interface brings everything together on one screen, helping your front desk team manage room availability and daily operations faster and more efficiently.</p>
+<div class="wn-how"><b>How to Access:</b><span>PMS Menu &gt;&gt; Rooms View</span></div>
+<p class="wn-cta">Experience smarter room management with eGlobe PMS!</p>
+</div>
+</details>
+</div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Tasks list -->
+<div class="modal" id="m-tasks" role="dialog" aria-modal="true" aria-labelledby="t-tasks">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg" style="width:min(1320px,100%)">
+<div class="dlg-h"><div><h2 id="t-tasks">Pending Tasks</h2><p>All 26 open tasks, highest priority first. Times are as of 11:32 AM.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b">
+<div class="filters">
+<div class="grp"><span class="glbl">Category</span>
+<input type="radio" name="tflt" id="f-t-all" checked><label for="f-t-all">All</label>
+<input type="radio" name="tflt" id="f-t-rr"><label for="f-t-rr">Room requests</label>
+<input type="radio" name="tflt" id="f-t-gs"><label for="f-t-gs">Guest service</label>
+<input type="radio" name="tflt" id="f-t-mt"><label for="f-t-mt">Maintenance</label>
+<input type="radio" name="tflt" id="f-t-hk"><label for="f-t-hk">Housekeeping</label>
+<input type="radio" name="tflt" id="f-t-fd"><label for="f-t-fd">Front desk</label>
+</div>
+<div class="grp"><span class="glbl">Only</span>
+<input type="checkbox" id="f-t-over"><label for="f-t-over">Overdue (5)</label>
+<input type="checkbox" id="f-t-un"><label for="f-t-un">Unassigned (4)</label>
+</div>
+</div>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Task</th><th>Guest</th><th>Room</th><th>Category</th><th>Request</th><th>Priority</th><th>Assigned to</th><th>Created</th><th>Pending</th><th>Status</th><th>Expected by</th><th>Actions</th></tr></thead>
+<tbody>
+<tr data-c="mt" data-o="1" data-u="1" class="urgent-row"><td class="nw"><b>T1198</b></td><td>Meera Pillai</td><td>418</td><td>Maintenance</td><td>Door lock card failing</td><td><span class="pr urgent">urgent</span></td><td><span class="unassigned">Unassigned</span></td><td class="nw">11:05 AM</td><td class="nw">27m</td><td><span class="st up">Open</span></td><td class="nw">11:25 AM <span class="od">Overdue 7m</span></td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="rr" data-o="1" data-u="1" class="urgent-row"><td class="nw"><b>T1203</b></td><td>Kunal Saxena</td><td>512</td><td>Room request</td><td>Noise from adjacent room - guest wants a room change</td><td><span class="pr urgent">urgent</span></td><td><span class="unassigned">Unassigned</span></td><td class="nw">11:10 AM</td><td class="nw">22m</td><td><span class="st up">Open</span></td><td class="nw">11:30 AM <span class="od">Overdue 2m</span></td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="mt" class="urgent-row"><td class="nw"><b>T1207</b></td><td>Sanjay Bhatia</td><td>227</td><td>Maintenance</td><td>No hot water in room</td><td><span class="pr urgent">urgent</span></td><td>Suresh Kumar</td><td class="nw">11:20 AM</td><td class="nw">12m</td><td><span class="st info">In progress</span></td><td class="nw">11:40 AM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="hk" data-o="1"><td class="nw"><b>T1190</b></td><td>Pooja Menon</td><td>114</td><td>Housekeeping</td><td>Pest-control follow-up</td><td><span class="pr high">high</span></td><td>Mohan Lal</td><td class="nw">9:55 AM</td><td class="nw">1h 37m</td><td><span class="st up">Open</span></td><td class="nw">10:40 AM <span class="od">Overdue 52m</span></td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="rr" data-u="1"><td class="nw"><b>T1196</b></td><td>Rahul Chopra</td><td>305</td><td>Room request</td><td>Baby cot required in room</td><td><span class="pr high">high</span></td><td><span class="unassigned">Unassigned</span></td><td class="nw">10:48 AM</td><td class="nw">44m</td><td><span class="st up">Open</span></td><td class="nw">11:33 AM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="gs"><td class="nw"><b>T1205</b></td><td>Arjun Thakur</td><td>332</td><td>Guest service</td><td>Airport pick-up arrangement (3:30 PM)</td><td><span class="pr high">high</span></td><td>Rohit Bhatt</td><td class="nw">11:15 AM</td><td class="nw">17m</td><td><span class="st info">In progress</span></td><td class="nw">12:00 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="fd" data-o="1"><td class="nw"><b>T1186</b></td><td>Divya Reddy</td><td>&ndash;</td><td>Front desk</td><td>Collect ID proof / Form-C (arriving today)</td><td><span class="pr high">high</span></td><td>Priya Nair</td><td class="nw">10:30 AM</td><td class="nw">1h 02m</td><td><span class="st up">Open</span></td><td class="nw">11:15 AM <span class="od">Overdue 17m</span></td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="fd"><td class="nw"><b>T1199</b></td><td>Amit Chopra</td><td>301</td><td>Front desk</td><td>Extension request - check availability</td><td><span class="pr high">high</span></td><td>Rahul Verma</td><td class="nw">11:00 AM</td><td class="nw">32m</td><td><span class="st info">In progress</span></td><td class="nw">11:45 AM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="hk"><td class="nw"><b>T1201</b></td><td>Neha Agarwal</td><td>223</td><td>Housekeeping</td><td>Replace bed linen - stain reported</td><td><span class="pr high">high</span></td><td>Kavita Rawat</td><td class="nw">11:05 AM</td><td class="nw">27m</td><td><span class="st up">Open</span></td><td class="nw">11:50 AM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="rr"><td class="nw"><b>T1195</b></td><td>Isha Kapoor</td><td>409</td><td>Room request</td><td>Extra towels required</td><td><span class="pr normal">normal</span></td><td>Geeta Kumari</td><td class="nw">10:40 AM</td><td class="nw">52m</td><td><span class="st info">In progress</span></td><td class="nw">12:40 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="rr"><td class="nw"><b>T1192</b></td><td>Tanvi Jain</td><td>206</td><td>Room request</td><td>Extra bed request</td><td><span class="pr normal">normal</span></td><td>Sunita Devi</td><td class="nw">10:15 AM</td><td class="nw">1h 17m</td><td><span class="st info">In progress</span></td><td class="nw">12:15 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="rr"><td class="nw"><b>T1200</b></td><td>Yash Pandey</td><td>121</td><td>Room request</td><td>Request to change room (higher floor)</td><td><span class="pr normal">normal</span></td><td>Ananya Das</td><td class="nw">11:00 AM</td><td class="nw">32m</td><td><span class="st up">Open</span></td><td class="nw">1:00 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="gs"><td class="nw"><b>T1197</b></td><td>Harsh Bansal</td><td>209</td><td>Guest service</td><td>Late check-out request (until 4 PM)</td><td><span class="pr normal">normal</span></td><td>Priya Nair</td><td class="nw">10:45 AM</td><td class="nw">47m</td><td><span class="st up">Open</span></td><td class="nw">12:45 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="gs"><td class="nw"><b>T1202</b></td><td>Shreya Desai</td><td>215</td><td>Guest service</td><td>Taxi booking for sightseeing at 2 PM</td><td><span class="pr normal">normal</span></td><td>Ananya Das</td><td class="nw">11:10 AM</td><td class="nw">22m</td><td><span class="st up">Open</span></td><td class="nw">1:10 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="mt"><td class="nw"><b>T1194</b></td><td>Vikram Shekhawat</td><td>507</td><td>Maintenance</td><td>Wi-Fi weak in room</td><td><span class="pr normal">normal</span></td><td>Vikram Singh</td><td class="nw">10:35 AM</td><td class="nw">57m</td><td><span class="st info">In progress</span></td><td class="nw">12:35 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="hk" data-o="1"><td class="nw"><b>T1185</b></td><td>Nikhil Rao</td><td>120</td><td>Housekeeping</td><td>Deep clean after long stay</td><td><span class="pr normal">normal</span></td><td>Kavita Rawat</td><td class="nw">9:15 AM</td><td class="nw">2h 17m</td><td><span class="st up">Open</span></td><td class="nw">11:15 AM <span class="od">Overdue 17m</span></td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="hk"><td class="nw"><b>T1193</b></td><td>Priya Kulkarni</td><td>316</td><td>Housekeeping</td><td>Turndown service request</td><td><span class="pr normal">normal</span></td><td>Imran Qureshi</td><td class="nw">10:30 AM</td><td class="nw">1h 02m</td><td><span class="st up">Open</span></td><td class="nw">12:30 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="hk"><td class="nw"><b>T1191</b></td><td>Siddharth Rao</td><td>411</td><td>Housekeeping</td><td>Bathroom amenities refill</td><td><span class="pr normal">normal</span></td><td>Deepa Menon</td><td class="nw">10:20 AM</td><td class="nw">1h 12m</td><td><span class="st up">Open</span></td><td class="nw">12:20 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="hk"><td class="nw"><b>T1204</b></td><td>Anjali Verma</td><td>311</td><td>Housekeeping</td><td>Hypoallergenic pillows requested</td><td><span class="pr normal">normal</span></td><td>Geeta Kumari</td><td class="nw">11:12 AM</td><td class="nw">20m</td><td><span class="st up">Open</span></td><td class="nw">1:12 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="fd" data-u="1"><td class="nw"><b>T1188</b></td><td>Rohan Mehta</td><td>318</td><td>Front desk</td><td>GST invoice details pending (arriving today)</td><td><span class="pr normal">normal</span></td><td><span class="unassigned">Unassigned</span></td><td class="nw">10:00 AM</td><td class="nw">1h 32m</td><td><span class="st up">Open</span></td><td class="nw">12:00 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="fd"><td class="nw"><b>T1189</b></td><td>Karan Malhotra</td><td>119</td><td>Front desk</td><td>Confirm arrival time with guest</td><td><span class="pr normal">normal</span></td><td>Rahul Verma</td><td class="nw">10:05 AM</td><td class="nw">1h 27m</td><td><span class="st info">In progress</span></td><td class="nw">12:05 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="fd"><td class="nw"><b>T1206</b></td><td>Sneha Kapoor</td><td>205</td><td>Front desk</td><td>Bill split request (company + personal)</td><td><span class="pr normal">normal</span></td><td>Priya Nair</td><td class="nw">11:18 AM</td><td class="nw">14m</td><td><span class="st up">Open</span></td><td class="nw">1:18 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="rr"><td class="nw"><b>T1180</b></td><td>Manish Tiwari</td><td>216</td><td>Room request</td><td>Mini-fridge restock</td><td><span class="pr low">low</span></td><td>Imran Qureshi</td><td class="nw">9:05 AM</td><td class="nw">2h 27m</td><td><span class="st up">Open</span></td><td class="nw">1:05 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="gs"><td class="nw"><b>T1184</b></td><td>Preeti Arora</td><td>322</td><td>Guest service</td><td>Laundry pick-up</td><td><span class="pr low">low</span></td><td>Rohit Bhatt</td><td class="nw">9:40 AM</td><td class="nw">1h 52m</td><td><span class="st up">Open</span></td><td class="nw">1:40 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="hk"><td class="nw"><b>T1187</b></td><td>Gaurav Sethi</td><td>218</td><td>Housekeeping</td><td>Balcony cleaning</td><td><span class="pr low">low</span></td><td>Mohan Lal</td><td class="nw">9:50 AM</td><td class="nw">1h 42m</td><td><span class="st up">Open</span></td><td class="nw">1:50 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+<tr data-c="hk"><td class="nw"><b>T1182</b></td><td>Riya Menon (checked out)</td><td>102</td><td>Housekeeping</td><td>Lost &amp; found item to be logged</td><td><span class="pr low">low</span></td><td>Sunita Devi</td><td class="nw">9:20 AM</td><td class="nw">2h 12m</td><td><span class="st up">Open</span></td><td class="nw">1:20 PM</td><td><select class="rowact sel" aria-label="Task actions"><option>Actions</option><option>Assign task</option><option>Change priority</option><option>Mark in progress</option><option>Mark completed</option><option>View guest details</option></select></td></tr>
+</tbody>
+</table></div>
+<p class="hint">Priority sets the expected completion time: urgent 20 min, high 45 min, normal 2 h, low 4 h. A task is overdue once its expected time has passed.</p>
+</div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Arrivals -->
+<div class="modal" id="m-arrivals" role="dialog" aria-modal="true" aria-labelledby="t-arr">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg">
+<div class="dlg-h"><div><h2 id="t-arr">Arrivals today</h2><p>28 reservations arriving on 13 Nov: 14 checked in, 14 expected. Showing 8.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b"><div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Reservation</th><th>Guest</th><th>Room</th><th class="r">Nights</th><th>Status</th><th class="r">Balance</th></tr></thead>
+<tbody>
+<tr><td><b>RSV48912</b></td><td>Ananya Iyer</td><td>412</td><td class="r">3</td><td><span class="st ok">Checked in</span></td><td class="r">&#8377;20,400</td></tr>
+<tr><td><b>RSV48915</b></td><td>Rohan Mehta</td><td>318</td><td class="r">4</td><td><span class="st up">Expected</span></td><td class="r">&#8377;29,200</td></tr>
+<tr><td><b>RSV48921</b></td><td>Sneha Kapoor</td><td>205</td><td class="r">2</td><td><span class="st ok">Checked in</span></td><td class="r">&#8377;18,600</td></tr>
+<tr><td><b>RSV48927</b></td><td>Vikram Shekhawat</td><td>507</td><td class="r">5</td><td><span class="st ok">Checked in</span></td><td class="r">&#8377;32,800</td></tr>
+<tr><td><b>RSV48930</b></td><td>Neha Agarwal</td><td>223</td><td class="r">2</td><td><span class="st ok">Checked in</span></td><td class="r">&#8377;10,200</td></tr>
+<tr><td><b>RSV48934</b></td><td>Karan Malhotra</td><td>119</td><td class="r">3</td><td><span class="st up">Expected</span></td><td class="r">&#8377;15,800</td></tr>
+<tr><td><b>RSV48938</b></td><td>Divya Reddy</td><td>Not assigned</td><td class="r">4</td><td><span class="st up">Expected</span></td><td class="r">&#8377;21,600</td></tr>
+<tr><td><b>RSV48941</b></td><td>Amit Chopra</td><td>301</td><td class="r">2</td><td><span class="st ok">Checked in</span></td><td class="r">&#8377;12,400</td></tr>
+</tbody></table></div></div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Departures -->
+<div class="modal" id="m-departures" role="dialog" aria-modal="true" aria-labelledby="t-dep">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg">
+<div class="dlg-h"><div><h2 id="t-dep">Departures today</h2><p>24 reservations departing on 13 Nov: 16 checked out, 8 pending (check-out time 11:00 AM). Showing 8.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b"><div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Reservation</th><th>Guest</th><th>Room</th><th>Status</th><th class="r">Balance</th></tr></thead>
+<tbody>
+<tr><td><b>RSV48702</b></td><td>Siddharth Nair</td><td>107</td><td><span class="st ok">Checked out 9:40 AM</span></td><td class="r">&#8377;0</td></tr>
+<tr><td><b>RSV48706</b></td><td>Deepa Rao</td><td>110</td><td><span class="st ok">Checked out 10:05 AM</span></td><td class="r">&#8377;0</td></tr>
+<tr><td><b>RSV48711</b></td><td>Gaurav Menon</td><td>208</td><td><span class="st ok">Checked out 10:20 AM</span></td><td class="r">&#8377;0</td></tr>
+<tr><td><b>RSV48715</b></td><td>Kavya Reddy</td><td>306</td><td><span class="st ok">Checked out 10:45 AM</span></td><td class="r">&#8377;0</td></tr>
+<tr><td><b>RSV48719</b></td><td>Pranav Bhatia</td><td>119</td><td><span class="st today">Pending</span></td><td class="r">&#8377;0</td></tr>
+<tr><td><b>RSV48723</b></td><td>Ritu Bhatia</td><td>318</td><td><span class="st today">Pending</span></td><td class="r">&#8377;4,200</td></tr>
+<tr><td><b>RSV48727</b></td><td>Manish Das</td><td>113</td><td><span class="st today">Pending</span></td><td class="r">&#8377;0</td></tr>
+<tr><td><b>RSV48730</b></td><td>Isha Siddiqui</td><td>221</td><td><span class="st today">Pending</span></td><td class="r">&#8377;12,600</td></tr>
+</tbody></table></div></div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Stayovers -->
+<div class="modal" id="m-stayovers" role="dialog" aria-modal="true" aria-labelledby="t-stay">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg">
+<div class="dlg-h"><div><h2 id="t-stay">Stayovers</h2><p>60 guests already checked in who stay beyond today. They are not counted as arrivals or departures. Showing 8.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b"><div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Reservation</th><th>Guest</th><th>Room</th><th>Checked in</th><th>Check-out</th><th class="r">Nights left</th><th class="r">Guests</th></tr></thead>
+<tbody>
+<tr><td><b>RSV48790</b></td><td>Lucas Dubois</td><td>117</td><td>9 Nov</td><td>17 Nov</td><td class="r">4</td><td class="r">2</td></tr>
+<tr><td><b>RSV48812</b></td><td>Aditi Sharma</td><td>104</td><td>11 Nov</td><td>15 Nov</td><td class="r">2</td><td class="r">2</td></tr>
+<tr><td><b>RSV48744</b></td><td>Pranav Kulkarni</td><td>213</td><td>8 Nov</td><td>14 Nov</td><td class="r">1</td><td class="r">3</td></tr>
+<tr><td><b>RSV48803</b></td><td>Meera Nair</td><td>303</td><td>12 Nov</td><td>16 Nov</td><td class="r">3</td><td class="r">2</td></tr>
+<tr><td><b>RSV48721</b></td><td>Sanjay Bhatia</td><td>227</td><td>6 Nov</td><td>18 Nov</td><td class="r">5</td><td class="r">3</td></tr>
+<tr><td><b>RSV48760</b></td><td>Pooja Menon</td><td>114</td><td>5 Nov</td><td>15 Nov</td><td class="r">2</td><td class="r">2</td></tr>
+<tr><td><b>RSV48755</b></td><td>Arjun Thakur</td><td>332</td><td>4 Nov</td><td>14 Nov</td><td class="r">1</td><td class="r">1</td></tr>
+<tr><td><b>RSV48731</b></td><td>Simran Kohli</td><td>421</td><td>3 Nov</td><td>14 Nov</td><td class="r">1</td><td class="r">2</td></tr>
+</tbody></table></div>
+<p class="hint">Nights left counts tonight. A stayover checked in before today and checks out after today.</p></div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- In-house guests -->
+<div class="modal" id="m-inhouse" role="dialog" aria-modal="true" aria-labelledby="t-inh">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg">
+<div class="dlg-h"><div><h2 id="t-inh">In-house guests</h2><p>172 guests in 82 rooms right now: <a class="link" href="#m-stayovers">60 stayovers</a> + 14 arrived today + 8 departing today (not yet checked out). Showing 8.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b"><div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Guest</th><th>Room</th><th class="r">Guests</th><th>Type</th><th>Check-out</th></tr></thead>
+<tbody>
+<tr><td>Ananya Iyer</td><td>412</td><td class="r">2</td><td><span class="st info">Arrived today</span></td><td>16 Nov</td></tr>
+<tr><td>Neha Agarwal</td><td>223</td><td class="r">2</td><td><span class="st info">Arrived today</span></td><td>15 Nov</td></tr>
+<tr><td>Sanjay Bhatia</td><td>227</td><td class="r">3</td><td><span class="st up">Stayover</span></td><td>18 Nov</td></tr>
+<tr><td>Pooja Menon</td><td>114</td><td class="r">2</td><td><span class="st up">Stayover</span></td><td>15 Nov</td></tr>
+<tr><td>Arjun Thakur</td><td>332</td><td class="r">1</td><td><span class="st up">Stayover</span></td><td>14 Nov</td></tr>
+<tr><td>Pranav Bhatia</td><td>119</td><td class="r">2</td><td><span class="st today">Departing today</span></td><td>13 Nov</td></tr>
+<tr><td>Lucas Dubois</td><td>117</td><td class="r">2</td><td><span class="st up">Stayover</span></td><td>17 Nov</td></tr>
+<tr><td>Isha Kapoor</td><td>409</td><td class="r">4</td><td><span class="st up">Stayover</span></td><td>16 Nov</td></tr>
+</tbody></table></div></div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- New bookings -->
+<div class="modal" id="m-newbook" role="dialog" aria-modal="true" aria-labelledby="t-nb">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg">
+<div class="dlg-h"><div><h2 id="t-nb">New bookings today</h2><p>31 reservations created on 13 Nov, worth &#8377;7,12,400 (ex-GST). Showing 8.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b"><div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Reservation</th><th>Guest</th><th>Channel</th><th>Stay</th><th>Room type</th><th class="r">Value (ex-GST)</th></tr></thead>
+<tbody>
+<tr><td><b>RSV48962</b></td><td>Lucas Taylor</td><td>Booking.com</td><td>16 &ndash; 19 Nov</td><td>Deluxe Room</td><td class="r">&#8377;19,800</td></tr>
+<tr><td><b>RSV48963</b></td><td>Aarav Saxena</td><td>MakeMyTrip</td><td>14 &ndash; 16 Nov</td><td>Premium Room</td><td class="r">&#8377;15,600</td></tr>
+<tr><td><b>RSV48964</b></td><td>Komal Arora</td><td>Booking Engine</td><td>20 &ndash; 23 Nov</td><td>Executive Suite</td><td class="r">&#8377;27,900</td></tr>
+<tr><td><b>RSV48965</b></td><td>Yuki Tanaka</td><td>Google Hotel Ads</td><td>13 &ndash; 15 Nov</td><td>Deluxe Room</td><td class="r">&#8377;13,000</td></tr>
+<tr><td><b>RSV48966</b></td><td>Nikhil Jain</td><td>Walk-in</td><td>13 &ndash; 14 Nov</td><td>Deluxe Room</td><td class="r">&#8377;6,700</td></tr>
+<tr><td><b>RSV48967</b></td><td>Swati Mishra</td><td>Airbnb</td><td>21 &ndash; 24 Nov</td><td>Family Suite</td><td class="r">&#8377;26,400</td></tr>
+<tr><td><b>RSV48968</b></td><td>Harsh Desai</td><td>Other OTAs</td><td>15 &ndash; 17 Nov</td><td>Premium Room</td><td class="r">&#8377;14,800</td></tr>
+<tr><td><b>RSV48969</b></td><td>Tanvi Menon</td><td>Google Hotel Ads</td><td>18 &ndash; 20 Nov</td><td>Deluxe Room</td><td class="r">&#8377;12,400</td></tr>
+</tbody></table></div></div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Cancellations -->
+<div class="modal" id="m-cancel" role="dialog" aria-modal="true" aria-labelledby="t-cx">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg">
+<div class="dlg-h"><div><h2 id="t-cx">Cancellations today</h2><p>3 reservations cancelled on 13 Nov, worth &#8377;68,400 (ex-GST). &#8377;6,200 kept as cancellation fees.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b"><div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Reservation</th><th>Guest</th><th>Channel</th><th>Stay</th><th class="r">Value (ex-GST)</th><th class="r">Fee kept</th><th>Reason</th></tr></thead>
+<tbody>
+<tr><td><b>RSV48440</b></td><td>Hans Mueller</td><td>Booking.com</td><td>16 &ndash; 19 Nov</td><td class="r">&#8377;30,200</td><td class="r">&#8377;3,100</td><td>Change of plans</td></tr>
+<tr><td><b>RSV48512</b></td><td>Olivia Taylor</td><td>MakeMyTrip</td><td>20 &ndash; 22 Nov</td><td class="r">&#8377;22,800</td><td class="r">&#8377;3,100</td><td>Flight cancelled</td></tr>
+<tr><td><b>RSV48587</b></td><td>Tanmay Joshi</td><td>Agoda</td><td>14 &ndash; 15 Nov</td><td class="r">&#8377;15,400</td><td class="r">&#8377;0</td><td>Free-cancellation rate</td></tr>
+</tbody>
+<tfoot><tr><td colspan="4" style="font-weight:700;border-top:2px solid var(--navy)">Total</td><td class="r" style="border-top:2px solid var(--navy)"><b>&#8377;68,400</b></td><td class="r" style="border-top:2px solid var(--navy)"><b>&#8377;6,200</b></td><td style="border-top:2px solid var(--navy)"></td></tr></tfoot></table></div></div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Rooms -->
+<div class="modal" id="m-rooms" role="dialog" aria-modal="true" aria-labelledby="t-rm">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg">
+<div class="dlg-h"><div><h2 id="t-rm">Rooms</h2><p>110 rooms: 82 occupied + 14 vacant clean + 11 vacant dirty + 2 out of order + 1 maintenance. Status as of 11:32 AM.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b">
+<div class="room-groups">
+<div class="rg" style="--kc:var(--c3)"><h3><i class="k3"></i>Vacant clean <span>14 rooms &middot; 12 inspected and ready, 2 awaiting inspection (211, 317)</span></h3><div class="rm"><span>103</span><span>109</span><span>112</span><span>122</span><span>204</span><span>211</span><span>219</span><span>302</span><span>317</span><span>404</span><span>413</span><span>508</span><span>511</span><span>520</span></div></div>
+<div class="rg" style="--kc:var(--c2)"><h3><i class="k2"></i>Vacant dirty <span>11 rooms &middot; 4 being cleaned (107, 110, 208, 306), 7 not started</span></h3><div class="rm"><span>102</span><span>107</span><span>110</span><span>116</span><span>208</span><span>222</span><span>306</span><span>313</span><span>408</span><span>414</span><span>516</span></div></div>
+<div class="rg" style="--kc:var(--c8)"><h3><i class="k8"></i>Out of order <span>2 rooms &middot; excluded from sellable inventory</span></h3><div class="rm"><span>118</span><span>307</span></div><p class="hint">118: AC compressor, until 17 Nov. 307: ceiling repair, until 15 Nov.</p></div>
+<div class="rg" style="--kc:var(--c7)"><h3><i class="k7"></i>Maintenance <span>1 room &middot; excluded from sellable inventory</span></h3><div class="rm"><span>214</span></div><p class="hint">214: scheduled plumbing maintenance, until 14 Nov.</p></div>
+<div class="rg" style="--kc:var(--c1)"><h3><i class="k1"></i>Occupied <span>82 rooms &middot; see <a class="link" href="#m-inhouse">In-house guests</a></span></h3></div>
+</div>
+<p class="hint">Room status describes the room itself. Cleaning progress is shown separately in the Housekeeping widget.</p>
+</div>
+<div class="dlg-f"><a class="btn" href="#m-block">Block a room</a><a class="btn primary" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Notifications -->
+<div class="modal" id="m-notif" role="dialog" aria-modal="true" aria-labelledby="t-nt">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg panel">
+<div class="dlg-h"><div><h2 id="t-nt">Notifications</h2><p>6 new</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b"><ul class="notif">
+<li><span class="al-i opp"><svg class="ic"><use href="#i-plus"/></svg></span><div><b>New booking RSV48969 <span class="dot-new" aria-label="new"></span></b><p>Tanvi Menon &middot; Deluxe &middot; 18 &ndash; 20 Nov &middot; Google Hotel Ads &middot; &#8377;12,400.</p><small>11:31 AM</small></div></li>
+<li><span class="al-i urgent"><svg class="ic"><use href="#i-zap"/></svg></span><div><b>Door lock card failing, room 418 <span class="dot-new" aria-label="new"></span></b><p>Urgent task is 7 minutes overdue and has no assignee.</p><small>11:25 AM</small><div class="na"><a class="btn sm" href="#m-tasks">Assign</a></div></div></li>
+<li><span class="al-i high"><svg class="ic"><use href="#i-bed"/></svg></span><div><b>Room 211 inspection passed <span class="dot-new" aria-label="new"></span></b><p>Ready for check-in. Assigned to an arrival today.</p><small>11:28 AM</small></div></li>
+<li><span class="al-i opp"><svg class="ic"><use href="#i-card"/></svg></span><div><b>&#8377;20,000 received <span class="dot-new" aria-label="new"></span></b><p>RSV48927 &middot; Vikram Shekhawat &middot; UPI.</p><small>11:14 AM</small></div></li>
+<li><span class="al-i normal"><svg class="ic"><use href="#i-plus"/></svg></span><div><b>New booking RSV48962 <span class="dot-new" aria-label="new"></span></b><p>Lucas Taylor &middot; Deluxe &middot; 16 &ndash; 19 Nov &middot; Booking.com &middot; &#8377;19,800.</p><small>11:02 AM</small></div></li>
+<li><span class="al-i opp"><svg class="ic"><use href="#i-tag"/></svg></span><div><b>Google Hotel Ads is above Booking.com <span class="dot-new" aria-label="new"></span></b><p>Deluxe, 14 &ndash; 15 Nov: &#8377;6,500 on Google Hotel Ads against &#8377;6,200 on Booking.com.</p><small>10:40 AM</small><div class="na"><a class="btn sm" href="#rate">Review rate</a></div></div></li>
+</ul></div>
+<div class="dlg-f"><a class="btn" href="#_">Mark all as read</a></div>
+</div>
+</div>
+<!-- Search -->
+<div class="modal" id="m-search" role="dialog" aria-modal="true" aria-labelledby="t-se">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg narrow">
+<div class="dlg-h"><div><h2 id="t-se">Search</h2><p>Reservation number, guest name or room number.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b">
+<div class="search-box"><svg class="ic"><use href="#i-search"/></svg><input type="search" list="search-list" placeholder="Try RSV48912, Ananya Iyer or 412" aria-label="Search"></div>
+<datalist id="search-list">
+<option value="RSV48912 - Ananya Iyer - Room 412"><option value="RSV48915 - Rohan Mehta - Room 318"><option value="RSV48921 - Sneha Kapoor - Room 205"><option value="RSV48927 - Vikram Shekhawat - Room 507">
+<option value="RSV48930 - Neha Agarwal - Room 223"><option value="RSV48934 - Karan Malhotra - Room 119"><option value="RSV48938 - Divya Reddy"><option value="Room 412"><option value="Room 318"><option value="T1198 - Door lock card failing - Room 418">
+</datalist>
+<p class="hint">Search covers reservations, guests, rooms and tasks for this property.</p>
+</div>
+</div>
+</div>
+<!-- Block Room -->
+<div class="modal" id="m-block" role="dialog" aria-modal="true" aria-labelledby="t-bl">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg narrow">
+<div class="dlg-h"><div><h2 id="t-bl">Block room</h2><p>Remove a room from sellable inventory for a period.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b"><div class="form">
+<label>Room<select><option>103 &middot; Deluxe &middot; vacant clean</option><option>102 &middot; Deluxe &middot; vacant dirty</option><option>109 &middot; Deluxe &middot; vacant clean</option></select></label>
+<label>Block type<select><option>Out of order</option><option>Maintenance</option></select></label>
+<label>From<input type="date" value="2026-11-13"></label>
+<label>To<input type="date" value="2026-11-15"></label>
+<label class="full">Reason<input type="text" placeholder="e.g. AC repair"><span class="help">A room with a reservation inside the period cannot be blocked until it is moved.</span></label>
+</div></div>
+<div class="dlg-f"><a class="btn" href="#_">Cancel</a><a class="btn primary" href="#_">Block room</a></div>
+</div>
+</div>
+<!-- All reviews -->
+<div class="modal" id="m-reviews" role="dialog" aria-modal="true" aria-labelledby="t-rv">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg">
+<div class="dlg-h"><div><h2 id="t-rv">Guest reviews</h2><p>128 reviews, average 4.6 out of 5. Showing the latest 8.</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b">
+<div class="sum-strip"><div>Google<b>4.7</b> 64 reviews</div><div>Booking.com<b>4.5</b> 38 reviews</div><div>MakeMyTrip<b>4.4</b> 26 reviews</div><div>All sources<b>4.6</b> 128 reviews</div></div>
+<div class="tbl-wrap"><table class="tbl">
+<thead><tr><th>Date</th><th>Guest</th><th>Source</th><th>Rating</th><th>Review</th></tr></thead>
+<tbody>
+<tr><td class="nw">12 Nov</td><td>Rahul Menon</td><td>Google</td><td class="nw"><b>5.0</b> <span class="stars sm" role="img" aria-label="5.0 out of 5"><span class="s-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="s-fill" style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td>Spotless room, quick check-in and a very helpful front desk.</td></tr>
+<tr><td class="nw">11 Nov</td><td>Sophie Dubois</td><td>Booking.com</td><td class="nw"><b>4.0</b> <span class="stars sm" role="img" aria-label="4.0 out of 5"><span class="s-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="s-fill" style="width:80%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td>Great location and comfortable beds. Breakfast could be better.</td></tr>
+<tr><td class="nw">10 Nov</td><td>Priya Kapoor</td><td>MakeMyTrip</td><td class="nw"><b>5.0</b> <span class="stars sm" role="img" aria-label="5.0 out of 5"><span class="s-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="s-fill" style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td>Late check-out was arranged without any fuss. Will stay again.</td></tr>
+<tr><td class="nw">9 Nov</td><td>Arjun Bhatia</td><td>Google</td><td class="nw"><b>4.0</b> <span class="stars sm" role="img" aria-label="4.0 out of 5"><span class="s-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="s-fill" style="width:80%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td>Clean and quiet. Wi-Fi was slow in the evening.</td></tr>
+<tr><td class="nw">8 Nov</td><td>Hans Becker</td><td>Booking.com</td><td class="nw"><b>5.0</b> <span class="stars sm" role="img" aria-label="5.0 out of 5"><span class="s-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="s-fill" style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td>Beautiful interiors and friendly staff.</td></tr>
+<tr><td class="nw">7 Nov</td><td>Neelam Sethi</td><td>Google</td><td class="nw"><b>3.0</b> <span class="stars sm" role="img" aria-label="3.0 out of 5"><span class="s-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="s-fill" style="width:60%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td>Room was fine but the AC took a long time to cool.</td></tr>
+<tr><td class="nw">6 Nov</td><td>Kenji Mori</td><td>Booking.com</td><td class="nw"><b>5.0</b> <span class="stars sm" role="img" aria-label="5.0 out of 5"><span class="s-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="s-fill" style="width:100%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td>Perfect for a short stay. Staff arranged an airport pick-up.</td></tr>
+<tr><td class="nw">5 Nov</td><td>Vivek Rawat</td><td>MakeMyTrip</td><td class="nw"><b>4.0</b> <span class="stars sm" role="img" aria-label="4.0 out of 5"><span class="s-base">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="s-fill" style="width:80%">&#9733;&#9733;&#9733;&#9733;&#9733;</span></span></td><td>Good value for money. Check-in was a little slow.</td></tr>
+</tbody>
+</table></div></div>
+<div class="dlg-f"><a class="btn" href="#_">Close</a></div>
+</div>
+</div>
+<!-- Change the Google Hotel Ads rate -->
+<div class="modal" id="m-rate-change" role="dialog" aria-modal="true" aria-labelledby="t-rc">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg narrow">
+<div class="dlg-h"><div><h2 id="t-rc">Change the Google Hotel Ads rate</h2><p>Deluxe Room &middot; only Google Hotel Ads changes</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b rp">
+<div class="rp-dates">
+<label>From<input type="date" value="2026-11-14"></label>
+<label>To<input type="date" value="2026-11-15"></label>
+</div>
+<div class="rp-opts">
+<label class="opt"><input type="radio" name="rpm" id="rpm-match" checked>
+<span class="opt-b"><b>Match an OTA</b>
+<select class="sel sm rp-ota" aria-label="OTA to match"><option value="bdc" selected>Booking.com &middot; &#8377;6,200</option><option value="mmt">MakeMyTrip &middot; &#8377;6,300</option><option value="agoda">Agoda &middot; &#8377;6,350</option></select>
+<span class="pv pv-bdc">New rate <b>&#8377;6,200</b> (4.6% lower)</span>
+<span class="pv pv-mmt">New rate <b>&#8377;6,300</b> (3.1% lower)</span>
+<span class="pv pv-agoda">New rate <b>&#8377;6,350</b> (2.3% lower)</span>
+</span>
+</label>
+<label class="opt"><input type="radio" name="rpm" id="rpm-pct">
+<span class="opt-b"><b>Decrease by</b>
+<span class="opt-in"><input type="number" min="0" max="50" step="0.1" placeholder="e.g. 4.6" aria-label="Decrease percentage"> %</span>
+</span>
+</label>
+<label class="opt"><input type="radio" name="rpm" id="rpm-fix">
+<span class="opt-b"><b>Fix a rate</b>
+<span class="opt-in">&#8377; <input type="number" min="0" step="50" placeholder="e.g. 6200" aria-label="Fixed rate"></span>
+</span>
+</label>
+</div>
+<p class="hint">Only Google Hotel Ads changes, and only for the dates above. Your Booking Engine and OTA rates stay as they are.</p>
+</div>
+<div class="dlg-f"><a class="btn" href="#_">Cancel</a><a class="btn primary" href="#m-rates">Apply to Google Hotel Ads only</a></div>
+</div>
+</div>
+<!-- Confirm Google Hotel Ads rate change -->
+<div class="modal" id="m-rates" role="dialog" aria-modal="true" aria-labelledby="t-ur">
+<a class="bd" href="#_" aria-label="Close"></a>
+<div class="dlg narrow">
+<div class="dlg-h"><div><h2 id="t-ur">Apply to Google Hotel Ads?</h2><p>Deluxe Room &middot; the dates you selected</p></div><a class="x-btn" href="#_" aria-label="Close"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="dlg-b">
+<ul class="plain">
+<li>Only the <b>Google Hotel Ads</b> rate changes, and only for the selected dates.</li>
+<li>Your Booking Engine and OTA rates are not changed.</li>
+<li>You can restore the previous Google Hotel Ads rate for these dates at any time.</li>
+</ul>
+</div>
+<div class="dlg-f"><a class="btn" href="#_">Cancel</a><a class="btn primary" href="#_">Confirm</a></div>
+</div>
+</div>
+<!-- Live notifications: a new pop-up every 7 seconds, in a shuffled order (pure CSS). Hovering pauses them, x hides one. -->
+<div class="toasts" role="status" aria-live="polite" aria-label="Live notifications">
+<div class="toast tt-book" style="animation-delay:1.5s"><span id="tc-1" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-plus"/></svg></span><div class="toast-b"><b>New booking received</b><p>RSV48969 &middot; Tanvi Menon &middot; Google Hotel Ads &middot; &#8377;12,400</p><small>Just now &middot; <a href="#m-newbook">View</a></small></div><a class="toast-x" href="#tc-1" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-info" style="animation-delay:8.5s"><span id="tc-2" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-login"/></svg></span><div class="toast-b"><b>Guest arriving soon</b><p>Rohan Mehta &middot; Room 318 &middot; RSV48915. 14 arrivals are still expected today.</p><small>Just now &middot; <a href="#m-arrivals">View arrivals</a></small></div><a class="toast-x" href="#tc-2" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-warn" style="animation-delay:15.5s"><span id="tc-3" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-trend"/></svg></span><div class="toast-b"><b>Rate parity alert</b><p>Google Hotel Ads is &#8377;300 (4.6%) above Booking.com for Sat 14 &ndash; Sun 15 Nov.</p><small>Just now &middot; <a href="#m-rate-change">Change rate</a></small></div><a class="toast-x" href="#tc-3" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-book" style="animation-delay:22.5s"><span id="tc-4" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-plus"/></svg></span><div class="toast-b"><b>New booking received</b><p>RSV48967 &middot; Swati Mishra &middot; Airbnb &middot; &#8377;26,400</p><small>Just now &middot; <a href="#m-newbook">View</a></small></div><a class="toast-x" href="#tc-4" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-bad" style="animation-delay:29.5s"><span id="tc-5" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-alert"/></svg></span><div class="toast-b"><b>Tasks need attention</b><p>5 overdue, 4 unassigned and 3 urgent tasks.</p><small>Just now &middot; <a href="#m-tasks">View tasks</a></small></div><a class="toast-x" href="#tc-5" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-book" style="animation-delay:36.5s"><span id="tc-6" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-percent"/></svg></span><div class="toast-b"><b>19 rooms left to sell</b><p>Occupancy is 82% and 14 vacant rooms are clean and ready.</p><small>Just now &middot; <a href="#m-rooms">View rooms</a></small></div><a class="toast-x" href="#tc-6" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-warn" style="animation-delay:43.5s"><span id="tc-7" class="tclose"></span><span class="toast-i">&#9733;</span><div class="toast-b"><b>Review waiting for a reply</b><p>Sophie Dubois left 4 stars on Booking.com: &ldquo;Breakfast could be better.&rdquo;</p><small>Just now &middot; <a href="#m-reviews">View reviews</a></small></div><a class="toast-x" href="#tc-7" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-book" style="animation-delay:50.5s"><span id="tc-8" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-plus"/></svg></span><div class="toast-b"><b>New booking received</b><p>RSV48964 &middot; Komal Arora &middot; Booking Engine &middot; &#8377;27,900</p><small>Just now &middot; <a href="#m-newbook">View</a></small></div><a class="toast-x" href="#tc-8" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-info" style="animation-delay:57.5s"><span id="tc-9" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-rupee"/></svg></span><div class="toast-b"><b>Balance due today</b><p>&#8377;85,700 falls due today on 6 bookings.</p><small>Just now &middot; <a href="#m-balance">View list</a></small></div><a class="toast-x" href="#tc-9" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-bad" style="animation-delay:64.5s"><span id="tc-10" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-ban"/></svg></span><div class="toast-b"><b>Booking cancelled</b><p>RSV48587 &middot; Tanmay Joshi &middot; 14 &ndash; 15 Nov. Free-cancellation rate, no fee kept.</p><small>Just now &middot; <a href="#m-cancel">View</a></small></div><a class="toast-x" href="#tc-10" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-warn" style="animation-delay:71.5s"><span id="tc-11" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-bed"/></svg></span><div class="toast-b"><b>Rooms awaiting inspection</b><p>2 rooms are waiting for inspection. 5 of 14 arrival rooms are ready.</p><small>Just now &middot; <a href="#housekeeping">View</a></small></div><a class="toast-x" href="#tc-11" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+<div class="toast tt-bad" style="animation-delay:78.5s"><span id="tc-12" class="tclose"></span><span class="toast-i"><svg class="ic"><use href="#i-card"/></svg></span><div class="toast-b"><b>Overdue balance</b><p>&#8377;62,000 is overdue on 2 bookings.</p><small>Just now &middot; <a href="#m-balance">View list</a></small></div><a class="toast-x" href="#tc-12" aria-label="Hide this notification"><svg class="ic"><use href="#i-x"/></svg></a></div>
+</div>
+</body>
+</html>
