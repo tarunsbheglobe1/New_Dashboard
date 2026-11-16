@@ -1697,3 +1697,118 @@ body { background: #f3f7fb; color: var(--navy); }
 body:has(#wt-alertcard:not(:checked)) #alertcard { display: none !important; }
 /* with the alert hidden the other four fill the strip */
 body:has(#wt-alertcard:not(:checked)) .kpis2 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ================================================================
+   Module not subscribed: blurred preview + Subscribe now (Housekeeping)
+   ================================================================ */
+#housekeeping { position: relative; overflow: hidden; }
+.sub-ov { display: none; position: absolute; inset: 0; z-index: 3; place-items: center; background: rgba(243, 247, 251, .45); }
+body:has(#sub-housekeeping:not(:checked)) #housekeeping .sub-ov { display: grid; }
+body:has(#sub-housekeeping:not(:checked)) #housekeeping > .card-h,
+body:has(#sub-housekeeping:not(:checked)) #housekeeping > .card-b { filter: blur(5px); opacity: .85; pointer-events: none; user-select: none; }
+.sub-btn { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 999px; background: #2f6fed; color: #fff; font-size: 13.5px; font-weight: 600; box-shadow: 0 6px 18px rgba(47, 111, 237, .35); }
+.sub-btn:hover { background: #2459c9; }
+.sub-btn .ic { width: 16px; height: 16px; }
+.sub-btn::after { content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 10px); transform: translateX(-50%); padding: 6px 10px; border-radius: 8px; background: var(--navy); color: #fff; font-size: 12px; font-weight: 500; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity .12s; pointer-events: none; }
+.sub-btn:hover::after, .sub-btn:focus-visible::after { opacity: 1; visibility: visible; }
+.wt-sub { background: #f7f9fc; border-radius: 10px; margin: 2px 0 4px 24px; padding-left: 12px; padding-right: 12px; border-bottom: 0; }
+
+.wtsub:checked ~ .sw { background: #2f6fed; }
+.wtsub:checked ~ .sw::after { transform: translateX(18px); }
+.wtsub:focus-visible ~ .sw { outline: 2px solid #2f6fed; outline-offset: 2px; }
+
+/* ================================================================
+   Phones and small tablets (800px and below): one column, nothing wider than the screen
+   ================================================================ */
+@media (max-width: 800px) {
+  html, body { overflow-x: hidden; }
+  .page { padding: 12px 12px 32px; }
+  .page-tools { margin-bottom: 12px; }
+  .grid { gap: 12px; margin-top: 12px; }
+  .gbreak { display: none; }
+
+  /* every widget is one full-width column */
+  .grid > .card, .grid > #recent, .grid > #checkins, .grid > #tasks, .grid > #housekeeping, .grid > #calendar,
+  .grid > #roomstatus, .grid > #occgauge, .grid > #channels, .grid > #reviews, .grid > #whatsnew,
+  .grid > .stack, .grid > .row4 { flex: 1 1 100% !important; width: 100%; max-width: 100%; min-width: 0; }
+  .stack { gap: 12px; }
+  .row4 { flex-direction: column; gap: 12px; }
+  .row4 > .card { flex: 1 1 auto !important; width: 100%; }
+
+  /* key figures: two across, the alert card full width */
+  .kpis, .kpis2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 10px; }
+  .kpi { padding: 12px 14px; }
+  .kpi .big { font-size: 20px; }
+  .kpis2 .kpi { display: block; }
+  .kpis2 .kpi-alert { grid-column: 1 / -1; }
+  .kpi h3 { font-size: 12px; }
+
+  /* Recent Reservations: each booking is a small card instead of a wide table row */
+  #recent .card-h { flex-wrap: wrap; }
+  #recent .rr-filter { flex-wrap: wrap; width: 100%; }
+  #recent .rrf, #recent .drp { flex: 1 1 100%; }
+  .rr-th { display: none; }
+  #recent .rr-list { max-height: none; }
+  #recent .rr { grid-template-columns: 34px minmax(0, 1fr) minmax(0, 1fr) auto; grid-template-rows: auto auto auto; gap: 2px 10px; min-width: 0; padding: 10px 14px; align-items: center; }
+  #recent .rr > :nth-child(1) { grid-column: 1; grid-row: 1 / 4; align-self: start; }
+  #recent .rr > :nth-child(2) { grid-column: 2 / 4; grid-row: 1; }
+  #recent .rr > :nth-child(3) { grid-column: 2 / 4; grid-row: 2; font-weight: 600; }
+  #recent .rr > :nth-child(4) { grid-column: 2; grid-row: 3; color: var(--muted); font-size: 12px; }
+  #recent .rr > :nth-child(5) { grid-column: 3; grid-row: 3; color: var(--muted); font-size: 12px; }
+  #recent .rr > :nth-child(4)::before { content: "In "; }
+  #recent .rr > :nth-child(5)::before { content: "Out "; }
+  #recent .rr > :nth-child(6) { grid-column: 4; grid-row: 1; text-align: right; }
+  #recent .rr > :nth-child(7) { grid-column: 4; grid-row: 2 / 4; justify-self: end; align-self: end; }
+  #recent .rr-foot { flex-wrap: wrap; gap: 12px; }
+
+  /* check-ins list keeps a sensible height */
+  #checkins .cio { min-height: 200px; max-height: 420px; }
+  .cif-bar { flex-wrap: nowrap; }
+
+  /* gauge, room status and the rest read well at this width */
+  .stack .gauge { width: min(100%, 240px); }
+  #calendar .cd { height: 28px; }
+  #whatsnew .card-b.wn { max-height: 460px; }
+
+  /* the notification stack leaves the screen edges free */
+  .toasts { left: 12px; right: 12px; bottom: 12px; width: auto; }
+  .sub-btn { padding: 9px 16px; }
+  .al-t { font-size: 14px; }
+}
+@media (max-width: 420px) {
+  .hdr-in { padding: 8px 12px; }
+  .acct b { display: none; }
+  .kpis, .kpis2 { gap: 8px; }
+  .card-h { padding-left: 14px; padding-right: 14px; }
+  .card-b { padding-left: 14px; padding-right: 14px; }
+}
+
+@media (max-width: 800px) {
+  #whatsnew { display: block; }
+  #whatsnew .card-b.wn { flex: none; height: 340px; min-height: 0; max-height: none; overflow-y: auto; }
+  #m-widgets .dlg, #m-subscribe .dlg { width: 100%; }
+  .wt-sub { margin-left: 12px; }
+}
+
+/* the same "not subscribed" preview for Room Status and Guest Reviews */
+#roomstatus, #reviews { position: relative; overflow: hidden; }
+body:has(#sub-roomstatus:not(:checked)) #roomstatus .sub-ov, body:has(#sub-reviews:not(:checked)) #reviews .sub-ov { display: grid; }
+body:has(#sub-roomstatus:not(:checked)) #roomstatus > .card-h, body:has(#sub-roomstatus:not(:checked)) #roomstatus > .card-b,
+body:has(#sub-reviews:not(:checked)) #reviews > .card-h, body:has(#sub-reviews:not(:checked)) #reviews > .card-b { filter: blur(5px); opacity: .85; pointer-events: none; user-select: none; }
+
+/* Recent Reservations: channel marks in brand colours */
+#recent .rr-src .chb { width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font-style: normal; color: #fff; overflow: hidden; }
+#recent .rr-src .chb b { font-size: 12px; font-weight: 800; line-height: 1; letter-spacing: -.02em; }
+#recent .rr-src .chb svg { width: 16px; height: 16px; }
+#recent .rr-src .chb svg.ic { width: 15px; height: 15px; }
+.chb.ch-bk { background: #003580; }
+.chb.ch-gh { background: #fff; border: 1px solid #d9e1ee; color: #4285f4; }
+.chb.ch-gh b { color: #4285f4; font-size: 14px !important; }
+.chb.ch-mm { background: #e8272c; }
+.chb.ch-mm b { font-size: 8.5px !important; letter-spacing: -.04em; }
+.chb.ch-ag { background: #fff; border: 1px solid #d9e1ee; }
+.chb.ch-ab { background: #ff5a5f; }
+.chb.ch-ab b { font-size: 15px !important; font-weight: 700; }
+.chb.ch-be { background: #1baf7a; }
+.chb.ch-wi { background: #6250d6; }
+.chb.ch-ot { background: #64748b; }
