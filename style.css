@@ -1920,20 +1920,3 @@ body.dg-on .stack.dg-empty, body.dg-on .stack2.dg-empty { display: flex !importa
 .grid.masonry > .stack.dg-empty, .grid.masonry > .stack2.dg-empty { display: none !important; }
 body.dg-on .grid.masonry > .stack.dg-empty, body.dg-on .grid.masonry > .stack2.dg-empty { display: flex !important; }
 @media (max-width: 800px) { .grid.masonry { display: flex !important; } .grid.masonry > * { grid-column: auto !important; grid-row: auto !important; } }
-
-/* equalized rows: the last card of a column grows so the column ends level with its neighbours */
-.grid.masonry > .stack > .card:last-child, .grid.masonry > .stack2 > #weather { flex: 1 1 auto !important; }
-.grid.masonry > .stack2 > #weather { align-content: start; }
-
-/* three equal columns under the top row */
-.grid > .col3 { flex: 1 1 320px; display: flex; flex-direction: column; gap: var(--gap, 16px); min-width: 0; }
-.col3 > .card, .col3 > .stack2 { flex: 0 0 auto; width: 100%; }
-.col3 > :last-child { flex: 1 1 auto; }
-.col3 > .stack2 { display: flex; flex-direction: column; gap: var(--gap, 16px); align-self: stretch; }
-.col3 > .stack2 > #weather { flex: 1 1 auto !important; align-content: start; }
-.grid > #recent { flex: 2.4 1 660px; }
-.grid > .stack { flex: .9 1 260px; }
-.grid > #whatsnew { flex: 1 1 100%; display: flex; flex-direction: column; }
-@media (max-width: 800px) { .grid > .col3 { flex: 1 1 100%; } }
-/* What's New shows its whole text now that it is a full-width card */
-.grid > #whatsnew > .card-b.wn { flex: none !important; height: auto !important; min-height: 0 !important; max-height: none !important; overflow: visible !important; }
