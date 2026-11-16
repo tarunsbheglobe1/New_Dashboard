@@ -1914,3 +1914,16 @@ body:has(#wt-weather:not(:checked)) #weather { display: none !important; }
 .row4 > #channels { flex: 1.5 1 0; }
 .row4 > #reviews { flex: 1.2 1 0; }
 .row4 > .stack2 { flex: 1 1 0; align-self: flex-start; min-width: 0; }
+
+/* keep the three-column rows on medium screens (zoomed or small laptops) */
+.grid > #recent { flex: 2.4 1 400px; }
+.grid > .stack { flex: .9 1 200px; }
+.grid > #whatsnew { flex: 1.15 1 240px; }
+.grid > #checkins, .grid > #tasks, .grid > #calendar { flex: 1 1 230px; }
+@media (min-width: 801px) {
+  .grid > #whatsnew { contain: size; }
+  .grid > .row4 { flex-wrap: nowrap; }
+  .row4 > .card, .row4 > .stack2 { flex-basis: 0 !important; }
+  .rr-th, #recent .rr { grid-template-columns: 30px minmax(70px, 1.1fr) minmax(70px, 1.2fr) minmax(44px, .8fr) minmax(44px, .8fr) minmax(76px, 1fr) 84px; gap: 0 6px; padding-left: 12px; padding-right: 12px; }
+}
+@media (max-width: 800px) { .grid > #whatsnew { contain: none; } }
