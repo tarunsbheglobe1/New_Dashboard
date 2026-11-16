@@ -1920,3 +1920,7 @@ body.dg-on .stack.dg-empty, body.dg-on .stack2.dg-empty { display: flex !importa
 .grid.masonry > .stack.dg-empty, .grid.masonry > .stack2.dg-empty { display: none !important; }
 body.dg-on .grid.masonry > .stack.dg-empty, body.dg-on .grid.masonry > .stack2.dg-empty { display: flex !important; }
 @media (max-width: 800px) { .grid.masonry { display: flex !important; } .grid.masonry > * { grid-column: auto !important; grid-row: auto !important; } }
+
+/* equalized rows: the last card of a column grows so the column ends level with its neighbours */
+.grid.masonry > .stack > .card:last-child, .grid.masonry > .stack2 > #weather { flex: 1 1 auto !important; }
+.grid.masonry > .stack2 > #weather { align-content: start; }
