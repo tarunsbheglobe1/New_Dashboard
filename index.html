@@ -94,7 +94,7 @@
 </ul>
 </nav>
 <main class="page">
-<div class="page-tools"><button type="button" class="btn" id="lay-default" title="Use the current arrangement as the default layout">Save as default</button><button type="button" class="btn" id="lay-reset" title="Go back to the default layout (Shift+click for the original factory layout)">Reset layout</button><a class="btn" href="#m-widgets"><svg class="ic"><use href="#i-grid"/></svg>Customize widgets</a></div>
+<div class="page-tools"><a class="btn" href="#m-widgets"><svg class="ic"><use href="#i-grid"/></svg>Customize widgets</a></div>
 <section class="kpis" aria-label="Key figures">
 <article class="card kpi">
 <h3><svg class="ic kic"><use href="#i-rupee"/></svg>Today's Revenue<span class="tipi" tabindex="0" data-tip="Booking value excluding GST (room + extras &minus; discounts) of the reservations whose check-in date is today, 13 Nov.">i</span></h3>
@@ -967,51 +967,6 @@
   tidy();
 
   var cards = [].slice.call(grid.querySelectorAll('.card'));
-  cards.forEach(function (card) {
-    var g = document.createElement('span'); g.className = 'dg-grip'; g.title = 'Drag to move this widget'; g.setAttribute('aria-hidden', 'true'); g.textContent = '\u22EF';
-    var r = document.createElement('span'); r.className = 'dg-rs'; r.title = 'Drag to resize'; r.setAttribute('aria-hidden', 'true');
-    card.appendChild(g); card.appendChild(r);
-    g.addEventListener('mousedown', function () { card.draggable = true; });
-    card.addEventListener('dragend', function () { card.draggable = false; card.classList.remove('dg-drag'); document.body.classList.remove('dg-on'); tidy(); refreshUnits(); save(); });
-    card.addEventListener('dragstart', function (e) { card.classList.add('dg-drag'); document.body.classList.add('dg-on'); try { e.dataTransfer.setData('text/plain', 'widget'); e.dataTransfer.effectAllowed = 'move'; } catch (x) {} });
-    card.addEventListener('dragover', function (e) {
-      var d = document.querySelector('.card.dg-drag'); if (!d || d === card) return;
-      e.preventDefault();
-      var b = card.getBoundingClientRect(), before = e.clientY < b.top + 8 || (e.clientY <= b.bottom && e.clientX < b.left + b.width / 2);
-      if (card.parentNode === grid && !card.classList.contains('s12') && e.clientY > b.top + b.height * 0.6 && e.clientY <= b.bottom) { var st = document.createElement('div'); st.className = 'stack dg-auto'; st.dataset.uid = 'dyn' + (dyn++); grid.insertBefore(st, card); uidMap[st.dataset.uid] = st; conts.push(st); attach(st); st.dataset.cs = card.dataset.cs || 4; st.appendChild(card); st.appendChild(d); tidy(); refreshUnits(); return; }
-      if (card.parentNode.classList.contains('stack') || card.parentNode.classList.contains('stack2')) before = e.clientY < b.top + b.height / 2;
-      var ref = before ? card : card.nextSibling;
-      if (ref !== d && ref !== d.nextSibling || d.parentNode !== card.parentNode) { card.parentNode.insertBefore(d, ref); tidy(); }
-    });
-    r.addEventListener('pointerdown', function (e) {
-      e.preventDefault(); r.setPointerCapture(e.pointerId);
-      var p = card.parentNode, unit = (p.classList.contains('stack') || p.classList.contains('stack2')) ? p : card;
-      var w0 = unit.getBoundingClientRect().width, h0 = card.getBoundingClientRect().height, x0 = e.clientX, y0 = e.clientY;
-      /* freeze the other widgets in this row at their current height so only this one changes */
-      var rowTop = unit.getBoundingClientRect().top;
-      if (!masonry) cards.forEach(function (c) { if (c === card || c.offsetParent === null) return; var cu = /\bstack2?\b/.test(c.parentNode.className) ? c.parentNode : c; if (Math.abs(cu.getBoundingClientRect().top - rowTop) < 4 && !/,\d/.test(c.dataset.sized || '')) applySize(c, 0, Math.round(c.getBoundingClientRect().height)); });
-      function mv(ev) {
-        var w = Math.max(200, Math.round(w0 + ev.clientX - x0)), h = Math.max(90, Math.round(h0 + ev.clientY - y0));
-        applySize(unit, w, 0); if (unit !== card) unit.dataset.sized = w + ','; applySize(card, unit === card ? w : 0, h);
-        if (unit !== card) card.dataset.sized = ',' + h;
-      }
-      function up() { r.removeEventListener('pointermove', mv); r.removeEventListener('pointerup', up); save(); }
-      r.addEventListener('pointermove', mv); r.addEventListener('pointerup', up);
-    });
-  });
-  /* drop onto the empty part of a column / row (also onto an emptied column) */
-  conts.forEach(function (c) {
-    if (c === grid) return;
-    var horiz = c.classList.contains('row4');
-    c.addEventListener('dragover', function (e) {
-      var d = document.querySelector('.card.dg-drag'); if (!d || e.target.closest('.card')) return;
-      e.preventDefault();
-      var kids = [].filter.call(c.children, function (k) { return k !== d && k.classList.contains('card'); }), ref = null;
-      for (var i = 0; i < kids.length; i++) { var b = kids[i].getBoundingClientRect(); if (horiz ? e.clientX < b.left + b.width / 2 : e.clientY < b.top + b.height / 2) { ref = kids[i]; break; } }
-      if (d.parentNode !== c || d.nextSibling !== ref) { c.insertBefore(d, ref); tidy(); }
-    });
-  });
-  document.addEventListener('dragover', function (e) { if (document.querySelector('.card.dg-drag')) e.preventDefault(); });
   /* ---- auto-fit (masonry) layout: widgets pack together, gaps are filled by the next widgets ---- */
   function colW() { var g = parseFloat(getComputedStyle(grid).columnGap) || 16; return [(grid.clientWidth - 11 * g) / 12, g]; }
   function units() { return [].filter.call(grid.children, function (k) { return !k.classList.contains('gbreak'); }); }
@@ -1035,32 +990,29 @@
     ro = new ResizeObserver(function (es) { es.forEach(function (en) { fit(en.target); }); });
     us.forEach(function (el) { if (!el.dataset.cs) el.dataset.cs = 4; adopt(el); });
   }
-  window.addEventListener('load', function () { setTimeout(startMasonry, 60); });
+  /* equalize: widgets that sit side by side end at the same line, so rows look tidy with no ragged gaps */
+  var eqT = null;
+  function equalize() {
+    if (!masonry) return;
+    var us = units().filter(function (u) { return getComputedStyle(u).display !== 'none'; });
+    us.forEach(function (u) { if (!u.classList.contains('dg-h')) u.style.minHeight = ''; });
+    us.forEach(fit);
+    for (var pass = 0; pass < 4; pass++) {
+      var arr = us.map(function (u) { var r = u.getBoundingClientRect(); return { u: u, top: r.top, bottom: r.bottom }; }).sort(function (a, b) { return a.top - b.top; });
+      var groups = [], cur = null;
+      arr.forEach(function (a) { if (!cur || a.top - cur.top > 24) { cur = { top: a.top, items: [] }; groups.push(cur); } cur.items.push(a); });
+      groups.forEach(function (g) {
+        if (g.items.length < 2) return;
+        var mb = Math.max.apply(null, g.items.map(function (a) { return a.bottom; }));
+        g.items.forEach(function (a) { if (a.u.classList.contains('dg-h') || mb - a.bottom < 2) return; a.u.style.minHeight = Math.ceil(mb - a.top) + 'px'; });
+      });
+      us.forEach(fit);
+    }
+  }
+  window.addEventListener('resize', function () { clearTimeout(eqT); eqT = setTimeout(equalize, 200); });
+  document.addEventListener('change', function (e) { if (e.target.matches && e.target.matches('input.wt, input.wtsub')) setTimeout(equalize, 120); });
+  window.addEventListener('load', function () { setTimeout(startMasonry, 60); setTimeout(equalize, 260); });
   window.addEventListener('resize', function () { startMasonry(); });
-  /* drop on blank space inside the grid: place the widget next to the nearest widget */
-  grid.addEventListener('dragover', function (e) {
-    var d = document.querySelector('.card.dg-drag'); if (!d || e.target !== grid) return;
-    e.preventDefault();
-    var best = null, bd = 1e9, after = false;
-    units().forEach(function (u) {
-      if (u === d || u.contains(d) && u.querySelectorAll('.card').length < 2 || getComputedStyle(u).display === 'none') return;
-      var r = u.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2, dist = Math.hypot(e.clientX - cx, e.clientY - cy);
-      if (dist < bd) { bd = dist; best = u; after = e.clientY > cy || (e.clientY > r.top && e.clientX > cx); }
-    });
-    if (!best) return;
-    var ref = after ? best.nextSibling : best;
-    if (ref === d) return;
-    grid.insertBefore(d, ref); tidy(); refreshUnits();
-  });
-  var rb = document.getElementById('lay-reset');
-  if (rb) rb.addEventListener('click', function (e) { try { localStorage.removeItem(KEY); if (e.shiftKey) localStorage.removeItem('eg-pms-layout-default'); } catch (x) {} location.reload(); });
-  var db = document.getElementById('lay-default');
-  if (db) db.addEventListener('click', function () {
-    save(); var j = ls(true);
-    try { localStorage.setItem('eg-pms-layout-default', j); } catch (x) {}
-    try { navigator.clipboard.writeText(j); } catch (x) {}
-    var old = db.textContent; db.textContent = 'Saved as default'; setTimeout(function () { db.textContent = old; }, 1800);
-  });
 })();
 </script></body>
 </html>
