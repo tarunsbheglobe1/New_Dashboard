@@ -94,28 +94,24 @@
 </ul>
 </nav>
 <main class="page">
-<div class="page-tools"><a class="btn" href="#m-widgets"><svg class="ic"><use href="#i-grid"/></svg>Customize widgets</a></div>
+<div class="page-tools"><button type="button" class="btn" id="lay-default" title="Use the current arrangement as the default layout">Save as default</button><button type="button" class="btn" id="lay-reset" title="Go back to the default layout (Shift+click for the original factory layout)">Reset layout</button><a class="btn" href="#m-widgets"><svg class="ic"><use href="#i-grid"/></svg>Customize widgets</a></div>
 <section class="kpis" aria-label="Key figures">
 <article class="card kpi">
-<h3><svg class="ic kic"><use href="#i-rupee"/></svg>Today's Revenue<span class="tipi" tabindex="0" data-tip="Booking value excluding GST (room + extras &minus; discounts) of the reservations whose check-in date is today, 13 Nov. The change compares it with yesterday's check-ins.">i</span></h3>
+<h3><svg class="ic kic"><use href="#i-rupee"/></svg>Today's Revenue<span class="tipi" tabindex="0" data-tip="Booking value excluding GST (room + extras &minus; discounts) of the reservations whose check-in date is today, 13 Nov.">i</span></h3>
 <a class="big" href="#m-arrivals" title="28 reservations check in on 13 Nov. Open the arrivals list."><small class="cur">INR</small>&nbsp;6,24,800</a>
 <p class="sub"><b>28</b> check-ins today</p>
-<p class="delta up"><svg class="ic ar"><use href="#i-arrow-up"/></svg><b>7.4%</b> <small>vs yesterday</small></p>
 </article>
 <article class="card kpi">
 <h3><svg class="ic kic"><use href="#i-chart"/></svg>ARR<span class="tipi" tabindex="0" data-tip="Average room rate (ARR) = room revenue &divide; rooms sold (INR&nbsp;5,70,240 &divide; 88).">i</span></h3>
 <div class="big"><small class="cur">INR</small>&nbsp;6,480</div>
-<p class="delta up"><svg class="ic ar"><use href="#i-arrow-up"/></svg><b>3.2%</b> <small>vs yesterday</small></p>
 </article>
 <article class="card kpi">
 <h3><svg class="ic kic"><use href="#i-chart"/></svg>ADR<span class="tipi" tabindex="0" data-tip="Average daily rate = room revenue &divide; rooms sold (INR&nbsp;5,70,240 &divide; 88).">i</span></h3>
 <div class="big"><small class="cur">INR</small>&nbsp;6,480</div>
-<p class="delta up"><svg class="ic ar"><use href="#i-arrow-up"/></svg><b>3.2%</b> <small>vs yesterday</small></p>
 </article>
 <article class="card kpi">
 <h3><svg class="ic kic"><use href="#i-pie"/></svg>RevPAR<span class="tipi" tabindex="0" data-tip="Revenue per available room = room revenue &divide; sellable rooms (INR&nbsp;5,70,240 &divide; 107).">i</span></h3>
 <div class="big"><small class="cur">INR</small>&nbsp;5,329</div>
-<p class="delta up"><svg class="ic ar"><use href="#i-arrow-up"/></svg><b>10.4%</b> <small>vs yesterday</small></p>
 </article>
 <article class="card kpi">
 <h3><svg class="ic kic"><use href="#i-login"/></svg>Arrivals</h3>
@@ -154,13 +150,11 @@
 <h3><svg class="ic kic"><use href="#i-plus"/></svg>New Bookings<span class="tipi" tabindex="0" data-tip="Reservations created today, counted before any later cancellations. Booking value excludes GST.">i</span></h3>
 <a class="big" href="#m-newbook" title="Open today's new bookings"><small class="cur">INR</small>&nbsp;7,12,400</a>
 <p class="sub"><b>31</b> bookings</p>
-<p class="delta up"><svg class="ic ar"><use href="#i-arrow-up"/></svg><b>5 more</b> <small>vs yesterday</small></p>
 </article>
 <article class="card kpi">
 <h3><svg class="ic kic"><use href="#i-ban"/></svg>Cancellations<span class="tipi" tabindex="0" data-tip="Reservations cancelled today (by cancellation date, any stay date). Value excludes GST; fees are charges kept from the guest's advance. Fees kept today: INR&nbsp;6,200.">i</span></h3>
 <a class="big" href="#m-cancel" title="Open today's cancellations">3</a>
 <p class="sub">INR&nbsp;68,400 value</p>
-<p class="delta up"><svg class="ic ar"><use href="#i-arrow-down"/></svg><b>1 fewer</b> <small>vs yesterday</small></p>
 </article>
 <article class="card kpi kpi-alert" id="alertcard">
 <h3><svg class="ic kic"><use href="#i-alert"/></svg>Alert<span class="tipi" tabindex="0" data-tip="Booking.com is not syncing rates and availability. Last successful sync was at 10:12 AM, so new Booking.com bookings may be delayed.">i</span></h3>
@@ -292,7 +286,8 @@
 </div>
 </div>
 </section>
-<section class="card s2" id="housekeeping" aria-labelledby="h-hk">
+<div class="stack2">
+<section class="card s2" id="housekeeping"aria-labelledby="h-hk">
 <header class="card-h"><h2 id="h-hk">Housekeeping Progress <span class="samp">Sample</span><span class="tipi" tabindex="0" data-tip="Cleaning jobs raised for today: check-out cleans plus stayover services (76 rooms). Cleaned = finished by the attendant, including jobs waiting for inspection. Ready = vacant, clean and inspected rooms. About 50% is expected by 11:30 AM. Arrival rooms: 5 of 14 ready (1 awaiting inspection, 3 being cleaned, 2 not started, 2 waiting for check-out, 1 not yet allocated); check-in starts 2:00 PM. 8 more rooms will need cleaning after pending check-outs.">i</span></h2><span class="status ok">49% cleaned &middot; On track</span></header>
 <div class="card-b">
 
@@ -308,7 +303,13 @@
 </div>
 <div class="sub-ov"><a class="sub-btn" href="#m-subscribe" data-tip="Housekeeping module"><svg class="ic"><use href="#i-sparkles"/></svg>Unlock Features</a></div>
 </section>
-<section class="card" id="calendar" aria-labelledby="h-cal">
+<section class="card weather" id="weather" aria-label="Weather in Jaipur">
+<div class="w-top"><span>Jaipur</span><span>13 Nov, 2026</span></div>
+<div class="w-now"><div class="w-main"><svg class="ic w-ic"><use href="#i-sun"/></svg><div><b>27&deg;C</b><span>Clear sky</span></div></div><div class="w-side"><span class="wch"><small>High / Low</small><b>29&deg; / 16&deg;</b></span><span class="wch"><small>Humidity</small><b>38%</b></span><span class="wch"><small>Wind</small><b>9 km/h</b></span></div></div>
+<div class="w-days"><div class="wd"><span>Sat</span><svg class="ic"><use href="#i-sun"/></svg><b>29&deg;</b><small>16&deg;</small></div><div class="wd"><span>Sun</span><svg class="ic"><use href="#i-sun"/></svg><b>30&deg;</b><small>17&deg;</small></div><div class="wd"><span>Mon</span><svg class="ic"><use href="#i-sun"/></svg><b>30&deg;</b><small>16&deg;</small></div><div class="wd"><span>Tue</span><svg class="ic cl"><use href="#i-cloud"/></svg><b>29&deg;</b><small>17&deg;</small></div><div class="wd"><span>Wed</span><svg class="ic"><use href="#i-sun"/></svg><b>28&deg;</b><small>15&deg;</small></div><div class="wd"><span>Thu</span><svg class="ic"><use href="#i-sun"/></svg><b>28&deg;</b><small>14&deg;</small></div><div class="wd"><span>Fri</span><svg class="ic cl"><use href="#i-cloud"/></svg><b>27&deg;</b><small>15&deg;</small></div></div>
+</section>
+</div>
+<section class="card" id="calendar"aria-labelledby="h-cal">
 <header class="card-h"><h2 id="h-cal">Occupancy Calendar <span class="samp">Sample data</span><span class="tipi" tabindex="0" data-tip="Actual occupancy up to today, then occupancy already on the books. Hover or focus a day to see rooms sold and, for the next 14 nights, how it compares with what is typically booked by this lead time.">i</span></h2></header>
 <div class="card-b">
 <p class="cal-m">November 2026</p>
@@ -411,6 +412,7 @@
 <label class="wt-row"><input type="checkbox" class="wt" id="wt-housekeeping" checked><span class="wt-t"><b>Housekeeping Progress</b><small>Cleaning jobs for today</small></span><span class="sw" aria-hidden="true"></span></label>
 <label class="wt-row wt-sub"><input type="checkbox" class="wtsub" id="sub-housekeeping" checked><span class="wt-t"><b>Housekeeping module</b><small>Subscribed. Turn off to see it as not subscribed (blurred, with Unlock Features)</small></span><span class="sw" aria-hidden="true"></span></label>
 <label class="wt-row"><input type="checkbox" class="wt" id="wt-calendar" checked><span class="wt-t"><b>Occupancy Calendar</b><small>Day-by-day occupancy for the month</small></span><span class="sw" aria-hidden="true"></span></label>
+<label class="wt-row"><input type="checkbox" class="wt" id="wt-weather" checked><span class="wt-t"><b>Weather</b><small>Today and the next 7 days</small></span><span class="sw" aria-hidden="true"></span></label>
 <label class="wt-row"><input type="checkbox" class="wt" id="wt-channels" checked><span class="wt-t"><b>Booking Source</b><small>Bookings and revenue by channel</small></span><span class="sw" aria-hidden="true"></span></label>
 <label class="wt-row"><input type="checkbox" class="wt" id="wt-reviews" checked><span class="wt-t"><b>Guest Reviews</b><small>Rating and latest reviews</small></span><span class="sw" aria-hidden="true"></span></label>
 <label class="wt-row wt-sub"><input type="checkbox" class="wtsub" id="sub-reviews" checked><span class="wt-t"><b>Guest Reviews module</b><small>Subscribed. Turn off to see it as not subscribed (blurred, with Unlock Features)</small></span><span class="sw" aria-hidden="true"></span></label>
@@ -930,5 +932,135 @@
       el.addEventListener('change', function () { localStorage.setItem(K, el.checked ? '1' : '0'); });
     });
   } catch (e) {}})();
+</script><script>
+(function () {
+  var KEY = 'eg-pms-layout', grid = document.querySelector('.grid');
+  if (!grid) return;
+  var conts = [grid].concat([].slice.call(grid.querySelectorAll('.row4, .stack, .stack2')));
+  var uidMap = {}, n = 0;
+  function uid(el) { if (!el.dataset.uid) { el.dataset.uid = 'u' + (n++); } uidMap[el.dataset.uid] = el; return el.dataset.uid; }
+  conts.forEach(function (c) { uid(c); [].forEach.call(c.children, uid); });
+  var dyn = 0, masonry = false, ro = null;
+  function attach(c) { var horiz = c.classList.contains('row4'); c.addEventListener('dragover', function (e) { var d = document.querySelector('.card.dg-drag'); if (!d || e.target.closest('.card')) return; e.preventDefault(); var kids = [].filter.call(c.children, function (k) { return k !== d && k.classList.contains('card'); }), ref = null; for (var i = 0; i < kids.length; i++) { var b = kids[i].getBoundingClientRect(); if (horiz ? e.clientX < b.left + b.width / 2 : e.clientY < b.top + b.height / 2) { ref = kids[i]; break; } } if (d.parentNode !== c || d.nextSibling !== ref) { c.insertBefore(d, ref); tidy(); } }); }
+  function mkDyn(id) { var st = document.createElement('div'); st.className = 'stack dg-auto'; st.dataset.uid = id; grid.appendChild(st); uidMap[id] = st; conts.push(st); attach(st); return st; }
+  function ls(get, v) { try { return get ? localStorage.getItem(KEY) : localStorage.setItem(KEY, v); } catch (e) { return null; } }
+  function tidy() { conts.forEach(function (c) { if (c !== grid) c.classList.toggle('dg-empty', !c.querySelector(':scope > .card')); }); }
+  function save() {
+    var o = { order: {}, size: {}, dyn: conts.filter(function (c) { return c.dataset.uid.indexOf('dyn') === 0; }).map(function (c) { return c.dataset.uid; }) };
+    conts.forEach(function (c) { o.order[c.dataset.uid] = [].map.call(c.children, function (k) { return k.dataset.uid; }); });
+    [].forEach.call(document.querySelectorAll('[data-sized]'), function (e) { o.size[e.dataset.uid] = e.dataset.sized; });
+    ls(false, JSON.stringify(o));
+  }
+  function applySize(e, w, h) {
+    if (w) { if (masonry) { var cwg = colW(); e.dataset.cs = Math.max(2, Math.min(12, Math.round((w + cwg[1]) / (cwg[0] + cwg[1])))); e.style.gridColumn = 'span ' + e.dataset.cs; } else { e.style.setProperty('flex', '0 0 ' + w + 'px', 'important'); e.style.setProperty('max-width', '100%', 'important'); } }
+    if (h) { e.style.setProperty('height', h + 'px', 'important'); e.style.setProperty('min-height', '0', 'important'); if (!w && e.parentNode && /\bstack2?\b/.test(e.parentNode.className)) e.style.setProperty('flex', '0 0 auto', 'important'); e.classList.add('dg-h'); }
+    e.dataset.sized = (w || '') + ',' + (h || '');
+  }
+  try {
+    var s = JSON.parse(ls(true) || localStorage.getItem('eg-pms-layout-default') || (window.EG_DEFAULT_LAYOUT ? JSON.stringify(window.EG_DEFAULT_LAYOUT) : null) || 'null');
+    if (s) {
+      (s.dyn || []).forEach(function (id) { mkDyn(id); dyn = Math.max(dyn, (+id.slice(3) || 0) + 1); });
+      Object.keys(s.order).forEach(function (cid) { var c = uidMap[cid]; if (c) s.order[cid].forEach(function (id) { if (uidMap[id]) c.appendChild(uidMap[id]); }); });
+      Object.keys(s.size).forEach(function (id) { var p = s.size[id].split(','); if (uidMap[id]) applySize(uidMap[id], +p[0] || 0, +p[1] || 0); });
+    }
+  } catch (e) {}
+  tidy();
+
+  var cards = [].slice.call(grid.querySelectorAll('.card'));
+  cards.forEach(function (card) {
+    var g = document.createElement('span'); g.className = 'dg-grip'; g.title = 'Drag to move this widget'; g.setAttribute('aria-hidden', 'true'); g.textContent = '\u22EF';
+    var r = document.createElement('span'); r.className = 'dg-rs'; r.title = 'Drag to resize'; r.setAttribute('aria-hidden', 'true');
+    card.appendChild(g); card.appendChild(r);
+    g.addEventListener('mousedown', function () { card.draggable = true; });
+    card.addEventListener('dragend', function () { card.draggable = false; card.classList.remove('dg-drag'); document.body.classList.remove('dg-on'); tidy(); refreshUnits(); save(); });
+    card.addEventListener('dragstart', function (e) { card.classList.add('dg-drag'); document.body.classList.add('dg-on'); try { e.dataTransfer.setData('text/plain', 'widget'); e.dataTransfer.effectAllowed = 'move'; } catch (x) {} });
+    card.addEventListener('dragover', function (e) {
+      var d = document.querySelector('.card.dg-drag'); if (!d || d === card) return;
+      e.preventDefault();
+      var b = card.getBoundingClientRect(), before = e.clientY < b.top + 8 || (e.clientY <= b.bottom && e.clientX < b.left + b.width / 2);
+      if (card.parentNode === grid && !card.classList.contains('s12') && e.clientY > b.top + b.height * 0.6 && e.clientY <= b.bottom) { var st = document.createElement('div'); st.className = 'stack dg-auto'; st.dataset.uid = 'dyn' + (dyn++); grid.insertBefore(st, card); uidMap[st.dataset.uid] = st; conts.push(st); attach(st); st.dataset.cs = card.dataset.cs || 4; st.appendChild(card); st.appendChild(d); tidy(); refreshUnits(); return; }
+      if (card.parentNode.classList.contains('stack') || card.parentNode.classList.contains('stack2')) before = e.clientY < b.top + b.height / 2;
+      var ref = before ? card : card.nextSibling;
+      if (ref !== d && ref !== d.nextSibling || d.parentNode !== card.parentNode) { card.parentNode.insertBefore(d, ref); tidy(); }
+    });
+    r.addEventListener('pointerdown', function (e) {
+      e.preventDefault(); r.setPointerCapture(e.pointerId);
+      var p = card.parentNode, unit = (p.classList.contains('stack') || p.classList.contains('stack2')) ? p : card;
+      var w0 = unit.getBoundingClientRect().width, h0 = card.getBoundingClientRect().height, x0 = e.clientX, y0 = e.clientY;
+      /* freeze the other widgets in this row at their current height so only this one changes */
+      var rowTop = unit.getBoundingClientRect().top;
+      if (!masonry) cards.forEach(function (c) { if (c === card || c.offsetParent === null) return; var cu = /\bstack2?\b/.test(c.parentNode.className) ? c.parentNode : c; if (Math.abs(cu.getBoundingClientRect().top - rowTop) < 4 && !/,\d/.test(c.dataset.sized || '')) applySize(c, 0, Math.round(c.getBoundingClientRect().height)); });
+      function mv(ev) {
+        var w = Math.max(200, Math.round(w0 + ev.clientX - x0)), h = Math.max(90, Math.round(h0 + ev.clientY - y0));
+        applySize(unit, w, 0); if (unit !== card) unit.dataset.sized = w + ','; applySize(card, unit === card ? w : 0, h);
+        if (unit !== card) card.dataset.sized = ',' + h;
+      }
+      function up() { r.removeEventListener('pointermove', mv); r.removeEventListener('pointerup', up); save(); }
+      r.addEventListener('pointermove', mv); r.addEventListener('pointerup', up);
+    });
+  });
+  /* drop onto the empty part of a column / row (also onto an emptied column) */
+  conts.forEach(function (c) {
+    if (c === grid) return;
+    var horiz = c.classList.contains('row4');
+    c.addEventListener('dragover', function (e) {
+      var d = document.querySelector('.card.dg-drag'); if (!d || e.target.closest('.card')) return;
+      e.preventDefault();
+      var kids = [].filter.call(c.children, function (k) { return k !== d && k.classList.contains('card'); }), ref = null;
+      for (var i = 0; i < kids.length; i++) { var b = kids[i].getBoundingClientRect(); if (horiz ? e.clientX < b.left + b.width / 2 : e.clientY < b.top + b.height / 2) { ref = kids[i]; break; } }
+      if (d.parentNode !== c || d.nextSibling !== ref) { c.insertBefore(d, ref); tidy(); }
+    });
+  });
+  document.addEventListener('dragover', function (e) { if (document.querySelector('.card.dg-drag')) e.preventDefault(); });
+  /* ---- auto-fit (masonry) layout: widgets pack together, gaps are filled by the next widgets ---- */
+  function colW() { var g = parseFloat(getComputedStyle(grid).columnGap) || 16; return [(grid.clientWidth - 11 * g) / 12, g]; }
+  function units() { return [].filter.call(grid.children, function (k) { return !k.classList.contains('gbreak'); }); }
+  function fit(el) { if (!masonry) return; var g = colW()[1]; el.style.gridRowEnd = 'span ' + Math.max(1, Math.ceil((el.offsetHeight + g) / 8)); }
+  function adopt(el) { if (!masonry) return; el.dataset.mo = 1; el.style.gridColumn = 'span ' + (el.dataset.cs || 4); if (ro) ro.observe(el); fit(el); }
+  function refreshUnits() { if (!masonry) return; units().forEach(function (el) { if (!el.dataset.cs) el.dataset.cs = 4; if (!el.dataset.mo) adopt(el); }); }
+  function startMasonry() {
+    if (masonry || window.innerWidth <= 800) return;
+    grid.style.alignItems = 'flex-start';
+    var cw = colW(), us = units(), rows = {};
+    us.forEach(function (el) {
+      if (getComputedStyle(el).display === 'none') return;
+      var r = el.getBoundingClientRect(), s = Math.max(1, Math.min(12, Math.round((r.width + cw[1]) / (cw[0] + cw[1]))));
+      el.dataset.cs = s; var k = Math.round(r.top / 8); (rows[k] = rows[k] || []).push(el);
+    });
+    Object.keys(rows).forEach(function (k) {
+      var g = rows[k], sum = g.reduce(function (a, e) { return a + (+e.dataset.cs); }, 0), big = g.slice().sort(function (a, b) { return b.dataset.cs - a.dataset.cs; })[0];
+      if (sum > 12) { big.dataset.cs = Math.max(1, +big.dataset.cs - (sum - 12)); } else if (sum < 12 && sum >= 9) { big.dataset.cs = +big.dataset.cs + (12 - sum); }
+    });
+    grid.style.alignItems = ''; grid.classList.add('masonry'); masonry = true;
+    ro = new ResizeObserver(function (es) { es.forEach(function (en) { fit(en.target); }); });
+    us.forEach(function (el) { if (!el.dataset.cs) el.dataset.cs = 4; adopt(el); });
+  }
+  window.addEventListener('load', function () { setTimeout(startMasonry, 60); });
+  window.addEventListener('resize', function () { startMasonry(); });
+  /* drop on blank space inside the grid: place the widget next to the nearest widget */
+  grid.addEventListener('dragover', function (e) {
+    var d = document.querySelector('.card.dg-drag'); if (!d || e.target !== grid) return;
+    e.preventDefault();
+    var best = null, bd = 1e9, after = false;
+    units().forEach(function (u) {
+      if (u === d || u.contains(d) && u.querySelectorAll('.card').length < 2 || getComputedStyle(u).display === 'none') return;
+      var r = u.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2, dist = Math.hypot(e.clientX - cx, e.clientY - cy);
+      if (dist < bd) { bd = dist; best = u; after = e.clientY > cy || (e.clientY > r.top && e.clientX > cx); }
+    });
+    if (!best) return;
+    var ref = after ? best.nextSibling : best;
+    if (ref === d) return;
+    grid.insertBefore(d, ref); tidy(); refreshUnits();
+  });
+  var rb = document.getElementById('lay-reset');
+  if (rb) rb.addEventListener('click', function (e) { try { localStorage.removeItem(KEY); if (e.shiftKey) localStorage.removeItem('eg-pms-layout-default'); } catch (x) {} location.reload(); });
+  var db = document.getElementById('lay-default');
+  if (db) db.addEventListener('click', function () {
+    save(); var j = ls(true);
+    try { localStorage.setItem('eg-pms-layout-default', j); } catch (x) {}
+    try { navigator.clipboard.writeText(j); } catch (x) {}
+    var old = db.textContent; db.textContent = 'Saved as default'; setTimeout(function () { db.textContent = old; }, 1800);
+  });
+})();
 </script></body>
 </html>
