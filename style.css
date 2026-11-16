@@ -1124,3 +1124,576 @@ details.tv summary, .mo caption, .drp-btn, .ch-tbl th, .tbl td b, .ch-tbl td b, 
 #checkins .cio .av, #checkouts .cio .av { width: 34px; height: 34px; font-size: 12px; }
 #checkins .cio b, #checkouts .cio b { font-size: 13.5px; font-weight: 700; color: #1a73e8; }
 #checkins .cio small, #checkouts .cio small { margin-top: 1px; font-size: 11.5px; color: var(--muted); }
+
+/* Occupancy gauge */
+#occgauge { display: flex; flex-direction: column; }
+#occgauge .og { flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+.gauge { position: relative; width: min(100%, 300px); }
+.gauge svg { display: block; width: 100%; overflow: visible; }
+.gauge path { fill: none; stroke-width: 28; }
+.g-track { stroke: #e6ebf3; }
+.g-fill { stroke: #2f6fed; }
+.g-mid { position: absolute; left: 0; right: 0; bottom: 4px; display: grid; justify-items: center; line-height: 1.2; }
+.g-mid b { font-size: 34px; font-weight: 800; color: var(--navy); }
+.g-mid span { font-size: 12.5px; color: var(--ink2); }
+.g-l, .g-r { position: absolute; bottom: -18px; font-size: 11.5px; color: var(--ink2); }
+.g-l { left: 0; } .g-r { right: 0; }
+.g-sub { margin-top: 12px; font-size: 12.5px; color: var(--ink2); }
+.g-sub b { color: var(--navy); }
+@media (max-width: 1300px) { #whatsnew { grid-column: span 12; } }
+
+/* ================================================================
+   Recent Reservations as a full-width table; INR tag; WhatsApp button
+   ================================================================ */
+#recent .rr-wrap { overflow-x: auto; }
+.rr-th, #recent .rr { display: grid; grid-template-columns: minmax(150px, 1.5fr) minmax(110px, 1.2fr) minmax(100px, 1fr) minmax(100px, 1fr) 80px minmax(150px, 1.5fr) minmax(110px, 1fr) 110px; gap: 0 14px; align-items: center; min-width: 900px; padding: 0 16px; }
+.rr-th { margin-top: 12px; padding-top: 10px; padding-bottom: 10px; font-size: 12.5px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.rr-th .r, #recent .rr .rr-amt { text-align: right; }
+#recent .rr { padding-top: 12px; padding-bottom: 12px; font-size: 13px; }
+#recent .rr .rr-id { color: #1a73e8; font-weight: 600; }
+#recent .rr .rr-amt { display: block; font-weight: 600; font-variant-numeric: tabular-nums; }
+#recent .rr-src { display: flex; align-items: center; gap: 8px; min-width: 0; }
+#recent .rr-src .chb { flex: none; width: 22px; height: 22px; border-radius: 6px; font-size: 9px; font-style: normal; }
+#recent .rr .st { font-style: normal; font-weight: 700; }
+#recent .rr-list { flex: 0 1 auto; min-height: 0; max-height: 340px; margin-top: 0; border-top: 0; }
+.cur { font-size: .55em; font-weight: 600; letter-spacing: .02em; color: var(--muted); }
+
+#checkins .cio li { grid-template-columns: 34px minmax(0, 1fr) auto auto; }
+.cio .wa { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #e7f9ee; color: #25d366; }
+.cio .wa:hover { background: #25d366; color: #fff; }
+.cio .wa .ic { width: 17px; height: 17px; }
+
+#recent .rrf { flex: 0 0 200px; }
+#recent .drp { flex: 0 0 270px; }
+
+/* ================================================================
+   Reference layout: Revenue line chart, Occupancy, Room Status tiles, weather + calendar column,
+   then Booking Source / Housekeeping / Check-ins / Check-outs
+   ================================================================ */
+/* Revenue: smooth area line chart with a period switch */
+#revenue .card-b { display: flex; align-items: center; }
+.rv-set { display: none; width: 100%; }
+#revenue:has(.rvp [value=d7]:checked) .rv-d7, #revenue:has(.rvp [value=d30]:checked) .rv-d30 { display: block; }
+.rv-set svg { display: block; width: 100%; height: auto; overflow: visible; }
+.rv-set .rg { stroke: #e6ebf3; stroke-width: 1; }
+.rv-set .rt { fill: var(--muted); font-size: 12px; }
+.rv-set .ra { fill: rgba(91, 95, 224, .13); stroke: none; }
+.rv-set .rl { fill: none; stroke: #5b5fe0; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.rv-set .rd { fill: #5b5fe0; stroke: #fff; stroke-width: 1.5; cursor: pointer; }
+.rv-set .rd:hover { r: 6; }
+
+/* Room Status: compact coloured tiles with an icon */
+#roomstatus .rs-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 58px; gap: 10px; }
+.rs { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; align-content: center; column-gap: 8px; padding: 8px 10px; border-radius: 10px; }
+.rs .ic { grid-row: 1 / 3; width: 18px; height: 18px; align-self: center; }
+.rs span { font-size: 11px; line-height: 1.2; color: var(--ink2); }
+.rs b { font-size: 20px; font-weight: 700; line-height: 1.15; color: var(--navy); }
+.rs1 { background: #e1ebff; } .rs1 .ic { color: #2f6fed; }
+.rs3 { background: #dff1e6; } .rs3 .ic { color: #1baf7a; }
+.rs2 { background: #ffe8dc; } .rs2 .ic { color: #eb6834; }
+.rs8 { background: #fde0e0; } .rs8 .ic { color: #e34948; }
+.rs7 { background: #fdefcf; } .rs7 .ic { color: #c98600; }
+#roomstatus .foot { margin-top: auto; padding-top: 12px; }
+
+/* weather + calendar column: compact weather on top */
+.side .weather { display: grid; flex: none; align-content: start; gap: 8px; padding: 14px 16px; }
+.side .weather .w-days-h { margin-top: 0; padding-top: 10px; }
+.side .weather .w-days { flex: none; gap: 4px; }
+.side .weather .wd { padding: 6px 0; gap: 3px; }
+.side .weather .wd .ic { width: 18px; height: 18px; }
+
+/* Booking Source: donut on top with total revenue in the centre, table underneath */
+#channels .ch-wrap { flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: flex-start; gap: 14px; }
+#channels .donut { align-self: center; width: 128px; height: 128px; }
+#channels .donut .mid { gap: 0; }
+#channels .donut .mid b { font-size: 12px; font-weight: 700; }
+#channels .donut .mid span { font-size: 10px; }
+#channels .ch-tbl { width: 100%; min-width: 0; }
+
+/* Housekeeping / check-ins at the narrower width */
+#housekeeping .card-h .status { font-size: 10.5px; }
+#checkins .cio li { grid-template-columns: 34px minmax(0, 1fr) auto; grid-template-rows: auto auto; row-gap: 4px; }
+#checkins .cio li > .av, #checkins .cio li > div { grid-row: 1 / 3; }
+#checkins .cio li > .st { grid-column: 3; grid-row: 1; justify-self: end; align-self: end; }
+#checkins .cio li > .wa { grid-column: 3; grid-row: 2; justify-self: end; }
+
+/* ================================================================
+   Wrapping widget flow: every visible widget grows to fill its row, so hiding one never leaves a gap
+   ================================================================ */
+.grid { display: flex; flex-wrap: wrap; align-items: stretch; gap: 14px; }
+.grid > .card { flex: 1 1 340px; min-width: 0; grid-column: auto; }
+.grid > #recent, .grid > #whatsnew { flex-basis: 100%; }
+.grid > #revenue { flex-basis: 420px; }
+.grid > #occgauge { flex-basis: 280px; }
+.grid > #roomstatus { flex-basis: 360px; }
+.grid > #weather { flex-basis: 440px; }
+.grid > #channels { flex-basis: 380px; }
+.grid > #housekeeping { flex-basis: 300px; }
+.grid > #checkins, .grid > #checkouts { flex-basis: 340px; }
+.grid > #calendar { flex: 1 1 380px; }
+.grid > #tasks, .grid > #reviews { flex-basis: 480px; }
+@media (max-width: 800px) { .grid > .card { flex-basis: 100%; } }
+
+/* Weather: current conditions, three stat chips, then the week as tiles */
+#weather { display: grid; align-content: space-between; gap: 14px; padding: 18px 20px; }
+#weather .w-top { font-size: 13px; }
+#weather .w-now { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 20px; align-items: center; }
+#weather .w-ic { width: 46px; height: 46px; }
+#weather .w-main b { font-size: 38px; line-height: 1.05; }
+#weather .w-main span { font-size: 13px; }
+#weather .w-side { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; text-align: left; }
+.wch { padding: 8px 10px; border-radius: 10px; background: rgba(255, 255, 255, .14); }
+.wch small { display: block; font-size: 10.5px; opacity: .8; }
+.wch b { font-size: 13.5px; font-weight: 700; white-space: nowrap; }
+#weather .w-days-h { margin: 0; padding-top: 12px; }
+#weather .w-days { flex: none; gap: 6px; }
+#weather .wd { padding: 9px 0; gap: 4px; border-radius: 10px; background: rgba(255, 255, 255, .13); }
+
+/* Customize dashboard screen */
+.page-tools { display: flex; justify-content: flex-end; margin-bottom: 12px; }
+.page-tools .btn { gap: 8px; }
+#m-widgets .dlg { width: min(100%, 540px); }
+.wt-list { display: grid; }
+.wt-row { position: relative; display: flex; align-items: center; gap: 14px; padding: 11px 4px; border-bottom: 1px solid var(--grid); cursor: pointer; }
+.wt-row:last-child { border-bottom: 0; }
+.wt-row input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.wt-t { flex: 1; min-width: 0; }
+.wt-t b { display: block; font-size: 13.5px; }
+.wt-t small { font-size: 12px; color: var(--muted); }
+.sw { position: relative; flex: none; width: 40px; height: 22px; border-radius: 999px; background: #cfd6e4; transition: background .15s; }
+.sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(15, 27, 51, .3); transition: transform .15s; }
+.wt:checked ~ .sw { background: #2f6fed; }
+.wt:checked ~ .sw::after { transform: translateX(18px); }
+.wt:focus-visible ~ .sw { outline: 2px solid #2f6fed; outline-offset: 2px; }
+#m-widgets .dlg-f { display: flex; gap: 8px; }
+#m-widgets .dlg-f .primary { margin-left: auto; }
+
+/* a widget switched off in the Customize screen disappears */
+body:has(#wt-kpis:not(:checked)) .kpis { display: none !important; }
+body:has(#wt-kpis2:not(:checked)) .kpis2 { display: none !important; }
+body:has(#wt-recent:not(:checked)) #recent { display: none !important; }
+body:has(#wt-occgauge:not(:checked)) #occgauge { display: none !important; }
+body:has(#wt-roomstatus:not(:checked)) #roomstatus { display: none !important; }
+body:has(#wt-channels:not(:checked)) #channels { display: none !important; }
+body:has(#wt-housekeeping:not(:checked)) #housekeeping { display: none !important; }
+body:has(#wt-checkins:not(:checked)) #checkins { display: none !important; }
+body:has(#wt-calendar:not(:checked)) #calendar { display: none !important; }
+body:has(#wt-tasks:not(:checked)) #tasks { display: none !important; }
+body:has(#wt-reviews:not(:checked)) #reviews { display: none !important; }
+body:has(#wt-whatsnew:not(:checked)) #whatsnew { display: none !important; }
+
+
+/* Check-ins filter dropdown */
+#checkins .cif { order: 3; flex-basis: 100%; width: 100%; margin-top: 4px; }
+.ci-empty { display: none; padding: 14px 0; font-size: 13px; color: var(--muted); }
+#checkins:has(.cif [value=in]:checked) .cio li:not(:has(.st.ok)),
+#checkins:has(.cif [value=exp]:checked) .cio li:has(.st.ok),
+#checkins:has(.cif [value=ns]:checked) .cio li { display: none; }
+#checkins:has(.cif [value=ns]:checked) .ci-empty { display: block; }
+
+/* Recent Reservations and Today's Check-ins share one row */
+.grid > #recent { flex: 2.2 1 760px; }
+.grid > #checkins { flex: 1 1 340px; }
+@media (max-width: 800px) { .grid > #recent, .grid > #checkins { flex-basis: 100%; } }
+
+.grid > #recent { flex: 2.2 1 880px; }
+.gbreak { flex: 0 0 100%; height: 0; margin-top: -14px; }
+@media (max-width: 800px) { .gbreak { display: none; } }
+
+.rr-th, #recent .rr { grid-template-columns: minmax(110px, 1.2fr) minmax(100px, 1.1fr) minmax(95px, 1fr) minmax(95px, 1fr) 60px minmax(130px, 1.4fr) minmax(100px, 1fr) 96px; gap: 0 10px; min-width: 800px; }
+
+/* ================================================================
+   Front-desk order: act now -> inventory and forecast -> bookings -> context.
+   Max three cards a row, related cards side by side, no gaps.
+   ================================================================ */
+.grid > #recent, .grid > #whatsnew { flex: 1 1 100%; }
+.grid > #checkins { flex: 1.15 1 420px; }
+.grid > #tasks { flex: 1.15 1 420px; }
+.grid > #housekeeping { flex: 1 1 340px; }
+.grid > #roomstatus { flex: 1 1 360px; }
+.grid > #occgauge { flex: .8 1 300px; }
+.grid > #calendar { flex: 1.1 1 400px; }
+.grid > #channels, .grid > #reviews, .grid > #weather { flex: 1 1 380px; }
+/* arrivals are wide enough again for one line per guest */
+#checkins .cio li { grid-template-columns: 34px minmax(0, 1fr) auto auto; grid-template-rows: auto; row-gap: 0; }
+#checkins .cio li > .av, #checkins .cio li > div { grid-row: auto; }
+#checkins .cio li > .st { grid-column: auto; grid-row: auto; justify-self: end; align-self: center; }
+#checkins .cio li > .wa { grid-column: auto; grid-row: auto; justify-self: end; }
+#reviews .rv-list { justify-content: flex-start; gap: 4px; }
+@media (max-width: 800px) { .grid > .card { flex-basis: 100%; } }
+
+/* ================================================================
+   Row 1: compact Recent Reservations | Today's Check-ins | Occupancy over Room Status, all one height
+   ================================================================ */
+.grid > #recent { flex: 2.4 1 700px; }
+.grid > #checkins { flex: 1 1 320px; }
+.stack { flex: .9 1 300px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.stack > .card { flex: 1 1 0; min-width: 0; }
+body:has(#wt-occgauge:not(:checked)):has(#wt-roomstatus:not(:checked)) .stack { display: none; }
+.grid > #tasks { flex: 1.15 1 420px; }
+.grid > #housekeeping { flex: 1 1 340px; }
+.grid > #calendar { flex: 1.1 1 400px; }
+
+/* compact reservations table */
+.rr-th, #recent .rr { grid-template-columns: minmax(90px, 1.1fr) minmax(90px, 1.1fr) minmax(78px, 1fr) minmax(78px, 1fr) minmax(110px, 1.4fr) minmax(84px, 1fr) 84px; gap: 0 8px; min-width: 650px; padding-left: 14px; padding-right: 14px; }
+.rr-th { margin-top: 6px; padding-top: 7px; padding-bottom: 7px; font-size: 12px; }
+#recent .rr { padding-top: 7px; padding-bottom: 7px; font-size: 12.5px; }
+#recent .rr-list { max-height: 262px; }
+#recent .rr-foot { padding-top: 8px; padding-bottom: 10px; }
+#recent .rr-foot b { font-size: 16px; }
+#recent .rrf { flex-basis: 150px; }
+#recent .drp { flex-basis: 230px; }
+#recent .card-h { padding-bottom: 0; }
+
+/* the stacked pair is compact */
+.stack .card-h { padding-top: 12px; }
+.stack .g-mid b { font-size: 26px; }
+.stack .gauge { width: min(100%, 210px); }
+.stack #occgauge .og { gap: 8px; padding-bottom: 6px; }
+.stack .g-sub { margin-top: 6px; }
+.stack #roomstatus .rs-grid { grid-auto-rows: 50px; gap: 8px; }
+.stack #roomstatus .foot { padding-top: 8px; }
+
+.grid > #recent { flex: 2.4 1 660px; }
+.grid > #checkins { flex: 1 1 300px; }
+.stack { flex: .9 1 260px; }
+.stack > .card { flex: 1 1 auto; }
+
+/* ================================================================
+   POLISH PASS - no layout changes. One spacing scale (4/8/12/16/20/24), one card shell, one type scale.
+   ================================================================ */
+:root { --navy: #172b4d; --ink2: #475a75; --muted: #64748b; --line: #e3eaf3; --grid: #edf1f7; --gap: 16px; }
+body { background: #f3f7fb; color: var(--navy); }
+.page { padding: 20px 24px 48px; }
+.page-tools { margin-bottom: 16px; }
+
+/* spacing between everything */
+.kpis, .kpis2, .grid, .stack { gap: var(--gap); }
+.kpis2, .grid { margin-top: var(--gap); }
+.gbreak { margin-top: calc(var(--gap) * -1); }
+
+/* one card shell */
+.card { background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 1px 2px rgba(23, 43, 77, .04); }
+.card-h { padding: 16px 20px 0; gap: 8px 12px; align-items: center; }
+.card-b { padding: 12px 20px 20px; }
+.card-h h2 { font-size: 15px; font-weight: 700; line-height: 1.3; color: var(--navy); letter-spacing: -.005em; }
+.card-h .link, .link { font-size: 12.5px; font-weight: 500; }
+.foot { font-size: 12px; color: var(--muted); }
+
+/* KPI cards: label, value, support line on one rhythm */
+.kpi { padding: 16px 18px; border-radius: 14px; }
+.kpi h3 { margin-bottom: 6px; font-size: 12.5px; font-weight: 500; line-height: 1.3; color: var(--muted); }
+.kpi .big { font-weight: 700; line-height: 1.15; color: var(--navy); }
+.kpi .sub, .kpi .delta { font-size: 12px; line-height: 1.4; }
+.kpi .sub { color: var(--muted); }
+.kpi .sub b { color: var(--navy); font-weight: 600; }
+
+/* Recent Reservations: one inset for header, rows and footer */
+#recent .card-h { padding-bottom: 0; }
+#recent .rr-wrap { padding: 0; }
+.rr-th, #recent .rr { padding-left: 20px; padding-right: 20px; }
+.rr-th { margin-top: 12px; padding-top: 8px; padding-bottom: 8px; font-size: 12px; font-weight: 500; color: var(--muted); background: #f8fafc; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+#recent .rr { padding-top: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--grid); }
+#recent .rr:hover { background: #f8fafd; }
+#recent .rr-foot { padding: 12px 20px 14px; border-top: 1px solid var(--line); }
+#recent .rr-foot span { font-size: 12px; color: var(--muted); }
+
+/* Today's Check-ins: even rows, subtle separators */
+#checkins .cif { margin-top: 8px; }
+#checkins .cio li { padding: 10px 0; border-top: 1px solid var(--grid); }
+#checkins .cio li:first-child { border-top: 0; }
+#checkins .cio small { font-size: 12px; }
+#checkins .foot { padding-top: 10px; }
+
+/* Occupancy + Room Status */
+.gauge { margin-bottom: 20px; }
+.g-l, .g-r { bottom: -20px; }
+.g-sub { margin-top: 0; text-align: center; }
+.stack #occgauge .og { gap: 10px; padding-bottom: 4px; }
+.stack .gauge { margin-bottom: 22px; }
+.stack .card-h { padding-top: 14px; }
+.stack .card-b { padding-bottom: 16px; }
+.rs { min-height: 52px; }
+.rs span { font-size: 11px; color: var(--muted); }
+.rs b { font-size: 20px; }
+#roomstatus .foot { padding-top: 12px; }
+
+/* Booking Source: tidy table, quiet total */
+#channels .ch-tbl td { padding: 9px 0 9px 8px; }
+#channels .ch-tbl th { padding-bottom: 8px; color: var(--muted); font-weight: 500; }
+#channels .ch-tbl tfoot td { border-top: 1px solid var(--line) !important; background: #f8fafc; font-weight: 600; padding-top: 10px; padding-bottom: 10px; }
+#channels .ch-tbl tfoot td:first-child { padding-left: 8px; }
+
+/* Guest Reviews: rating panel, then reviews spread evenly with separators */
+#reviews .rv-top { padding: 16px 18px; }
+#reviews .rv-list { justify-content: space-between; gap: 0; }
+#reviews .rv-list li { padding: 12px 0; border-top: 1px solid var(--grid); }
+#reviews .rv-list li:first-child { border-top: 0; }
+
+/* Weather: header on top, conditions centred in the free space, forecast at the bottom */
+#weather { grid-template-rows: auto 1fr auto auto; align-content: stretch; gap: 14px; padding: 20px 22px; }
+#weather .w-now { align-self: center; }
+#weather .w-days-h { padding-top: 14px; }
+#weather .w-days { gap: 8px; }
+#weather .wd { padding: 10px 0; }
+
+/* Housekeeping + tasks: matching rhythm */
+#housekeeping .hkr .bar { margin-top: 7px; }
+#tasks .task-list a { padding: 10px 8px; }
+#tasks .task-total { margin-top: 12px; }
+
+/* What's New */
+#whatsnew .wn > p { line-height: 1.65; }
+#whatsnew .wn-list li { margin-bottom: 8px; line-height: 1.55; }
+#whatsnew .wn-how { margin-bottom: 16px; }
+
+/* keep the blue weather card; let the reservations list show whole rows */
+#weather.card { background: linear-gradient(135deg, #2e6eeb, #1c50c6); border: 0; color: #fff; box-shadow: 0 1px 2px rgba(23, 43, 77, .08); }
+#recent .rr-list { flex: 0 0 auto; max-height: 280px; }
+
+/* the old progress-bar rule also uses .stack: undo its height and margin for the Occupancy / Room Status column */
+.grid > .stack { height: auto; margin: 0; align-self: stretch; }
+.grid > .stack > .card { flex: 1 1 auto; }
+
+/* ================================================================
+   Compact bottom row: Booking Source | Guest Reviews | Weather
+   ================================================================ */
+.grid > #channels { flex: 1.5 1 480px; }
+.grid > #reviews, .grid > #weather { flex: 1 1 340px; }
+
+/* Booking Source: donut beside the table instead of above it */
+#channels .card-b { padding-top: 6px; padding-bottom: 14px; }
+#channels .ch-wrap { flex-direction: row; align-items: center; gap: 20px; }
+#channels .donut { flex: none; width: 112px; height: 112px; align-self: center; }
+#channels .donut .mid b { font-size: 11px; }
+#channels .donut .mid span { font-size: 9.5px; }
+#channels .ch-tbl { flex: 1; min-width: 0; }
+#channels .ch-tbl th { padding-bottom: 6px; }
+#channels .ch-tbl td { padding: 5px 0 5px 8px; }
+#channels .ch-tbl tfoot td { padding-top: 7px; padding-bottom: 7px; }
+
+/* Guest Reviews */
+#reviews .card-b { padding-top: 8px; padding-bottom: 14px; }
+#reviews .rv { gap: 8px; }
+#reviews .rv-top { padding: 12px 16px; }
+#reviews .rv-score b { font-size: 30px; }
+#reviews .rv-list li { padding: 8px 0; }
+
+/* Weather */
+#weather { gap: 10px; padding: 16px 18px; }
+#weather .w-main b { font-size: 32px; }
+#weather .w-ic { width: 40px; height: 40px; }
+#weather .w-days-h { padding-top: 8px; }
+#weather .wd { padding: 7px 0; gap: 3px; }
+
+/* What's New */
+#whatsnew .wn > p { line-height: 1.5; }
+#whatsnew .wn-list li { margin-bottom: 5px; }
+
+#channels .donut { width: 122px; height: 122px; }
+#channels .donut .mid span { font-size: 9px; }
+
+/* Recent Reservations: icon-only Source column first, no scrollbars */
+.rr-th, #recent .rr { grid-template-columns: 30px minmax(84px, 1.1fr) minmax(90px, 1.2fr) minmax(56px, .8fr) minmax(56px, .8fr) minmax(88px, 1fr) 92px; gap: 0 10px; min-width: 0; }
+#recent .rr-wrap { overflow: visible; }
+#recent .rr-list { max-height: none; overflow: visible; flex: 0 0 auto; }
+#recent .rr-src { gap: 0; }
+
+/* ================================================================
+   No clipped text: cards adapt to their own width
+   ================================================================ */
+#checkins, #roomstatus { container-type: inline-size; }
+
+/* Check-ins: in a narrow card the status pill moves under the room line, so names and rooms stay readable */
+@container (max-width: 420px) {
+  #checkins .cio li { grid-template-columns: 34px minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 12px; row-gap: 4px; align-items: center; }
+  #checkins .cio li > .av { grid-column: 1; grid-row: 1 / 3; }
+  #checkins .cio li > div { grid-column: 2; grid-row: 1; }
+  #checkins .cio li > .st { grid-column: 2; grid-row: 2; justify-self: start; align-self: start; }
+  #checkins .cio li > .wa { grid-column: 3; grid-row: 1 / 3; }
+}
+
+/* Room Status: in a narrow card drop the icon so every label fits on its tile */
+@container (max-width: 340px) {
+  #roomstatus .rs-grid { gap: 8px; }
+  #roomstatus .rs { grid-template-columns: minmax(0, 1fr); padding: 8px 10px; }
+  #roomstatus .rs .ic { display: none; }
+  #roomstatus .rs span { white-space: nowrap; }
+}
+#roomstatus .foot { font-size: 11px; line-height: 1.4; }
+
+/* Booking Source: total row matches the rows above */
+#channels .ch-tbl tfoot td, #channels .ch-tbl tfoot b { font-size: 12.5px; }
+
+/* ================================================================
+   One compact row: Booking Source | Guest Reviews | Weather | What's New
+   ================================================================ */
+.grid > .row4 { flex: 1 1 100%; display: flex; align-items: stretch; gap: var(--gap); min-width: 0; }
+.row4 > .card { min-width: 0; }
+.row4 > #channels { flex: 1.7 1 0; }
+.row4 > #reviews { flex: 1.1 1 0; }
+.row4 > #weather { flex: 1.3 1 0; }
+.row4 > #whatsnew { flex: 1.2 1 0; display: flex; flex-direction: column; }
+@media (max-width: 1100px) { .grid > .row4 { flex-wrap: wrap; } .row4 > .card { flex: 1 1 320px !important; } }
+
+/* Booking Source */
+#channels .card-b { padding-top: 4px; padding-bottom: 12px; }
+#channels .ch-wrap { gap: 16px; }
+#channels .ch-tbl td { padding: 3px 0 3px 8px; }
+#channels .ch-tbl th { padding-bottom: 4px; }
+#channels .ch-tbl tfoot td { padding-top: 5px; padding-bottom: 5px; }
+
+/* Guest Reviews: rating panel plus the two latest reviews */
+#reviews .rv-list li:nth-child(n+3) { display: none; }
+#reviews .rv-top { grid-template-columns: 84px minmax(0, 1fr); gap: 6px 14px; padding: 10px 14px; }
+#reviews .rv-score b { font-size: 26px; }
+#reviews .rv-list li { padding: 7px 0; }
+
+/* Weather */
+#weather { gap: 8px; padding: 14px 16px; }
+#weather .w-main b { font-size: 28px; }
+#weather .w-ic { width: 34px; height: 34px; }
+#weather .w-now { gap: 12px; }
+#weather .w-days-h { display: none; }
+#weather .wd { padding: 6px 0; }
+
+/* What's New: compact card, the text scrolls inside it */
+#whatsnew .card-b.wn { display: block; flex: 1 1 0; min-height: 200px; overflow-y: auto; padding-top: 10px; scrollbar-width: thin; }
+#whatsnew .wn-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-bottom: 8px; }
+#whatsnew .wn-title { font-size: 14.5px; line-height: 1.35; }
+#whatsnew .wn > p { font-size: 12.5px; line-height: 1.5; margin: 0 0 8px; }
+#whatsnew .wn-h { margin: 8px 0 6px; font-size: 13px; }
+#whatsnew .wn-list li { font-size: 12.5px; margin-bottom: 5px; }
+#whatsnew .wn-how { margin: 6px 0 8px; }
+#whatsnew .wn-foot { flex: none; }
+
+/* narrow-card fixes (container queries) */
+#channels, #reviews { container-type: inline-size; }
+@container (max-width: 470px) {
+  #channels .ch-wrap { flex-direction: column; align-items: stretch; gap: 8px; }
+  #channels .donut { width: 96px; height: 96px; align-self: center; }
+  #channels .ch-tbl { width: 100%; }
+}
+@container (max-width: 340px) {
+  #reviews .card-h { flex-wrap: nowrap; }
+  #reviews .card-h .link { font-size: 11.5px; white-space: nowrap; }
+  #reviews .rv-top { grid-template-columns: 70px minmax(0, 1fr); gap: 4px 10px; }
+  #reviews .hkr > div:first-child { font-size: 11px; }
+}
+@container (max-width: 330px) {
+  #roomstatus .rs span { font-size: 10px; letter-spacing: -.01em; }
+  #roomstatus .rs { padding: 8px 8px; }
+}
+
+@container (max-width: 470px) {
+  #channels .donut { width: 118px; height: 118px; }
+  #channels .donut::after { display: none; }
+  #channels .donut .mid { inset: 18px; }
+  #channels .donut .mid b { font-size: 10.5px; }
+  #channels .donut .mid span { font-size: 8.5px; }
+}
+@container (max-width: 330px) { #roomstatus .foot { font-size: 10.5px; } #roomstatus .foot b { font-weight: 600; } }
+
+.row4 > #channels { flex: 1.6 1 0; }
+.row4 > #reviews { flex: 1.1 1 0; }
+.row4 > #whatsnew { flex: 1.3 1 0; }
+
+/* Check-ins / Check-outs dropdown: check-out rows are hidden until a check-out option is chosen */
+#checkins .f-out, #checkins .cio li.co { display: none !important; }
+#checkins:has(.cif [value=coall]:checked) .cio li.co,
+#checkins:has(.cif [value=copend]:checked) .cio li.co:has(.st.today),
+#checkins:has(.cif [value=codone]:checked) .cio li.co:has(.st.ok) { display: grid !important; }
+#checkins:has(.cif [value=coall]:checked) .cio li:not(.co),
+#checkins:has(.cif [value=copend]:checked) .cio li:not(.co),
+#checkins:has(.cif [value=codone]:checked) .cio li:not(.co) { display: none !important; }
+#checkins:has(.cif [value=coall]:checked) .f-out,
+#checkins:has(.cif [value=copend]:checked) .f-out,
+#checkins:has(.cif [value=codone]:checked) .f-out { display: block !important; }
+#checkins:has(.cif [value=coall]:checked) .f-in,
+#checkins:has(.cif [value=copend]:checked) .f-in,
+#checkins:has(.cif [value=codone]:checked) .f-in { display: none; }
+#checkins .cio li.co > .st { justify-self: end; }
+
+#checkins .cio li.co { grid-template-columns: 34px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 12px; row-gap: 4px; align-items: center; }
+#checkins .cio li.co > .av { grid-column: 1; grid-row: 1 / 3; }
+#checkins .cio li.co > div { grid-column: 2; grid-row: 1; }
+#checkins .cio li.co > .st { grid-column: 2; grid-row: 2; justify-self: start; align-self: start; }
+
+/* seven key figures in the first strip */
+@media (min-width: 1301px) { .kpis { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
+
+@media (min-width: 1301px) { .kpis { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
+
+.notif .al-i { align-self: start; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; }
+
+/* Check-ins: filter takes half the width, Send WhatsApp the other half */
+#checkins .cif-bar { order: 3; flex-basis: 100%; display: flex; gap: 8px; margin-top: 8px; }
+#checkins .cif-bar .cif { flex: 1 1 0; min-width: 0; width: auto; margin: 0; }
+.wa-send { flex: 1 1 0; min-width: 0; display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 34px; padding: 0 10px; border-radius: 8px; background: #25d366; color: #fff; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+.wa-send:hover { background: #1ebe5a; }
+.wa-send .ic { width: 16px; height: 16px; }
+
+#checkins .cif-bar { min-width: 0; width: 100%; }
+#checkins .cif-bar .cif { order: 0; flex: 1 1 0; width: 0; min-width: 0; max-width: none; box-sizing: border-box; text-overflow: ellipsis; }
+#checkins .cif-bar .wa-send { order: 1; flex: 1 1 0; width: 0; box-sizing: border-box; }
+
+@container (max-width: 330px) { #checkins .cif-bar { gap: 6px; } #checkins .cif-bar .cif { font-size: 11.5px; padding-left: 8px; } .wa-send { font-size: 11px; gap: 4px; padding: 0 4px; } .wa-send .ic { width: 14px; height: 14px; } }
+
+/* ================================================================
+   Notifications stack: each one slides in at the bottom, the older ones move up, and every one
+   leaves after ~21 s (three slots), so up to three are visible, one under another. No overlap.
+   ================================================================ */
+.toasts { display: flex; flex-direction: column; justify-content: flex-end; height: auto; pointer-events: none; }
+.toast { position: relative; bottom: auto; left: auto; right: auto; box-sizing: border-box; overflow: hidden; pointer-events: auto; animation: toast-stack 84s ease infinite backwards; }
+@keyframes toast-stack {
+  0%    { visibility: hidden; opacity: 0; transform: translateX(28px); max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; border-width: 0 0 0 4px; }
+  .01%  { visibility: visible; }
+  .9%   { opacity: 1; transform: translateX(0); max-height: 160px; margin-top: 10px; padding-top: 12px; padding-bottom: 12px; border-width: 1px 1px 1px 4px; }
+  24%   { visibility: visible; opacity: 1; transform: translateX(0); max-height: 160px; margin-top: 10px; padding-top: 12px; padding-bottom: 12px; border-width: 1px 1px 1px 4px; }
+  25%   { opacity: 0; transform: translateX(28px); max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; border-width: 0 0 0 4px; }
+  25.01%, 100% { visibility: hidden; opacity: 0; max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; border-width: 0 0 0 4px; }
+}
+@keyframes toast-stack-still {
+  0% { visibility: hidden; opacity: 0; max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; border-width: 0 0 0 4px; }
+  .01% { visibility: visible; }
+  .9%, 24% { visibility: visible; opacity: 1; max-height: 160px; margin-top: 10px; padding-top: 12px; padding-bottom: 12px; border-width: 1px 1px 1px 4px; }
+  25%, 100% { visibility: hidden; opacity: 0; max-height: 0; margin-top: 0; padding-top: 0; padding-bottom: 0; border-width: 0 0 0 4px; }
+}
+@media (prefers-reduced-motion: reduce) { .toast { animation-name: toast-stack-still; } }
+
+/* light grey surface for What's New and for notifications */
+#whatsnew.card, #whatsnew .wn-foot { background: #eff2f6; }
+#whatsnew.card { border-color: #dde3ec; }
+#whatsnew .wn-foot { border-top-color: #dde3ec; }
+.toast { background: #eff2f6; border-top-color: #dde3ec; border-right-color: #dde3ec; border-bottom-color: #dde3ec; }
+.toast-x:hover { background: #e1e6ee; }
+#m-notif .dlg, #m-notif .dlg-f { background: #eff2f6; }
+#m-notif .dlg-h { background: #eff2f6; }
+
+/* Alert card in the money strip: light pink-red */
+@media (min-width: 1101px) { .kpis2 { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.kpis2 .kpi-alert { display: block; background: #fdeef0; border-color: #f3c9cf; }
+.kpi-alert h3, .kpi-alert h3 .kic { color: #b42336; }
+.kpi-alert .al-t { display: block; margin-top: 2px; font-size: 14.5px; font-weight: 700; line-height: 1.3; color: #8f1d2c; }
+.kpi-alert .al-t:hover { text-decoration: underline; }
+.kpi-alert .sub { margin-top: 4px; color: #6d2c36; }
+.kpi-alert .al-l { margin-top: 6px; font-size: 12px; font-weight: 600; }
+.kpi-alert .al-l a { color: #b42336; }
+.kpi-alert .al-l a:hover { text-decoration: underline; }
+.kpi-alert:has(a.al-t):hover { box-shadow: 0 4px 16px rgba(180, 35, 54, .15); }
+
+/* five cards in the strip: stack label / value / support line in every card */
+@media (min-width: 1101px) {
+  .kpis2 .kpi { display: block; padding: 16px 18px; }
+  .kpis2 .kpi .big { display: block; text-align: left; margin-top: 2px; }
+  .kpis2 .kpi h3, .kpis2 .kpi > p { grid-column: auto; }
+}
+
+/* Alert card: hide with the x on the card or the Alert card switch in Customize widgets */
+.kpi-alert { position: relative; }
+.al-x { position: absolute; top: 10px; right: 10px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; color: #b42336; cursor: pointer; }
+.al-x .ic { width: 14px; height: 14px; }
+.al-x:hover { background: #f9d5da; }
+body:has(#wt-alertcard:not(:checked)) #alertcard { display: none !important; }
+/* with the alert hidden the other four fill the strip */
+body:has(#wt-alertcard:not(:checked)) .kpis2 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
